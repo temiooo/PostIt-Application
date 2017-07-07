@@ -6,8 +6,8 @@
 
   <title>PostIt - Create New Group</title>
 
-  <link href="css/font-awesome.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
 
   <link href="css/custom.css" rel="stylesheet">
 
@@ -27,77 +27,59 @@
               <input type="text" class="form-control" name="subject" id="subject">
             </div>
         </div>
-        <!-- What is the difference between col-md and col-sm-->                      
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="message">All Users</label>
-                <textarea rows="15" id="message" name="message" class="form-control"></textarea>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="message">Users in Group</label>
-                <textarea rows="15" id="message" name="message" class="form-control"></textarea>
-            </div>
-        </div>
 
+        <div class="col-sm-5">
+          <div class="well">
 
-<div class="row">
-        <div class="col-md-12 text-center"><h3>Pick List Example</h3></div>
-      <div class="col-sm-4 col-sm-offset-1">
-          <div class="list-group" id="list1">
-          <a href="#" class="list-group-item active">List 1 <input title="toggle all" type="checkbox" class="all pull-right"></a>
-          <a href="#" class="list-group-item">Second item <input type="checkbox" class="pull-right"></a>
-          <a href="#" class="list-group-item">Third item <input type="checkbox" class="pull-right"></a>
-          <a href="#" class="list-group-item">More item <input type="checkbox" class="pull-right"></a>
-          <a href="#" class="list-group-item">Another <input type="checkbox" class="pull-right"></a>
-          </div>
-        </div>
-        <div class="col-md-2 v-center">
-        <button title="Send to list 2" class="btn btn-default center-block add"><i class="glyphicon glyphicon-chevron-right"></i></button>
-            <button title="Send to list 1" class="btn btn-default center-block remove"><i class="glyphicon glyphicon-chevron-left"></i></button>
-        </div>
-        <div class="col-sm-4">
-        <div class="list-group" id="list2">
-          <a href="#" class="list-group-item active">List 2 <input title="toggle all" type="checkbox" class="all pull-right"></a>
-          <a href="#" class="list-group-item">Alpha <input type="checkbox" class="pull-right"></a>
-          <a href="#" class="list-group-item">Charlie <input type="checkbox" class="pull-right"></a>
-          <a href="#" class="list-group-item">Bravo <input type="checkbox" class="pull-right"></a>
-          </div>
-        </div>
-  </div>
-</div>
-
-<div class="col-xs-6">
-            <h3 class="text-center">Basic Example</h3>
-            <div class="well" style="max-height: 300px;overflow: auto;">
-            <ul class="list-group checked-list-box">
-                  <li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item" data-checked="true">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Morbi leo risus</li>
-                  <li class="list-group-item">Porta ac consectetur ac</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-                  <li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Morbi leo risus</li>
-                  <li class="list-group-item">Porta ac consectetur ac</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
+            <ul class="list-group" id="list1">
+              <li class="list-group-item active">All Users<input title="toggle all" type="checkbox" class="all pull-right"></li>
+              <li class="list-group-item">Second item <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Third item <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">More item <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Another <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Third item <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">More item <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Another <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Third item <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">More item <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Another <input type="checkbox" class="pull-right"></li>
                 </ul>
-            </div>
+
+          </div>
+            
         </div>
 
+        <div class="col-md-2 v-center">
+          <button title="Send to list 2" class="btn btn-default center-block add"> > </button>
+            <button title="Send to list 1" class="btn btn-default center-block remove"> < </i></button>
+        </div>
+
+        <div class="col-sm-5">
+          <div class="well">
+
+            <ul class="list-group" id="list2">
+              <li class="list-group-item active">Users In Group <input title="toggle all" type="checkbox" class="all pull-right"></li>
+              <li class="list-group-item">Alpha <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Charlie <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Bravo <input type="checkbox" class="pull-right"></li>
+        </ul>
+
+          </div>
+            
+        </div>
 
         <div class="col-sm-12 text-center">
             <button type="submit" class="button">Create Group </button>
-
         </div>
                             
     </div>
   <!-- /.row -->
+
   </form>
 
 </div>
 
+<script src="js/move.js"></script>
 </body>
 
 </html>

@@ -6,7 +6,9 @@
 
   <title>Message Board - Post-Its</title>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+
   <link href="css/custom.css" rel="stylesheet">
 
 </head>
@@ -14,31 +16,98 @@
 <body>
 <div class = "container">
 
-<div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'London')">London</button>
-  <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
-  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+<h2 class='text-center'>Message Board</h2>
+
+<div class="row">
+
+  <div class="col-sm-4">
+
+  <ul class="tab">
+    <li class="tablinks"><a href=#Work> Work </a></li>
+    <li class="tablinks"><a href=#Family>Church</a></li>
+    <li class="tablinks">Family</li>
+    <li class="tablinks">Volunteer</li>
+  </ul>
+
+  </div>
+
+  <div class="col-sm-8 tabcontent">
+
+  <div class="msg-wrap">
+
+
+                <div class="media msg ">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 32px; height: 32px;">
+                    </a>
+                    <div class="media-body">
+                        <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:10am</small>
+                        <h5 class="media-heading">Naimish Sakhpara</h5>
+                        <small class="col-lg-10">Location H-2, Ayojan Nagar, Near Gate-3, Near
+                            Shreyas Crossing Dharnidhar Derasar,
+                            Paldi, Ahmedabad 380007, Ahmedabad,
+                            India
+                            Phone 091 37 669307
+                            Email aapamdavad.district@gmail.com</small>
+                    </div>
+                </div>
+                <div class="alert alert-info msg-date">
+                    <strong>Today</strong>
+                </div>
+                <div class="media msg">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 32px; height: 32px;" >
+                    </a>
+                    <div class="media-body">
+                        <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:10am</small>
+
+                        <h5 class="media-heading">Naimish Sakhpara</h5>
+                        <small class="col-lg-10">Arnab Goswami: "Some people close to Congress Party and close to the government had a #secret #meeting in a farmhouse in Maharashtra in which Anna Hazare send some representatives and they had a meeting in the discussed how to go about this all fast and how eventually this will end."</small>
+                    </div>
+                </div>
+                <div class="media msg">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 32px; height: 32px;" >
+                    </a>
+                    <div class="media-body">
+                        <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:10am</small>
+
+                        <h5 class="media-heading">Naimish Sakhpara</h5>
+                        <small class="col-lg-10">Arnab Goswami: "Some people close to Congress Party and close to the government had a #secret #meeting in a farmhouse in Maharashtra in which Anna Hazare send some representatives and they had a meeting in the discussed how to go about this all fast and how eventually this will end."</small>
+                    </div>
+                </div>
+
+                <div class="media msg">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 32px; height: 32px;" >
+                    </a>
+                    <div class="media-body">
+                        <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:10am</small>
+                        <h5 class="media-heading">Naimish Sakhpara</h5>
+
+                        <small class="col-lg-10">Arnab Goswami: "Some people close to Congress Party and close to the government had a #secret #meeting in a farmhouse in Maharashtra in which Anna Hazare send some representatives and they had a meeting in the discussed how to go about this all fast and how eventually this will end."</small>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="send-wrap ">
+
+                <textarea class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
+            </div>
+            <div class="btn-panel">
+                
+                <a href="" class=" col-lg-4 text-right btn   send-message-btn pull-right" role="button"><i class="fa fa-plus"></i> Send Message</a>
+            </div>
+
+
 </div>
 
-<div id="London" class="tabcontent">
-  <h3>London</h3>
-  <p>London is the capital city of England.</p>
-</div>
+    
 
-<div id="Paris" class="tabcontent">
-  <h3>Paris</h3>
-  <p>Paris is the capital of France.</p> 
+  </div>
 </div>
-
-<div id="Tokyo" class="tabcontent">
-  <h3>Tokyo</h3>
-  <p>Tokyo is the capital of Japan.</p>
-</div>
-
-</div>
-
-<!--<script src="js/toggler.js"></script>-->
-  
+ 
 </body>
 
 </html>
