@@ -4,7 +4,7 @@
 
   <meta charset="utf-8">
 
-  <title>Message Board - Post-Its</title>
+  <title>Message Board - Post-It</title>
 
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -16,18 +16,160 @@
 <body>
 <div class = "container">
 
-<h2 class='text-center'>Message Board</h2>
+
+
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Post-It Application</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal2">Add Users to Group</button></li>
+        <div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Users to Group</h4>
+      </div>
+      <div class="modal-body">
+        <form class="postmessage">
+    <div class="row">
+                            
+        <div class="col-md-12">
+            <div class="form-group">
+              <label for="sel1">Choose Group</label>
+      		<select class="form-control" id="sel1">
+        	<option>Group A</option>
+        	<option>Group B</option>
+      </select>
+            </div>
+        </div>
+
+        <div class="col-sm-5">
+          <div class="well">
+
+            <ul class="list-group" id="list1">
+              <li class="list-group-item active">All Users<input title="toggle all" type="checkbox" class="all pull-right"></li>
+              <li class="list-group-item">Second item <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Third item <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">More item <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Another <input type="checkbox" class="pull-right"></li>
+              
+                </ul>
+
+          </div>
+            
+        </div>
+
+        <div class="col-md-2 v-center">
+          <button title="Send to list 2" class="btn btn-default center-block add"> > </button>
+            <button title="Send to list 1" class="btn btn-default center-block remove"> < </i></button>
+        </div>
+
+        <div class="col-sm-5">
+          <div class="well">
+
+            <ul class="list-group" id="list2">
+              <li class="list-group-item active">Users In Group <input title="toggle all" type="checkbox" class="all pull-right"></li>
+              <li class="list-group-item">Alpha <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Charlie <input type="checkbox" class="pull-right"></li>
+              <li class="list-group-item">Bravo <input type="checkbox" class="pull-right"></li>
+        </ul>
+
+          </div>
+            
+        </div>
+
+        <div class="col-sm-12 text-center">
+            <button type="submit" class="button"> Add Users </button>
+        </div>
+                            
+    </div>
+  <!-- /.row -->
+
+  </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+
+
+
 
 <div class="row">
 
-  <div class="col-sm-4">
+ <div class="col-sm-4">
 
   <ul class="tab">
+  <!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create New Group</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create New Group</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form">
+
+    <div class="form-group">
+    <label for="email">Group Name</label>
+    <input type="textbox" class="textbox" id="email">
+    </div>
+
+    <div class="form-group">
+    <textarea class="form-control send-message" rows="3" placeholder="Add Description Here..."></textarea>
+    </div>
+
+    <button type="submit" class="button">Create Group</button>
+
+  </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+    
     <li class="tablinks"><a href=#Work> Work </a></li>
     <li class="tablinks"><a href=#Family>Church</a></li>
     <li class="tablinks">Family</li>
     <li class="tablinks">Volunteer</li>
+
   </ul>
+
+  
 
   </div>
 
@@ -80,6 +222,12 @@
 
   </div>
 </div>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
  
 </body>
 
