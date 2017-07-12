@@ -1,5 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-  const Messages = sequelize.define('Messages', {
+  const Message = sequelize.define('Message', {
+    senderId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     content: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -24,12 +28,16 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        Messages.belongsTo(models.Groups, {
+        Message.belongsTo(models.Group, {
           foreignKey: 'groupId',
           onDelete: 'CASCADE',
         });
-      }
+        Message.belongsTo(models.User, {
+          foreignKey: 'userId',
+          onDelete: 'CASCADE',
+        });
+      },
     }
   });
-  return Messages;
+  return Message;
 };

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Group = sequelize.define('Groups', {
+  const Group = sequelize.define('Group', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -11,11 +11,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        Group.belongsToMany(models.Users, {
-          through: 'UserGroups',
-          foreignkey: 'groupId',
+        Group.belongsToMany(models.User, {
+          through: 'UserGroup',
+          foreignKey: 'groupId',
+          constraints: false,
         });
-        Group.hasMany(models.Messages, {
+        Group.hasMany(models.Message, {
           foreignKey: 'groupId'
         });
       }

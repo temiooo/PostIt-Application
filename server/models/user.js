@@ -31,9 +31,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        User.belongsToMany(models.Groups, {
-          through: 'UserGroups',
+        User.belongsToMany(models.Group, {
+          through: 'UserGroup',
           foreignKey: 'userId',
+          constraints: false,
+        });
+        User.hasMany(models.Message, {
+          foreignKey: 'userId',
+          as: 'senderId',
         });
       },
       instanceMethod: {
