@@ -1,6 +1,4 @@
-const Group = require('../models').Group;
-const User = require('../models').User;
-// const UserGroup = require('../models').UserGroup;
+import { Group, User } from '../models';
 
 module.exports = {
   create(req, res) {
@@ -28,8 +26,14 @@ module.exports = {
           if (!user) {
             res.send('User Does Not Exist');
           } else {
-            group.addUser(userId);
-            res.send('User Added Successfully');
+            group.getUsers({ where: { id: userId } }).then(() => {
+              if (user) {
+                res.send('User Already Exists In This Group');
+              } else {
+                group.addUser(userId);
+                res.send('User Added Successfully');
+              }
+            });
           }
         });
       }

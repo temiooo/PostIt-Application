@@ -37,8 +37,8 @@ module.exports = (sequelize, DataTypes) => {
           constraints: false,
         });
         User.hasMany(models.Message, {
-          foreignKey: 'userId',
-          as: 'senderId',
+          foreignKey: 'senderId',
+          as: 'messages',
         });
       },
       instanceMethod: {

@@ -7,15 +7,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      senderId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Users',
-          key: 'id',
-          as: 'senderId',
-        }
-      },
       content: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -41,7 +32,16 @@ module.exports = {
           key: 'id',
           as: 'groupId',
         }
-      }
+      },
+      senderId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'senderId',
+        }
+      },
     }),
   down: queryInterface => queryInterface.dropTable('Messages')
 };
