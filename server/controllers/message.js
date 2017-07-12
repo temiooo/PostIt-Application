@@ -9,9 +9,9 @@ module.exports = {
       if (!group) {
         res.send('Group Does Not Exist');
       } else {
-        group.getUsers({ where: { id: userId } }).then((user) => {
-          if (!user) {
-            res.send('You don\'t belong to this group so you can\'t post a message here');
+        group.hasUser(userId).then((result) => {
+          if (!result) {
+            res.send({ Message: 'You don\'t belong to this group so you can\'t post a message here' });
           } else {
             Message.create({
               senderId: userId,
@@ -35,20 +35,15 @@ module.exports = {
 
     Group.findById(groupId).then((group) => {
       if (!group) {
-        res.send('Group Does Not Exist');
+        res.send({ Message: 'Group Does Not Exist' });
       } else {
-        group.getUsers({ where: { id: userId } }).then((user) => {
-          if (!user) {
-            res.send('You don\'t belong to this group so you can\'t post a message here');
+        group.hasUser(userId).then((result) => {
+          if (!result) {
+            res.send({ Message: 'You don\'t belong to this group' });
           } else {
-            Message.findAll({
-              where: {
-                groupId
-              }
-            })
-              .then((message) => {
-                res.send(message);
-              });
+            group.getMessages().then((messages) => {
+              res.send({ messages });
+            });
           }
         });
       }

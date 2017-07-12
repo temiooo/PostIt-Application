@@ -26,8 +26,8 @@ module.exports = {
           if (!user) {
             res.send('User Does Not Exist');
           } else {
-            group.getUsers({ where: { id: userId } }).then(() => {
-              if (user) {
+            group.hasUser(userId).then((result) => {
+              if (result) {
                 res.send('User Already Exists In This Group');
               } else {
                 group.addUser(userId);
