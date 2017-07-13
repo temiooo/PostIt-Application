@@ -13,11 +13,13 @@
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+  "production": {"url": "postgres://xjcvxfcaurcngt:cc21fab24eb2d6960589b00a61fc02043267ac57653dc0dbb3825b6818347f85@ec2-54-163-254-143.compute-1.amazonaws.com:5432/d81c2h4mpjhe1b",
+    "dialect": "postgres",
+    "ssl": true,
+    "dialectOptions": {
+      "ssl" : {
+        "require": true
+      }
+    }
   }
 }
