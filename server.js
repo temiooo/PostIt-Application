@@ -18,7 +18,7 @@ require('./server/routes')(app);
 
 // Start the server and listen at port
 app.listen(port, () => {
-  console.log('app started at port 8000');
+  // console.log('app started at port 8000');
 });
 
 module.exports = app;
