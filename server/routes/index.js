@@ -5,6 +5,13 @@ const groupController = require('../controllers').group;
 const messageController = require('../controllers').message;
 
 module.exports = (app) => {
+  app.get('/', (req, res) => res.status(200).send({
+    message: 'Welcome to Post-It Application',
+  }));
+
+  app.post('/', (req, res) => res.status(200).send({
+    message: 'Welcome to Post-It Application',
+  }));
   app.post('/api/user/signup', userController.signup);
   app.post('/api/user/signin', userController.signin);
   app.use(authenticate.verifyUser);
