@@ -9,7 +9,7 @@ module.exports = {
       .then((group) => {
         const user = req.decoded.userId;
         group.addUser(user);
-        res.status(200).send('Group Created Successfully');
+        res.status(201).send({ message: 'Group Created Successfully', group });
       })
       .catch(error => res.status(400).send(error));
   },
@@ -20,18 +20,18 @@ module.exports = {
 
     Group.findById(groupId).then((group) => {
       if (!group) {
-        res.send('Group Does Not Exist');
+        res.status(400).send({ message: 'Group Does Not Exist' });
       } else {
         User.findById(userId).then((user) => {
           if (!user) {
-            res.send('User Does Not Exist');
+            res.status(400).send({ message: 'User Does Not Exist' });
           } else {
             group.hasUser(userId).then((result) => {
               if (result) {
-                res.send('User Already Exists In This Group');
+                res.status(400).send({ message: 'User Already Exists In This Group' });
               } else {
                 group.addUser(userId);
-                res.send('User Added Successfully');
+                res.status(201).send({ message: 'User Added Successfully' });
               }
             });
           }
