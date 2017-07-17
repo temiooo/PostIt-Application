@@ -1,7 +1,7 @@
-const User = require('../models').User;
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-const jwt = require('jsonwebtoken');
+const User = require('../models').User;
 
 module.exports = {
   signup(req, res) {
@@ -10,19 +10,19 @@ module.exports = {
       .create({
         email: req.body.email,
         username: req.body.username,
-        password
+        password,
       })
       .then((user) => {
         const token = jwt.sign({
           userId: user.id
-        }, 'Abracadabra', {
-          expiresIn: '2h' // expires in 2 hours
+        }, 'July@2017onyl', {
+          expiresIn: '5h' // expires in 5 hours
         });
 
-          // Return the information including token as JSON Value
-        res.json({
+        res.status(201).send({
           success: true,
           message: 'Token Generated. Signup successful!',
+          userId: user.id,
           token,
         });
       })
@@ -37,25 +37,27 @@ module.exports = {
         }
       }).then((user) => {
         if (!user) {
-          res.status(404).send({ msg: 'User not found' });
+          res.status(400).send({ message: 'User not found' });
         }
 
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const token = jwt.sign({
             userId: user.id
-          }, 'Abracadabra', {
+          }, 'July@2017onyl', {
             expiresIn: '2h' // expires in 2 hours
           });
 
           // Return the information including token as JSON Value
-          res.json({
+          res.status(200).send({
             success: true,
             message: 'Token Generated. Signin successful!',
+            userId: user.id,
             token,
           });
         } else {
-          res.status(404).send({ msg: 'Password is incorrect' });
+          res.status(400).send({ message: 'Password is incorrect' });
         }
-      });
+      })
+      .catch(error => res.send(error));
   }
 };

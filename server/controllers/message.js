@@ -7,11 +7,11 @@ module.exports = {
 
     Group.findById(groupId).then((group) => {
       if (!group) {
-        res.send('Group Does Not Exist');
+        res.status(400).send({ message: 'Group Does Not Exist' });
       } else {
         group.hasUser(userId).then((result) => {
           if (!result) {
-            res.send({ Message: 'You don\'t belong to this group so you can\'t post a message here' });
+            res.status(400).send({ message: 'You don\'t belong to this group so you can\'t post a message here' });
           } else {
             Message.create({
               senderId: userId,
@@ -20,7 +20,7 @@ module.exports = {
               groupId
             })
               .then(() => {
-                res.send(' Message Posted Successfully');
+                res.status(201).send({ message: ' Message Posted Successfully' });
               });
           }
         });
@@ -35,14 +35,14 @@ module.exports = {
 
     Group.findById(groupId).then((group) => {
       if (!group) {
-        res.send({ Message: 'Group Does Not Exist' });
+        res.status(400).send({ Message: 'Group Does Not Exist' });
       } else {
         group.hasUser(userId).then((result) => {
           if (!result) {
-            res.send({ Message: 'You don\'t belong to this group' });
+            res.status(400).send({ Message: 'You don\'t belong to this group' });
           } else {
             group.getMessages().then((messages) => {
-              res.send({ messages });
+              res.status(200).send({ messages });
             });
           }
         });
