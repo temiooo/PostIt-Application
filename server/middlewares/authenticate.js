@@ -1,16 +1,14 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 
-dotenv.config();
+require('dotenv').config();
 
 const authenticate = {
   verifyUser(req, res, next) {
     const token = req.headers['x-access-token'] || req.headers.authorization;
     if (token) {
-      jwt.verify(token, 'July@2017onyl', (err, decoded) => {
+      jwt.verify(token, process.env.SECRET, (err, decoded) => {
         if (err) {
-          return res.json({
-            success: false,
+          return res.status(403).send({
             message: 'Token is no longer Valid'
           });
         }
@@ -19,7 +17,6 @@ const authenticate = {
       });
     } else {
       return res.status(403).send({
-        success: false,
         message: 'No token provided'
       });
     }

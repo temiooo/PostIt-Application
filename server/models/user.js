@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -40,16 +40,16 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'senderId',
           as: 'messages',
         });
-      },
-      instanceMethod: {
-        hashPassword() {
-          return bcrypt.hashSync(User.password, bcrypt.genSaltSync(10));
-        }
-      },
-      hooks: {
-        beforeCreate(user) {
-          user.password = User.hashPassword();
-        }
+      }
+    },
+    instanceMethods: {
+      hashPassword() {
+        this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
+      }
+    },
+    hooks: {
+      beforeCreate(user) {
+        user.hashPassword();
       }
     }
   });
