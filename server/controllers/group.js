@@ -33,11 +33,26 @@ module.exports = {
                 group.addUser(userId);
                 res.status(201).send({ message: 'User Added Successfully' });
               }
-            })
-              .catch(error => res.status(400).send(error));
+            });
           }
         });
       }
-    });
+    })
+      .catch(error => res.status(400).send(error));
+  },
+
+  listUsers(req, res) {
+    const groupId = req.params.groupId;
+
+    Group.findById(groupId).then((group) => {
+      if (!group) {
+        res.status(400).send({ message: 'Group Does Not Exist' });
+      } else {
+        group.getUsers().then((result) => {
+          res.status(200).send(result);
+        });
+      }
+    })
+      .catch(error => res.status(400).send(error));
   }
 };

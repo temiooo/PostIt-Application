@@ -16,8 +16,10 @@ module.exports = (app) => {
   app.post('/api/user/signup', validateInput.validateUsername, validateInput.validateEmail, userController.signup);
   app.post('/api/user/signin', userController.signin);
   app.use(authenticate.verifyUser);
+  app.get('/api/user/:userId/groups', userController.listGroups);
   app.post('/api/group', validateInput.validateGroupname, groupController.create);
   app.post('/api/group/:groupId/user', groupController.addUser);
+  app.get('/api/group/:groupId/users', groupController.listUsers);
   app.post('/api/group/:groupId/message', messageController.create);
   app.get('/api/group/:groupId/messages', messageController.list);
 

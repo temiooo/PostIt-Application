@@ -20,7 +20,7 @@ module.exports = {
               groupId
             })
               .then(() => {
-                res.status(201).send({ message: ' Message Posted Successfully' });
+                res.status(201).send({ message: 'Message Posted Successfully' });
               });
           }
         });

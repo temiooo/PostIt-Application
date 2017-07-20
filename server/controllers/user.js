@@ -49,7 +49,7 @@ module.exports = {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const token = jwt.sign({
             userId: user.id
-          }, 'July@2017onyl', {
+          }, process.env.SECRET, {
             expiresIn: '2h' // expires in 2 hours
           });
 
@@ -63,5 +63,20 @@ module.exports = {
         return res.status(400).send({ message: 'Password is incorrect' });
       })
       .catch(error => res.send(error));
+  },
+
+  listGroups(req, res) {
+    const userId = req.params.userId;
+
+    User.findById(userId).then((user) => {
+      if (!user) {
+        res.status(400).send({ message: 'User Does Not Exist' });
+      } else {
+        user.getGroups().then((result) => {
+          res.status(200).send(result);
+        });
+      }
+    })
+      .catch(error => res.status(400).send(error));
   }
 };
