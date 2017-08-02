@@ -1,0 +1,72 @@
+.logo{
+  font-family: 'Gorditas';
+  color: white;
+  padding:10px;
+  border-radius: 5px 20px 5px;
+  border: 4px solid white;
+}
+
+.top-space{
+  margin-top: 50px;
+}
+.link{
+  padding:10px;
+}
+
+.side-nav{
+  top:64px;
+}
+
+.tabcontent {
+  padding: 5px 20px;
+  height:460px;
+}
+
+.msg-wrap{
+  padding:10px;
+  height:360px;
+  overflow: auto;
+}
+
+.msg{
+  padding:5px;
+  border-bottom:1px solid #ddd;
+}
+
+
+.msg-heading{
+  color:#e53935;
+  font-weight: 700;
+  font-size:1.3rem;
+}
+
+.time{
+  color:#bfbfbf;
+}
+
+textarea{
+  height: 3rem;
+  padding:5px;
+}
+
+.send-msg{
+  margin:0;
+  position: sticky;
+}
+
+.send-msg button{
+  margin:10px 40px 5px 150px;
+}
+
+.myinput{
+  margin-top:0px;
+}
+
+.select-wrapper input.select-dropdown{
+  margin:0;
+}
+
+.modal{
+  max-height:70%;
+  padding: 15px;
+}

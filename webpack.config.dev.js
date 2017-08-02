@@ -42,6 +42,10 @@ module.exports = {
           presets: ['es2015', 'react'],
         },
       },
+      {
+        test: /\.(woff|woff2)$/,
+        loader: 'url?prefix=font/&limit=5000'
+      },
     ],
   },
 };

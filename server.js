@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 
 // Get an instance of express
 const app = express();
-const port = parseInt(process.env.PORT, 10) || 8000;
+const port = parseInt(process.env.PORT, 10) || 6000;
 
 // Allow app to use logger and bodyparser
 app.use(logger('dev'));
