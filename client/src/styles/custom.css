@@ -70,3 +70,7 @@ textarea{
   max-height:70%;
   padding: 15px;
 }
+
+.errors{
+  margin-left: 40px;
+}

@@ -23,12 +23,14 @@ class LoginPage extends React.Component {
 		return (
 			<div>
         <div className="row top-space">
-          <Banner />
+					<div className="col s12 m6 l6">
+          <Banner/>
+					</div>
 					<div className="col s12 m6 l6 top-space">
 						<form className="white col s12 z-depth-5">
 							<h6 className="center-align link">
 								New to Post-It?
-								<Link to="/">Create Account</Link>
+								<Link to="/"> Create Account</Link>
 							</h6>
 							<div className="divider"></div>
 	
