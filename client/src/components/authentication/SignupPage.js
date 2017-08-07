@@ -72,7 +72,7 @@ class SignupPage extends React.Component {
             <form className="white col s12 z-depth-5">
   			      <h6 className="center-align link">
                 Already a member?
-                <Link to="signin"> Login</Link>
+                <Link to="login"> Login</Link>
               </h6>
               <div className="divider"></div>
   				      <TextInput
@@ -115,7 +115,6 @@ class SignupPage extends React.Component {
       				    <Button 
                     className="btn waves-effect waves-light red lighten-2"
                     onClick={this.onSubmit}
-                    disabled
                     >CREATE ACCOUNT
                   </Button>
       			    </div>

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const Button = ({onClick, className, children, disabled}) => {
+const Button = ({onClick, className, children}) => {
 	return(
 		<button
 			onClick={onClick}
@@ -14,7 +14,6 @@ const Button = ({onClick, className, children, disabled}) => {
 Button.PropTypes ={
 	onClick: PropTypes.func.isRequired,
 	className: PropTypes.string,
-	children: PropTypes.string.isRequired,
-	disabled: PropTypes.bool
+	children: PropTypes.string.isRequired
 }
 export default Button;

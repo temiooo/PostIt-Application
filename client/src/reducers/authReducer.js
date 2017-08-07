@@ -1,17 +1,19 @@
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
-export default function authReducer(state = initialState.currentUser, action) {
+const authReducer = (state = initialState.currentUser, action) => {
   switch (action.type) {
     case types.SIGNUP_SUCCESS:
       return {
         currentUser: action.user.userId
       };
 
-    case types.SIGNUP_FAILURE:
-      return state;
+    case types.LOGIN_SUCCESS:
+      return {
+        currentUser: action.user.userId
+      };
 
-    case types.LOGOUT_SUCCESS:
+    case types.LOGOUT:
       return {
         currentUser: ''
       };
@@ -19,4 +21,6 @@ export default function authReducer(state = initialState.currentUser, action) {
     default:
       return state;
   }
-}
+};
+
+export default authReducer;

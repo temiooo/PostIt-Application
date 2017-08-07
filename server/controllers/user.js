@@ -7,7 +7,9 @@ require('dotenv').config();
 module.exports = {
   signup(req, res) {
     if (!req.body.email || !req.body.username || !req.body.password) {
-      return res.status(400).send({ message: 'Email, Username and Password must be provided' });
+      return res.status(400).send({
+        message: 'Email, Username and Password must be provided'
+      });
     }
     return User
       .create({
@@ -19,7 +21,7 @@ module.exports = {
         const token = jwt.sign({
           userId: user.id
         }, process.env.SECRET, {
-          expiresIn: '5h' // expires in 5 hours
+          expiresIn: '2h' // expires in 5 hours
         });
 
         res.status(201).send({
@@ -33,7 +35,9 @@ module.exports = {
 
   signin(req, res) {
     if (!req.body.username || !req.body.password) {
-      return res.status(400).send({ message: 'Please provide a username and password' });
+      return res.status(400).send({
+        message: 'Please provide a username and password'
+      });
     }
     return User
       .findOne({
