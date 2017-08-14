@@ -21,6 +21,7 @@ class LoginPage extends React.Component {
   }
 
   onChange(event) {
+		event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -39,7 +40,7 @@ class LoginPage extends React.Component {
 
 	render() {
 		return (
-			<div className="container">
+			<div className="container login">
         <div className="row top-space">
 					<div className="col s12 m6 l6">
           <Banner/>
@@ -68,16 +69,15 @@ class LoginPage extends React.Component {
                   label="Password"
                 />
 							<div className="row  center-align">
-									<Button 
-                    className="btn waves-effect waves-light red lighten-2"
+									<Button
+										className="btn waves-effect waves-light red lighten-2"
                     onClick={this.onSubmit}
-                    disabled
-                    >LOGIN
-                  </Button>
+                    text="login"
+                  />
 							</div>
 							<div className="row  right-align">
 								<h6 className="link">
-									<a href="#" className="black-text">Forgot Password?</a>
+									<a href="" className="black-text" onClick={this.props.actions.logout}>Forgot Password?</a>
 								</h6>
 							</div>
 						</form>
@@ -95,7 +95,7 @@ LoginPage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  return{
+  return {
     currentUser: state.auth.currentUser
   }
 }

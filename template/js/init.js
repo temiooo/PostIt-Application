@@ -1,8 +1,7 @@
-(function($){
-  $(function(){
-
+(function ($) {
+  $(() => {
     $('.button-collapse').sideNav();
     $('select').material_select();
-     $('.modal').modal();
+    $('.modal').modal();
   }); // end of document ready
-})(jQuery); // end of jQuery name space
+}(jQuery)); // end of jQuery name space

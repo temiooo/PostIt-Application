@@ -19,8 +19,8 @@ module.exports = {
               priority: req.body.priority,
               groupId
             })
-              .then(() => {
-                res.status(201).send({ message: 'Message Posted Successfully' });
+              .then((message) => {
+                res.status(201).send({ message });
               });
           }
         });

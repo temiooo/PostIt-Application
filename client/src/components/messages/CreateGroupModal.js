@@ -1,7 +1,30 @@
 import React from 'react';
-import Button from './Button';
+import Button from '../common/Button';
+import TextInput from '../common/TextInput';
 
-class SideNav extends React.Component {
+class CreateGroupModal extends React.Component {
+  constructor(props, context){
+    super(props, context);
+
+    this.state = {
+      groupname: '',
+      errors: {}
+    };
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+  }
+
 	render() {
 		return(
 			<div id="modal2" className="modal black-text">
@@ -10,13 +33,14 @@ class SideNav extends React.Component {
             <div className="row">
               <div className="input-field col s12">
                 <input placeholder="Enter Group Name Here" id="search" type="text" />
-                <label for="search">Group Name</label>
+                <label htmlFor="search">Group Name</label>
               </div>
             </div>
         </div>
         <div className="modal-footer">
 					<Button 
 						className="btn modal-action modal-close waves-effect waves-green red darken-1"
+            onClick={this.onSubmit}
 						>CREATE GROUP
 					</Button>
 				</div>
@@ -24,3 +48,5 @@ class SideNav extends React.Component {
 		);
 	}
 }
+
+export default (CreateGroupModal);

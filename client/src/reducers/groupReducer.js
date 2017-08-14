@@ -4,7 +4,7 @@ import initialState from './initialState';
 const groupReducer = (state = initialState.groups, action) => {
   switch (action.type) {
     case types.GET_GROUPS_SUCCESS:
-      return action;
+      return action.groups;
 
     default:
       return state;

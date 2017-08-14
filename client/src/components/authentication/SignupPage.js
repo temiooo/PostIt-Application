@@ -112,11 +112,11 @@ class SignupPage extends React.Component {
                   error={errors.password}
                 />
       			    <div className="row center-align">
-      				    <Button 
-                    className="btn waves-effect waves-light red lighten-2"
+                  <Button
+										className="btn waves-effect waves-light red lighten-2"
                     onClick={this.onSubmit}
-                    >CREATE ACCOUNT
-                  </Button>
+                    text="Create Account"
+                  />
       			    </div>
 			      </form>  
           </div>
@@ -131,6 +131,7 @@ SignupPage.propTypes = {
   currentUser: PropTypes.number,
   actions: PropTypes.object.isRequired
 };
+
 function mapStateToProps(state, ownProps) {
   return{
     currentUser: state.auth.currentUser

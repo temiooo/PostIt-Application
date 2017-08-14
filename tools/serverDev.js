@@ -5,9 +5,8 @@ import open from 'open';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import config from '../webpack.config.dev';
-import UserRouter from '../server/routes/user';
-import GroupRouter from '../server/routes/group';
-
+// import userRoutes from '../server/routes/user';
+// import groupRoutes from '../server/routes/group';
 /* eslint-disable no-console */
 
 const port = 8000;
@@ -21,15 +20,18 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
+app.use(express.static(path.join(__dirname, '../client/src')));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(UserRouter);
-app.use(GroupRouter);
 
-app.get('*', (req, res) => {
+require('../server/routes/index')(app);
+
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/src/index.html'));
 });
+
 
 // Start the server and listen at port
 app.listen(port, (err) => {

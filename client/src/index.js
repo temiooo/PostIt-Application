@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import jwtDecode from 'jwt-decode';
 import routes from './routes';
-import { signupSuccess } from './actions/authActions';
+import { loginSuccess } from './actions/authActions';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import './styles/custom.css';
 
@@ -14,7 +14,7 @@ const store = configureStore();
 
 if (localStorage.jwtToken) {
   setAuthorizationToken(localStorage.jwtToken);
-  store.dispatch(signupSuccess(jwtDecode(localStorage.jwtToken)));
+  store.dispatch(loginSuccess(jwtDecode(localStorage.jwtToken)));
 }
 
 render(

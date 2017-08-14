@@ -7,19 +7,13 @@ export function getGroupsSuccess(groups) {
 }
 
 export function getGroups(user) {
-  debugger;
   return dispatch =>
     axios.get(`/api/user/${user}/groups`)
       .then((response) => {
-        debugger;
-        toastr.error(response);
-        console.log(response);
-        debugger;
         dispatch(getGroupsSuccess(response.data));
-        debugger;
       })
       .catch((error) => {
-        toastr.error(error.response.data.message);
+        toastr.error(error);
       });
 }
 

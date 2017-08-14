@@ -1,4 +1,9 @@
 export default {
   currentUser: '',
-  groups: []
+  groups: [],
+  messages: {
+    groupId: '',
+    groupName: '',
+    groupMessages: []
+  }
 };
