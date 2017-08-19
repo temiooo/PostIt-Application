@@ -9,7 +9,7 @@ import config from '../webpack.config.dev';
 // import groupRoutes from '../server/routes/group';
 /* eslint-disable no-console */
 
-const port = 8000;
+const port = parseInt(process.env.PORT, 10) || 8000;
 const app = express();
 const compiler = webpack(config);
 
