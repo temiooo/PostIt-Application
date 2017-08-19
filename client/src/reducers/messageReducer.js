@@ -11,10 +11,7 @@ const messageReducer = (state = initialState.messages, action) => {
       };
 
     case types.ADD_MESSAGE_SUCCESS:
-      return [
-        ...state,
-        Object.assign({}, action)
-      ];
+      return { ...state, groupMessages: action.messages };
 
     default:
       return state;

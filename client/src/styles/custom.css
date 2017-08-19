@@ -1,3 +1,20 @@
+html {
+  background: #ffffff;
+  height: 100%;
+}
+
+ body {
+  height: 100%;
+} 
+
+.login-form {
+  margin-top: 50px;
+}
+
+.message-board {
+  height: 100% !important;
+}
+
 .logo{
   font-family: 'Gorditas';
   color: white;
@@ -7,7 +24,7 @@
 }
 
 .top-space{
-  margin-top: 50px;
+  padding-top: 50px;
 }
 .link{
   padding:10px;
@@ -45,13 +62,13 @@
 }
 
 textarea{
-  height: 3rem;
+  height:4rem;
   padding:5px;
 }
 
 .send-msg{
   margin:0;
-  position: sticky;
+  position:sticky;
 }
 
 .send-msg button{
@@ -59,12 +76,12 @@ textarea{
 }
 
 .priority{
-  margin-top:0px;
-}
+  margin-top:0.5rem;
+}  
 
-.select-wrapper input.select-dropdown{
+/* .select-wrapper input.select-dropdown{
   margin:0;
-}
+} */
 
 .modal{
   max-height:70%;
@@ -73,4 +90,63 @@ textarea{
 
 .errors{
   margin-left: 40px;
+}
+
+ .input-field select{
+  position:relative;
+  width:100%;
+  height:40px;
+  opacity:1;
+  pointer-events: auto;
+} 
+
+.search{
+  margin-bottom: 5px;
+}
+
+input[type=search]:not(.browser-default) {
+  border-bottom: none !important;
+  margin: 0px !important;
+  padding: 3px !important;
+}
+
+.search-icon{
+  margin-top:10px;
+}
+
+.pagination {
+  margin-bottom: -1px;
+}
+
+.search-btn {
+  background: #fff;
+  color: #000;
+  width: 100%;
+  padding: 0px;
+  box-shadow: none !important;
+}
+
+.search-btn i {
+  font-size: 24px;
+}
+
+.search-btn:hover{
+  background-color: #f4f4f4;
+}
+
+.search-btn:focus {
+  background-color:#fff;
+} 
+
+.no-user {
+  margin-top: 50px;
+}
+
+.group-members {
+  max-height:450px;
+  overflow: auto;
+}
+
+.group-action {
+  margin: 15px 20px 0px 0px;
 }

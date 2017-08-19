@@ -1,30 +1,37 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, trim } from 'lodash';
 import validator from 'validator';
 
 export default function validateInput(state) {
   const errors = {};
-  if (validator.isEmpty(state.email)) {
+
+  if (trim(state.email).length === 0) {
     errors.email = 'Email is required';
   } else if (!validator.isEmail(state.email)) {
     errors.email = 'Email is Invalid';
   }
 
-  if (validator.isEmpty(state.username)) {
+  if (trim(state.username).length === 0) {
     errors.username = 'Username is required';
-  } else if (state.username.length < 5) {
+  } else if (trim(state.username).length < 5) {
     errors.username = 'Minimum of 5 characters';
   }
 
-  if (validator.isEmpty(state.phonenumber)) {
+  if (trim(state.phonenumber).length === 0) {
     errors.phonenumber = 'Phone Number is required';
   } else if (!validator.isInt(state.phonenumber)) {
     errors.phonenumber = 'Numbers only';
   }
 
-  if (validator.isEmpty(state.password)) {
+  if (trim(state.password).length === 0) {
     errors.password = 'Password is required';
   } else if (state.password.length < 8) {
     errors.password = 'Minimum of 8 characters';
+  }
+
+  if (trim(state.name).length === 0) {
+    errors.groupname = 'Group name cannot be empty';
+  } else if (trim(state.name).length < 5) {
+    errors.groupname = 'Minimum of 5 characters';
   }
 
   return {

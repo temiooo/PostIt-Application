@@ -5,5 +5,10 @@ export default {
     groupId: '',
     groupName: '',
     groupMessages: []
+  },
+  users: {
+    members: [],
+    nonMembers: [],
+    pagination: {}
   }
 };

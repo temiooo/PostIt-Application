@@ -1,25 +1,34 @@
 import React, {PropTypes} from 'react';
+import MessageList from './MessageList';
+import NewMessage from './NewMessage'; 
 
-const Messages = ({messages}) => {
-	return (
-		<div className="tabcontent">
-			<div><h4>{messages.groupName}</h4></div>
-				<div className="msg-wrap">
-				{messages.groupMessages.map(message => <div className="msg" key={message.id}>
-					<div>
-						<small className="right time">{message.createdAt}</small>
-						<h6 className="msg-heading">{message.senderId}</h6>
-						<h6>{message.content}</h6>
-					</div>
-				</div>
-				)}
-				</div>
-		</div>
-	);
+const Messages = ({messages, searchUsers}) => {
+	if (messages.groupId) {
+		return (
+			<div className="white col s12 m12 l9">
+				<MessageList messages={messages} searchUsers={searchUsers}/>
+				<NewMessage/>
+			</div>
+		);
+	} else {
+		return (
+			<div className="white col s12 m12 l9">
+				<h4 className="center-align top-space">
+					Click on a group to view your messages
+				</h4>
+				<h4 className="center-align top-space">
+					Not in any group? Create one.
+				</h4>
+			</div>
+		);
+	}
+
+	
 };
 
 Messages.propTypes = {
-	messages: PropTypes.object.isRequired
+	messages: PropTypes.object.isRequired,
+	searchUsers: PropTypes.func.isRequired
 };
 
 export default Messages;

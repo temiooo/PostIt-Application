@@ -39,7 +39,7 @@ const validateInput = {
     }).then((group) => {
       if (group) {
         return res.status(400).send({
-          message: 'This name has been taken already.'
+          message: 'Group name exists already. Please use another one.'
         });
       }
       next();

@@ -21,8 +21,8 @@ class SignupPage extends React.Component {
       errors: {},
     };
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
@@ -31,7 +31,7 @@ class SignupPage extends React.Component {
    } 
   }
 
-  onChange(event) {
+  handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -45,7 +45,7 @@ class SignupPage extends React.Component {
     return isValid;
   }
 
-  onSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
       this.setState({ errors: {} })
@@ -80,7 +80,7 @@ class SignupPage extends React.Component {
 						      type="email"
 						      name="email"
 						      value={this.state.email}
-						      onChange={this.onChange}
+						      onChange={this.handleChange}
                   label="Email Address"
                   error={errors.email}
                 />
@@ -89,7 +89,7 @@ class SignupPage extends React.Component {
 						      type="text"
 						      name="username"
 						      value={this.state.username}
-						      onChange={this.onChange}
+						      onChange={this.handleChange}
                   label="Username"
                   error={errors.username}
                 />
@@ -98,7 +98,7 @@ class SignupPage extends React.Component {
 						      type="tel"
 						      name="phonenumber"
 						      value={this.state.phonenumber}
-						      onChange={this.onChange}
+						      onChange={this.handleChange}
                   label="Phone Number"
                   error={errors.phonenumber}
                 />
@@ -107,14 +107,14 @@ class SignupPage extends React.Component {
 						      type="password"
 						      name="password"
 						      value={this.state.password}
-						      onChange={this.onChange}
+						      onChange={this.handleChange}
                   label="Password"
                   error={errors.password}
                 />
       			    <div className="row center-align">
                   <Button
 										className="btn waves-effect waves-light red lighten-2"
-                    onClick={this.onSubmit}
+                    onClick={this.handleSubmit}
                     text="Create Account"
                   />
       			    </div>
@@ -128,7 +128,7 @@ class SignupPage extends React.Component {
 }
 
 SignupPage.propTypes = {
-  currentUser: PropTypes.number,
+  currentUser: PropTypes.number.isRequired,
   actions: PropTypes.object.isRequired
 };
 

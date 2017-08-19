@@ -16,18 +16,24 @@ class LoginPage extends React.Component {
       username: '',
 			password: ''
     };
-		this.onChange = this.onChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+	
+	componentWillMount() {
+   if(this.props.currentUser) {
+     browserHistory.push('/messageboard');
+   } 
   }
 
-  onChange(event) {
+  handleChange(event) {
 		event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value
     });
 	}
 	
-	onSubmit(event) {
+	handleSubmit(event) {
 		event.preventDefault();
 		this.props.actions.login(this.state)
 		.then(() => {
@@ -40,12 +46,12 @@ class LoginPage extends React.Component {
 
 	render() {
 		return (
-			<div className="container login">
+			<div className="container">
         <div className="row top-space">
 					<div className="col s12 m6 l6">
           <Banner/>
 					</div>
-					<div className="col s12 m6 l6 top-space">
+					<div className="col s12 m6 l6 login-form">
 						<form className="white col s12 z-depth-5">
 							<h6 className="center-align link">
 								New to Post-It?
@@ -57,7 +63,7 @@ class LoginPage extends React.Component {
 						      type="text"
 						      name="username"
 						      value={this.state.username}
-						      onChange={this.onChange}
+						      onChange={this.handleChange}
                   label="Username"
                 />
 							<TextInput
@@ -65,13 +71,13 @@ class LoginPage extends React.Component {
 						      type="password"
 						      name="password"
 						      value={this.state.password}
-						      onChange={this.onChange}
+						      onChange={this.handleChange}
                   label="Password"
                 />
 							<div className="row  center-align">
 									<Button
 										className="btn waves-effect waves-light red lighten-2"
-                    onClick={this.onSubmit}
+                    onClick={this.handleSubmit}
                     text="login"
                   />
 							</div>
@@ -90,7 +96,7 @@ class LoginPage extends React.Component {
 
 
 LoginPage.propTypes = {
-  currentUser: PropTypes.number,
+  currentUser: PropTypes.number.isRequired,
   actions: PropTypes.object.isRequired
 };
 

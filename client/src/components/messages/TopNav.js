@@ -13,22 +13,12 @@ const TopNav = ({ logout }) => {
 					</a>
 	  			<ul className="right hide-on-med-and-down">
 						<li>
-							<a className="modal-trigger" href="#modal1">
-								Add New Group Member
-							</a>
-						</li>
-						<li>
 							<a onClick={logout}>
 								Logout
 							</a>
 						</li>
 	  			</ul>
 	  			<ul className="side-nav" id="mobile-demo">
-						<li>
-							<a className="modal-trigger" href="#modal1">
-								Add New Group Member
-							</a>
-						</li>
 						<li>
 							<a onClick={logout}>
 								Logout

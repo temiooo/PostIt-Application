@@ -6,17 +6,24 @@ import TopNav from './TopNav';
 import SideNav from './SideNav';
 import Messages from './Messages';
 import NewMessage from './NewMessage';
+import GroupMember from './GroupMember';
+import CreateGroupModal from './CreateGroupModal';
 import * as authActions from '../../actions/authActions';
 import * as groupActions from '../../actions/groupActions';
 import * as messageActions from '../../actions/messageActions';
 
-
 class MessageBoard extends React.Component {
 	constructor(props, context) {
-	super(props, context);
+		super(props, context);
 
-	this.logout = this.logout.bind(this);
-	}
+		this.state = {
+			searching: false
+		}
+		
+		this.searchUsers = this.searchUsers.bind(this);
+		this.getMessages = this.getMessages.bind(this);
+		this.logout = this.logout.bind(this);
+		}
 
 	componentWillMount() {
    if(!this.props.currentUser) {
@@ -26,6 +33,17 @@ class MessageBoard extends React.Component {
 	 }
 	}
 
+	searchUsers(event){
+		event.preventDefault();
+		this.setState({ searching: true })
+	}
+
+	getMessages(group) {
+		event.preventDefault();
+		this.setState({ searching: false });
+		this.props.actions.getMessages(group);
+	}
+
 	logout(event) {
 		event.preventDefault();
 		this.props.actions.logout();
@@ -33,15 +51,24 @@ class MessageBoard extends React.Component {
 	}
 	
   render() {
+	  const {searching} = this.state
 		return(
-			<div className="white">
+			<div className="white message-board">
 				<TopNav logout={this.logout}/>
 				<div className="row">
-					<SideNav/>
-					<div className="white col s12 m12 l9">
-						<Messages  messages={this.props.messages}/>
-						<NewMessage/>
-					</div>
+					<SideNav
+						getMessages={this.getMessages}
+						groups={this.props.groups}/>
+					<CreateGroupModal/>
+
+					{searching ? (
+						<GroupMember/>
+					) : (
+						<Messages
+							messages={this.props.messages}
+							searchUsers={this.searchUsers}/>
+					)}
+
 				</div>
 			</div>
 		);
@@ -55,6 +82,7 @@ MessageBoard.propTypes = {
 function mapStateToProps(state, ownProps) {
   return {
 		currentUser: state.auth.currentUser,
+		groups: state.groups,
 		messages: state.messages
   }
 }

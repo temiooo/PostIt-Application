@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react';
 
-const Button = ({onClick, className, text, icon}) => {
+const Button = ({onClick, className, text, icon, disabled}) => {
 	return(
 		<button
 			onClick={onClick}
 			className={className}
-			type="submit">
+			type="submit"
+			disabled={disabled}>
 			{text}
 			{icon && <i className="material-icons right">{icon}</i>}
 		</button>
@@ -13,9 +14,10 @@ const Button = ({onClick, className, text, icon}) => {
 };
 
 Button.PropTypes = {
-	onClick: PropTypes.func.isRequired,
+	onClick: PropTypes.func,
 	className: PropTypes.string,
-	text: PropTypes.string.isRequired,
-	icon: PropTypes.string
+	text: PropTypes.string,
+	icon: PropTypes.string,
+	disabled: PropTypes.bool
 }
 export default Button;

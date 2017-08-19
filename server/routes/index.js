@@ -8,6 +8,7 @@ const messageController = require('../controllers').message;
 module.exports = (app) => {
   app.post('/api/user/signup', validateInput.validateUsername, validateInput.validateEmail, userController.signup);
   app.post('/api/user/signin', userController.signin);
+  app.get('/api/search/users', authenticate.verifyUser, userController.searchUser);
   app.get('/api/user/:userId/groups', authenticate.verifyUser, userController.listGroups);
   app.post('/api/group', authenticate.verifyUser, validateInput.validateGroupname, groupController.create);
   app.post('/api/group/:groupId/user', authenticate.verifyUser, groupController.addUser);

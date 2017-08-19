@@ -2,59 +2,102 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Button from '../common/Button';
-import SelectInput from '../common/SelectInput';
 import * as messageActions from '../../actions/messageActions';
 
 class NewMessage extends React.Component {
-	
- constructor(props) {
-    super(props);
-    this.state = {value: 'coconut'};
+	constructor(props) {
+		super(props);
+		
+		this.state = {
+			message:{
+				content: '',
+				priority: ''
+			},
+    };
+			
+		this.onChange = this.onChange.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
+	}
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+	onChange(event) {
+			const field = event.target.name;
+			const message = this.state.message;
+			message[field] = event.target.value;
+			return this.setState({
+				message
+			});
+	}
+
+  onSubmit(event) {
+		event.preventDefault();
+		const id = this.props.messages.groupId
+		this.props.actions.postMessage(id, this.state.message)
+			.then(() =>
+			this.setState({
+				message:{
+					content: '',
+					priority: ''
+				}
+			}));
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
+	render() {
+		const options = ['Normal', 'Urgent', 'Critical']
+		const { content, priority } = this.state.message
 
-  handleSubmit(event) {
-    alert('Your favorite flavor is: ' + this.state.value);
-    event.preventDefault();
-  }
+		return (
+			<div className="row send-msg fixed">
+				<form className="col s12">
+					<div className="col s12">
+						<textarea
+						name="content"
+						value={content}
+						onChange={this.onChange}
+						/>
+					</div>
+				</form>
+						
+				<div className="col s12 m6 l6">
+					<div className="priority input-field col s12">
+						<select
+							name="priority"
+							value={priority}
+							onChange={this.onChange}>
+							<option value="" disabled>Choose Your Priority</option>
+							{options.map((option) => {
+								return <option key={option} value={option}>{option}</option>;
+							})}
+						</select>
+					</div>
+				</div>
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Pick your favorite La Croix flavor:
-          <select
-                value={this.state.value}
-                onChange={this.handleChange}
-                className="form-control">
-                <option value="">defaultOption</option>
-                <option value="99">99</option>;
-                </select>
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    );
-  }
+				<div className="col s12 m6 l6">
+					<Button
+						className="btn waves-effect waves-light red darken-1"
+      			onClick={this.onSubmit}
+           	text="send"
+						icon="send"
+						disabled={this.state.disabled}
+          />
+				</div>
+			</div>
+		);
+	}
 }
 
 NewMessage.propTypes = {
+	actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
 	return {
-		message: state.messages
+		messages: state.messages
 	};
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-	actions: bindActionCreators(messageActions, dispatch)
+		actions: bindActionCreators(messageActions, dispatch)
   };
 }
 

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User } from '../models';
+import { User, Group } from '../models';
 
 require('dotenv').config();
 
@@ -21,7 +21,7 @@ module.exports = {
         const token = jwt.sign({
           userId: user.id
         }, process.env.SECRET, {
-          expiresIn: '2h' // expires in 5 hours
+          expiresIn: '24h' // expires in 5 hours
         });
 
         res.status(201).send({
@@ -53,7 +53,7 @@ module.exports = {
           const token = jwt.sign({
             userId: user.id
           }, process.env.SECRET, {
-            expiresIn: '2h' // expires in 2 hours
+            expiresIn: '24h' // expires in 2 hours
           });
 
           // Return the information including token as JSON Value
@@ -66,6 +66,60 @@ module.exports = {
         return res.status(400).send({ message: 'Password is incorrect' });
       })
       .catch(error => res.send(error));
+  },
+
+  searchUser(req, res) {
+    const limit = req.query.limit || null;
+    const offset = req.query.offset || null;
+    const groupId = req.query.group;
+
+    Group.findById(groupId).then((group) => {
+      if (!group) {
+        res.status(400).send({ message: 'Group Not Specified' });
+      } else {
+        group.getUsers().then((users) => {
+          const getId = (userArray) => {
+            const arr = [];
+            const n = users.length;
+            for (let i = 0; i < n; i++) {
+              arr.push(userArray[i].id);
+            }
+            return arr;
+          };
+          const members = getId(users);
+          User.findAndCountAll({
+            where: {
+              username: {
+                $ilike: `%${req.query.q}%`
+              },
+              $not: [{
+                id: members }]
+            },
+            attributes: {
+              exclude: ['password']
+            },
+            offset,
+            limit,
+            order: [['id', 'DESC']]
+          }).then((result) => {
+            if (result.count === 0) {
+              res.status(404).send({ message: 'No users found' });
+            } else {
+              const pagination = {
+                pageCount: Math.ceil(result.count / limit),
+                pageNumber: Math.floor(offset / limit) + 1,
+              };
+              res.status(200).send({
+                users: result.rows,
+                pagination
+              });
+            }
+          })
+            .catch(error => res.status(400).send(error));
+        })
+          .catch(error => res.status(400).send(error));
+      }
+    });
   },
 
   listGroups(req, res) {
