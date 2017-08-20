@@ -69,7 +69,7 @@ class SignupPage extends React.Component {
             <Banner/>
           </div>
           <div className="col s12 m6 l6">
-            <form className="white col s12 z-depth-5">
+            <form className="white col s12 z-depth-5" onSubmit={this.handleSubmit}>
   			      <h6 className="center-align link">
                 Already a member?
                 <Link to="login"> Login</Link>

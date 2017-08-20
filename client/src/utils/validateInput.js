@@ -28,12 +28,6 @@ export default function validateInput(state) {
     errors.password = 'Minimum of 8 characters';
   }
 
-  if (trim(state.name).length === 0) {
-    errors.groupname = 'Group name cannot be empty';
-  } else if (trim(state.name).length < 5) {
-    errors.groupname = 'Minimum of 5 characters';
-  }
-
   return {
     errors,
     isValid: isEmpty(errors)
