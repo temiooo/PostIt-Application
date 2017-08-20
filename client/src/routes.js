@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 import App from './components/app';
 import SignupPage from './components/authentication/SignupPage';
 import LoginPage from './components/authentication/LoginPage';
-import messageboard from './components/messages/messageboard';
+import messageboard from './components/messages/MessageBoard';
 
 export default (
     <Route path="/" component={App}>
