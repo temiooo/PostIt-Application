@@ -1,12 +1,12 @@
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {Link, browserHistory} from 'react-router';
-import {bindActionCreators} from 'redux';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { Link, browserHistory } from 'react-router';
+import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import Banner from '../common/Banner';
 import Button from '../common/Button';
 import TextInput from '../common/TextInput';
-import * as authActions from '../../actions/authActions';
+import { login } from '../../actions/authActions';
 
 class LoginPage extends React.Component {
 	constructor(props, context){
@@ -35,7 +35,7 @@ class LoginPage extends React.Component {
 	
 	handleSubmit(event) {
 		event.preventDefault();
-		this.props.actions.login(this.state)
+		this.props.login(this.state)
 		.then(() => {
 			if (this.props.currentUser) {
 			toastr.success('Welcome Back');
@@ -83,7 +83,7 @@ class LoginPage extends React.Component {
 							</div>
 							<div className="row  right-align">
 								<h6 className="link">
-									<a href="" className="black-text" onClick={this.props.actions.logout}>Forgot Password?</a>
+									<a href="" className="black-text">Forgot Password?</a>
 								</h6>
 							</div>
 						</form>
@@ -97,19 +97,14 @@ class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
   currentUser: PropTypes.number.isRequired,
-  actions: PropTypes.object.isRequired
+  login: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-  return {
-    currentUser: state.auth.currentUser
-  }
-}
+const mapStateToProps = state => ({
+  currentUser: state.auth.currentUser
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(authActions, dispatch)
-    };
-}
+const mapDispatchToProps = dispatch =>
+	bindActionCreators({ login }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

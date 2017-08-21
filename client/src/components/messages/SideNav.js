@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
 const SideNav = ({ groups, getMessages }) => {
 	return(

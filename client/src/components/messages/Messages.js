@@ -1,15 +1,15 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import MessageList from './MessageList';
 import NewMessage from './NewMessage'; 
 
-const Messages = ({messages, searchUsers}) => {
+const Messages = ({ messages, searchUsers }) => {
 	if (messages.groupId) {
 		return (
 			<div className="white col s12 m12 l9">
-				<MessageList messages={messages} searchUsers={searchUsers}/>
-				<NewMessage/>
+				<MessageList messages={ messages } searchUsers={ searchUsers }/>
+				<NewMessage groupId={ messages.groupId }/>
 			</div>
-		);
+		); 
 	} else {
 		return (
 			<div className="white col s12 m12 l9">

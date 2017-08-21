@@ -1,17 +1,17 @@
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {Link, browserHistory} from 'react-router';
-import {bindActionCreators} from 'redux';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { Link, browserHistory } from 'react-router';
+import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import Banner from '../common/Banner';
 import Button from '../common/Button';
 import TextInput from '../common/TextInput';
-import validateInput from '../../utils/validateInput';
-import * as authActions from '../../actions/authActions';
+import { validateSignupInput } from '../../utils/validateInput';
+import { signup } from '../../actions/authActions';
 
 class SignupPage extends React.Component {
-  constructor(props, context){
-    super(props, context);
+  constructor(props){
+    super(props);
 
     this.state = {
       email: '',
@@ -38,7 +38,7 @@ class SignupPage extends React.Component {
   }
 
   isValid() {
-    const { errors, isValid } = validateInput(this.state);
+    const { errors, isValid } = validateSignupInput(this.state);
     if(!isValid) {
       this.setState({errors});
     }
@@ -49,12 +49,11 @@ class SignupPage extends React.Component {
     event.preventDefault();
     if (this.isValid()) {
       this.setState({ errors: {} })
-      this.props.actions.signup(this.state)
-      .then(() => {
+      this.props.signup(this.state).then(() => {
         if (this.props.currentUser) {
         toastr.success('Welcome to PostIt');
         browserHistory.push('/messageboard');
-        } 
+        }
       });
     } 
   }
@@ -69,7 +68,7 @@ class SignupPage extends React.Component {
             <Banner/>
           </div>
           <div className="col s12 m6 l6">
-            <form className="white col s12 z-depth-5" onSubmit={this.handleSubmit}>
+            <form className="white col s12 z-depth-5">
   			      <h6 className="center-align link">
                 Already a member?
                 <Link to="login"> Login</Link>
@@ -124,24 +123,19 @@ class SignupPage extends React.Component {
 			</div>
     );
   }
-
+  
 }
 
 SignupPage.propTypes = {
   currentUser: PropTypes.number.isRequired,
-  actions: PropTypes.object.isRequired
+  signup: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-  return{
-    currentUser: state.auth.currentUser
-  }
-}
+const mapStateToProps = state => ({
+  currentUser: state.auth.currentUser
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(authActions, dispatch)
-    };
-}
+const mapDispatchToProps = dispatch => 
+  bindActionCreators({ signup }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);

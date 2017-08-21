@@ -1,65 +1,61 @@
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Button from '../common/Button';
 import TextInput from '../common/TextInput';
-import validateInput from '../../utils/validateInput';
-import {createGroup} from '../../actions/groupActions';
+import { validateGroupInput } from '../../utils/validateInput';
+import { createGroup } from '../../actions/groupActions';
 
 class CreateGroupModal extends React.Component {
-  constructor(props, context){
-    super(props, context);
+  constructor(props){
+    super(props);
 
     this.state = {
       name: '',
       errors: {},
-      disabled: true
     };
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.onFocus = this.onFocus.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  onChange(event) {
+  handleChange(event) {
     this.setState({
       name: event.target.value
     });
-    if(this.isValid) {
-      this.setState({ disabled: false })
-    }
-  }
+  };
 
   isValid() {
-    const { errors, isValid } = validateInput(this.state);
+    const { isValid } = validateGroupInput(this.state);
+    return isValid;
+  };
+
+  hasErrors() {
+    const { errors, isValid } = validateGroupInput(this.state);
     if(!isValid) {
       this.setState({errors});
-    }
-    return isValid;
+    } 
   }
 
-  onBlur(event){
-    this.isValid();
+  handleBlur() {
+    this.hasErrors();
   }
 
-  onFocus(event){
-    this.setState({
-      errors: ''
-    })
+  handleFocus() {
+    this.setState({ errors: {} })
   }
 
-  onSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
-    if (this.isValid()) {
-      const {name} = this.state
-      this.props.createGroup({name})
-      .then(() =>
-        this.setState({
-          name: '',
-          errors: {}
-        }))
-    }
+    const { name } = this.state
+    this.props.createGroup({name})
+    .then(() =>
+      this.setState({
+        name: '',
+        errors: {}
+      }))
   }
 
 	render() {
@@ -74,18 +70,18 @@ class CreateGroupModal extends React.Component {
               type="text"
               value={this.state.name}
               label="Group Name"
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-              onFocus={this.onFocus}
-              error={errors.groupname}
+              onChange={this.handleChange}
+              onBlur={this.handleBlur}
+              onFocus={this.handleFocus}
+              error={errors.name}
             />
         </div>
         <div className="modal-footer">
 					<Button
 						className="btn modal-action modal-close waves-effect waves-green red darken-1"
 						text="CREATE GROUP"
-            onClick={this.onSubmit}
-            disabled={this.state.disabled}
+            onClick={this.handleSubmit}
+            disabled={!this.isValid()}
 					/>
 				</div>
       </div>
@@ -97,10 +93,7 @@ CreateGroupModal.propTypes = {
   createGroup: PropTypes.func.isRequired
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    createGroup: bindActionCreators(createGroup, dispatch)
-  };
-}
+const mapDispatchToProps = dispatch => 
+  bindActionCreators({ createGroup }, dispatch)
 
 export default connect(null, mapDispatchToProps)(CreateGroupModal);
