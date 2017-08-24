@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactPaginate from 'react-paginate';
@@ -20,7 +21,7 @@ class GroupMember extends React.Component {
 	}
 
   componentWillMount() {
-    const group = this.props.messages.groupId;
+    const group = this.props.messages.groupId || this.props.match.params.id;
     this.props.getGroupMembers(group);
   }
 
@@ -36,7 +37,7 @@ class GroupMember extends React.Component {
 
   searchUser(offset) {
     const query = this.state.searchTerm;
-    const group = this.props.messages.groupId;
+    const group = this.props.messages.groupId || this.props.match.params.id;
     const limit = 9;
     offset = offset || 0;
     this.props.searchUsers(query, group, limit, offset);

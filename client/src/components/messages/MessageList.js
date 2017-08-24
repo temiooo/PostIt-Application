@@ -1,7 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Button from '../common/Button';
+import { Link } from 'react-router-dom'
 
-const MessagesList = ({ messages, searchUsers }) => {
+const MessagesList = ({ messages, edit }) => {
 	const messageLength = messages.groupMessages.length;
 		return (
 			<div className="tabcontent">
@@ -13,14 +15,15 @@ const MessagesList = ({ messages, searchUsers }) => {
 						<div className="col s12 m12 l4">
 							<a
 							className="group-action btn-floating waves-effect waves-light modal-trigger"
-							href="#creategroup"
+							href="#group"
+							onClick={edit}
 							><i className="material-icons right">edit</i>
 							</a>
-							<Button
-							className="group-action btn-floating waves-effect waves-light"
-							icon="person_add"
-							onClick={searchUsers}
-							/>
+							<Link
+								to={`/messageboard/group/${messages.groupId}/members`}
+								className="group-action btn-floating waves-effect waves-light">	
+									<i className="material-icons right">person_add</i>
+							</Link>
 						</div>
 					</div>
 					{ messageLength > 0 ? ( 
@@ -28,8 +31,8 @@ const MessagesList = ({ messages, searchUsers }) => {
 						{messages.groupMessages.map(message =>
 							<div className="msg" key={message.id}>
 								<div>
-									<small className="right time">{message.createdAt}</small>
-									<h6 className="msg-heading">{message.senderId}</h6>
+									<small className="right time">{message.createdAt.slice(0, 10)}</small>
+									<h6 className="msg-heading">{message.User.username}</h6>
 									<h6>{message.content}</h6>
 								</div>
 							</div>
@@ -46,7 +49,7 @@ const MessagesList = ({ messages, searchUsers }) => {
 
 MessagesList.propTypes = {
 	messages: PropTypes.object.isRequired,
-	searchUsers: PropTypes.func.isRequired
+	edit: PropTypes.func.isRequired
 };
 
 export default MessagesList;

@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const TextInput = ({icon, type, name, value, label,
+const TextInput = ({icon, type, name, value, label, placeholder,
 	onChange, error, onBlur, onFocus }) => {
 		return(
 			<div className="row">
@@ -11,11 +12,12 @@ const TextInput = ({icon, type, name, value, label,
 						type={type} 
 						name={name}
 						value={value}
+						placeholder={placeholder}
 						onChange={onChange}
 						onBlur={onBlur}
 						onFocus={onFocus}
 						/>
-					<label  htmlFor={name}>{label}</label>
+					<label htmlFor={name}>{label}</label>
 					{error && <span className="red-text errors">{error}</span>}
 				</div>
 			</div>
@@ -27,7 +29,8 @@ TextInput.propTypes = {
 	type: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	value: PropTypes.string.isRequired,
-	label: PropTypes.string.isRequired,
+	label: PropTypes.string,
+	placeholder: PropTypes.string,
 	onChange: PropTypes.func.isRequired,
 	onBlur: PropTypes.func,
 	onFocus: PropTypes.func,

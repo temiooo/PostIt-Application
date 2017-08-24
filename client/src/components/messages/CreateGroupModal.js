@@ -1,10 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Button from '../common/Button';
 import TextInput from '../common/TextInput';
 import { validateGroupInput } from '../../utils/validateInput';
-import { createGroup } from '../../actions/groupActions';
+import { createGroup, updateGroup } from '../../actions/groupActions';
+import { updateGroupInfo } from '../../actions/messageActions';
 
 class CreateGroupModal extends React.Component {
   constructor(props){
@@ -19,6 +21,17 @@ class CreateGroupModal extends React.Component {
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.edit) {
+      const group = this.state.name;
+      if (group !== nextProps.selectedGroup.groupName) {
+        this.setState({ name: nextProps.selectedGroup.groupName })
+      }
+    } else {
+      this.setState({ name: '' })
+    }
   }
 
   handleChange(event) {
@@ -49,27 +62,33 @@ class CreateGroupModal extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { name } = this.state
-    this.props.createGroup({name})
-    .then(() =>
-      this.setState({
-        name: '',
-        errors: {}
-      }))
+    const groupName = { name: this.state.name };
+    const groupId = this.props.selectedGroup.groupId;
+    const user = this.props.user;
+
+    if (this.props.edit) {
+      this.props.updateGroup(groupName, groupId, user)
+      .then(() => {
+        const group = this.props.groups.filter(group => group.id == groupId)
+        this.props.updateGroupInfo(group)
+      });
+    } else {
+      this.props.createGroup(groupName);
+    }
   }
 
 	render() {
     const { errors } = this.state;
 
 		return(
-			<div id="creategroup" className="modal black-text">
+			<div id="group" className="modal black-text">
         <div className="modal-content">
           <h5>Create New Group</h5>
             <TextInput
               name="name"
               type="text"
               value={this.state.name}
-              label="Group Name"
+              placeholder="Enter group name here"
               onChange={this.handleChange}
               onBlur={this.handleBlur}
               onFocus={this.handleFocus}
@@ -79,7 +98,7 @@ class CreateGroupModal extends React.Component {
         <div className="modal-footer">
 					<Button
 						className="btn modal-action modal-close waves-effect waves-green red darken-1"
-						text="CREATE GROUP"
+						text="SAVE GROUP"
             onClick={this.handleSubmit}
             disabled={!this.isValid()}
 					/>
@@ -90,10 +109,24 @@ class CreateGroupModal extends React.Component {
 }
 
 CreateGroupModal.propTypes = {
-  createGroup: PropTypes.func.isRequired
+  createGroup: PropTypes.func.isRequired,
+  updateGroup: PropTypes.func.isRequired,
+  updateGroupInfo: PropTypes.func.isRequired,
+  edit: PropTypes.bool.isRequired,
+  selectedGroup: PropTypes.object.isRequired,
+  groups: PropTypes.array.isRequired,
+  user: PropTypes.number.isRequired
 }
 
-const mapDispatchToProps = dispatch => 
-  bindActionCreators({ createGroup }, dispatch)
+const mapStateToProps = (state) => ({
+  selectedGroup: state.messages,
+  groups: state.groups,
+  user: state.auth.currentUser
+});
 
-export default connect(null, mapDispatchToProps)(CreateGroupModal);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  createGroup,
+  updateGroup,
+  updateGroupInfo }, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupModal);

@@ -21,7 +21,7 @@ html {
   margin-top: 50px;
 }
 
- .message-board {
+.message-board {
   height: 100% !important;
 } 
 
@@ -47,7 +47,7 @@ html {
 
 .tabcontent {
   padding: 5px 20px;
-  height:460px;
+  height: 460px;
 }
 
 .msg-wrap {
@@ -159,4 +159,14 @@ input[type=search]:not(.browser-default) {
 
 .group-action {
   margin: 15px 20px 0px 0px;
+}
+
+@media only screen and (max-width: 992px) {
+  .tabcontent {
+    height: 600px;
+  }
+
+  .msg-wrap {
+    height:420px;
+  }
 }

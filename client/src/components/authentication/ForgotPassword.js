@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import Banner from '../common/Banner';
@@ -10,7 +10,7 @@ import TextInput from '../common/TextInput';
 import { validateSignupInput } from '../../utils/validateInput';
 import { signup } from '../../actions/authActions';
 
-class SignupPage extends React.Component {
+class ForgotPassword extends React.Component {
   constructor(props){
     super(props);
 
@@ -24,6 +24,12 @@ class SignupPage extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount() {
+   if(this.props.currentUser) {
+     browserHistory.push('/messageboard');
+   } 
   }
 
   handleChange(event) {
@@ -46,19 +52,16 @@ class SignupPage extends React.Component {
       this.setState({ errors: {} })
       this.props.signup(this.state).then(() => {
         if (this.props.currentUser) {
-          toastr.success('Welcome to PostIt');
+        toastr.success('Welcome to PostIt');
+        browserHistory.push('/messageboard');
         }
       });
     } 
   }
 
-  render() {  
-    if (this.props.currentUser) {
-      return (
-        <Redirect to = '/messageboard'/>
-      );
-    }
-
+  render() {
+    const { errors } = this.state;
+    
     return (
       <div className="login teal lighten-1">
       <div className="container">
@@ -70,7 +73,7 @@ class SignupPage extends React.Component {
             <form className="white col s12 z-depth-5">
   			      <h6 className="center-align link">
                 Already a member?
-                <Link to="/login"> Login</Link>
+                <Link to="login"> Login</Link>
               </h6>
               <div className="divider"></div>
   				      <TextInput
@@ -80,7 +83,7 @@ class SignupPage extends React.Component {
 						      value={this.state.email}
 						      onChange={this.handleChange}
                   label="Email Address"
-                  error={this.state.errors.email}
+                  error={errors.email}
                 />
                 <TextInput
                   icon="account_circle"
@@ -89,7 +92,7 @@ class SignupPage extends React.Component {
 						      value={this.state.username}
 						      onChange={this.handleChange}
                   label="Username"
-                  error={this.state.errors.username}
+                  error={errors.username}
                 />
                 <TextInput
                   icon="phone"
@@ -98,7 +101,7 @@ class SignupPage extends React.Component {
 						      value={this.state.phonenumber}
 						      onChange={this.handleChange}
                   label="Phone Number"
-                  error={this.state.errors.phonenumber}
+                  error={errors.phonenumber}
                 />
                 <TextInput
                   icon="lock"
@@ -107,7 +110,7 @@ class SignupPage extends React.Component {
 						      value={this.state.password}
 						      onChange={this.handleChange}
                   label="Password"
-                  error={this.state.errors.password}
+                  error={errors.password}
                 />
       			    <div className="row center-align">
                   <Button
@@ -126,16 +129,16 @@ class SignupPage extends React.Component {
   
 }
 
+SignupPage.propTypes = {
+  currentUser: PropTypes.number.isRequired,
+  signup: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => ({
   currentUser: state.auth.currentUser
 });
 
 const mapDispatchToProps = dispatch => 
   bindActionCreators({ signup }, dispatch);
-
-SignupPage.propTypes = {
-  currentUser: PropTypes.number,
-  signup: PropTypes.func.isRequired
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);

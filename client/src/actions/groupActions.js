@@ -20,8 +20,8 @@ const getGroups = user => dispatch => axios
   });
 
 
-const createGroup = name => dispatch => axios
-  .post('/api/group', name)
+const createGroup = groupName => dispatch => axios
+  .post('/api/group', groupName)
   .then((response) => {
     dispatch(createGroupSuccess(response.data.group));
   })
@@ -29,6 +29,18 @@ const createGroup = name => dispatch => axios
     toastr.error(error.response.data.message);
   });
 
+const updateGroup = (groupName, groupId, user) => dispatch => axios
+  .put(`/api/group/${groupId}`, groupName)
+  .then((response) => {
+    toastr.error(response.data.message);
+    axios.get(`/api/user/${user}/groups`)
+      .then((result) => {
+        dispatch(getGroupsSuccess(result.data));
+      });
+  })
+  .catch((error) => {
+    toastr.error(error.response.data.message);
+  });
 
-export { getGroups, getGroupsSuccess,
-  createGroup, createGroupSuccess };
+export { getGroups, getGroupsSuccess, createGroup,
+  createGroupSuccess, updateGroup };

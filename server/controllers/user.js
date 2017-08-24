@@ -21,7 +21,7 @@ module.exports = {
         const token = jwt.sign({
           userId: user.id
         }, process.env.SECRET, {
-          expiresIn: '24h' // expires in 5 hours
+          expiresIn: '24h' // expires in 24 hours
         });
 
         res.status(201).send({
@@ -53,7 +53,7 @@ module.exports = {
           const token = jwt.sign({
             userId: user.id
           }, process.env.SECRET, {
-            expiresIn: '24h' // expires in 2 hours
+            expiresIn: '24h' // expires in 24 hours
           });
 
           // Return the information including token as JSON Value
@@ -66,6 +66,26 @@ module.exports = {
         return res.status(400).send({ message: 'Password is incorrect' });
       })
       .catch(error => res.send(error));
+  },
+
+  edit(req, res) {
+    User.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then((user) => {
+      if (!user) {
+        res.status(404).send({ message: 'This email does not exist' });
+      } else {
+        return user
+          .update({ password: req.body.password })
+          .then(() => res.status(200).send({
+            message: 'Password change successful'
+          }))
+          .catch(error => res.status(400).send({ error }));
+      }
+    })
+      .catch(error => res.status(400).send({ error }));
   },
 
   searchUser(req, res) {

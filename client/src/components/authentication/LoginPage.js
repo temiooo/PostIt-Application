@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
+import { Link, Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import Banner from '../common/Banner';
@@ -19,12 +20,6 @@ class LoginPage extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-	
-	componentWillMount() {
-   if(this.props.currentUser) {
-     browserHistory.push('/messageboard');
-   } 
-  }
 
   handleChange(event) {
 		event.preventDefault();
@@ -38,13 +33,18 @@ class LoginPage extends React.Component {
 		this.props.login(this.state)
 		.then(() => {
 			if (this.props.currentUser) {
-			toastr.success('Welcome Back');
-			browserHistory.push('/messageboard');
+				toastr.success('Welcome Back');
 			} 
 		});
 	}
 
 	render() {
+		if (this.props.currentUser) {
+      return (
+        <Redirect to = '/messageboard'/>
+      );
+	 	}
+		
 		return (
 			<div className="login teal lighten-1">
 				<div className="container">
@@ -98,7 +98,7 @@ class LoginPage extends React.Component {
 
 
 LoginPage.propTypes = {
-  currentUser: PropTypes.number.isRequired,
+  currentUser: PropTypes.number,
   login: PropTypes.func.isRequired
 };
 
