@@ -5,9 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc --reporter=text  --reporter=html mocha --compilers js:babel-core/register --reporter spec --timeout 5000",
-    "start": "nodemon --exec babel-node server.js",
-    "start-dev": "babel-node server.js",
-    "open-dev": "babel-node tools/serverDev.js"
+    "start": "babel-node server.js",
+    "start:dev": "nodemon --exec babel-node server.js",
+    "open:src": "babel-node tools/srcServer.js",
+    "clean-dist": "mkdir client/dist",
+    "remove-dist": "node_modules/.bin/rimraf client/dist",
+    "build:js": "babel-node tools/build.js",
+    "prebuild": "npm-run-all build:js",
+    "build": "babel-node tools/buildHtml.js",
+    "postbuild": "babel-node tools/distServer.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +38,8 @@
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
     "chai": "^4.1.0",
+    "cheerio": "^1.0.0-rc.2",
+    "colors": "^1.1.2",
     "css-loader": "^0.28.4",
     "dotenv": "^4.0.0",
     "dotenv-webpack": "^1.5.3",
@@ -54,6 +62,7 @@
     "morgan": "^1.8.2",
     "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.2",
     "nyc": "^11.0.3",
     "open": "0.0.5",
     "pg": "^6.4.0",
@@ -69,6 +78,7 @@
     "redux-immutable-state-invariant": "^2.0.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "rimraf": "^2.6.1",
     "sass-loader": "^6.0.6",
     "sequelize": "^3.30.4",
     "style-loader": "^0.18.2",

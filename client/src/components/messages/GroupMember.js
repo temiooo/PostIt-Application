@@ -1,8 +1,9 @@
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import ReactPaginate from 'react-paginate';
-import * as userActions from '../../actions/userActions';
+import { getGroupMembers, searchUsers, searchUsersFailure, 
+  addUser } from '../../actions/userActions';
 
 class GroupMember extends React.Component {
   constructor(props) {
@@ -20,11 +21,11 @@ class GroupMember extends React.Component {
 
   componentWillMount() {
     const group = this.props.messages.groupId;
-    this.props.actions.getGroupMembers(group);
+    this.props.getGroupMembers(group);
   }
 
   componentWillUnmount() {
-    this.props.actions.searchUsersFailure();
+    this.props.searchUsersFailure();
   }
   
   handleChange(event) {
@@ -38,7 +39,7 @@ class GroupMember extends React.Component {
     const group = this.props.messages.groupId;
     const limit = 9;
     offset = offset || 0;
-    this.props.actions.searchUsers(query, group, limit, offset);
+    this.props.searchUsers(query, group, limit, offset);
   }
 
   handleSearch(event) {
@@ -50,9 +51,9 @@ class GroupMember extends React.Component {
     event.preventDefault();
     const group = this.props.messages.groupId;
     const userDetail = { userId : user }
-    this.props.actions.addUser(group, userDetail)
+    this.props.addUser(group, userDetail)
     .then(() => {
-      this.props.actions.getGroupMembers(group);
+      this.props.getGroupMembers(group);
       this.searchUser();
     })
   }
@@ -65,7 +66,7 @@ class GroupMember extends React.Component {
   }
 
   render () {
-    const {members, nonMembers, pagination } = this.props.users;
+    const { members, nonMembers, pagination } = this.props.users;
     const paginationSize = Object.keys(pagination).length;
 
     return (
@@ -141,22 +142,24 @@ class GroupMember extends React.Component {
 }
 
 GroupMember.propTypes = {
-  actions: PropTypes.object.isRequired,
   users: PropTypes.object.isRequired,
-  messages: PropTypes.object.isRequired
+  messages: PropTypes.object.isRequired,
+  getGroupMembers: PropTypes.func.isRequired,
+  searchUsers: PropTypes.func.isRequired,
+  searchUsersFailure: PropTypes.func.isRequired,
+  addUser: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-  return {
+const mapStateToProps = state => ({
     messages: state.messages,
     users: state.users
-  };
-}
+});
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(userActions, dispatch)
-  };
-}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getGroupMembers,
+  searchUsers,
+  searchUsersFailure,
+  addUser
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupMember);

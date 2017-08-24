@@ -1,20 +1,20 @@
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {browserHistory} from 'react-router';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
 import TopNav from './TopNav';
 import SideNav from './SideNav';
 import Messages from './Messages';
 import NewMessage from './NewMessage';
 import GroupMember from './GroupMember';
 import CreateGroupModal from './CreateGroupModal';
-import * as authActions from '../../actions/authActions';
-import * as groupActions from '../../actions/groupActions';
-import * as messageActions from '../../actions/messageActions';
+import { logout } from '../../actions/authActions';
+import { getGroups } from '../../actions/groupActions';
+import { getMessages } from '../../actions/messageActions';
 
 class MessageBoard extends React.Component {
-	constructor(props, context) {
-		super(props, context);
+	constructor(props) {
+		super(props);
 
 		this.state = {
 			searching: false
@@ -26,14 +26,14 @@ class MessageBoard extends React.Component {
 		}
 
 	componentWillMount() {
-   if(!this.props.currentUser) {
-     browserHistory.push('login');
-   } else {
-		 this.props.actions.getGroups(this.props.currentUser);
-	 }
+  	if(!this.props.currentUser) {
+    	browserHistory.push('login');
+  	} else {
+			this.props.getGroups(this.props.currentUser);
+		}
 	}
 
-	searchUsers(event){
+	searchUsers(event) {
 		event.preventDefault();
 		this.setState({ searching: true })
 	}
@@ -41,19 +41,19 @@ class MessageBoard extends React.Component {
 	getMessages(group) {
 		event.preventDefault();
 		this.setState({ searching: false });
-		this.props.actions.getMessages(group);
+		this.props.getMessages(group);
 	}
 
 	logout(event) {
 		event.preventDefault();
-		this.props.actions.logout();
+		this.props.logout();
 		browserHistory.push('/login');	
 	}
 	
   render() {
 	  const {searching} = this.state
 		return(
-			<div className="white message-board">
+			<div className="message-board">
 				<TopNav logout={this.logout}/>
 				<div className="row">
 					<SideNav
@@ -76,25 +76,24 @@ class MessageBoard extends React.Component {
 }
 
 MessageBoard.propTypes = {
-	actions: PropTypes.object.isRequired
+	currentUser: PropTypes.number.isRequired,
+	groups: PropTypes.array.isRequired,
+	messages: PropTypes.object.isRequired,
+	logout: PropTypes.func.isRequired,
+	getGroups: PropTypes.func.isRequired,
+	getMessages: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-  return {
-		currentUser: state.auth.currentUser,
-		groups: state.groups,
-		messages: state.messages
-  }
-}
+const mapStateToProps = (state) => ({
+	currentUser: state.auth.currentUser,
+	groups: state.groups,
+	messages: state.messages
+});
 
-function mapDispatchToProps(dispatch) {
-	return {
-    actions: bindActionCreators(
-      Object.assign({},
-      authActions,
-      groupActions,
-      messageActions), dispatch)
-  };
-}
+const mapDispatchToProps = dispatch => bindActionCreators({
+	logout,
+	getGroups,
+	getMessages
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageBoard);

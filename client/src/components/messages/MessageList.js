@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import Button from '../common/Button';
 
 const MessagesList = ({ messages, searchUsers }) => {
@@ -11,10 +11,11 @@ const MessagesList = ({ messages, searchUsers }) => {
 							<h4>{messages.groupName}</h4>
 						</div>
 						<div className="col s12 m12 l4">
-							<Button
-							className="group-action btn-floating waves-effect waves-light"
-							icon="edit"
-							/>
+							<a
+							className="group-action btn-floating waves-effect waves-light modal-trigger"
+							href="#creategroup"
+							><i className="material-icons right">edit</i>
+							</a>
 							<Button
 							className="group-action btn-floating waves-effect waves-light"
 							icon="person_add"
@@ -28,7 +29,7 @@ const MessagesList = ({ messages, searchUsers }) => {
 							<div className="msg" key={message.id}>
 								<div>
 									<small className="right time">{message.createdAt}</small>
-									<h6 className="msg-heading">{message.senderId}</h6>
+									<h6 className="msg-heading">{message.User.username}</h6>
 									<h6>{message.content}</h6>
 								</div>
 							</div>

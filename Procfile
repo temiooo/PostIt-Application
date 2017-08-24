@@ -1,1 +1,1 @@
-web: npm run open-dev
+web: npm run build

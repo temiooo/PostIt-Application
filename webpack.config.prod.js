@@ -1,15 +1,14 @@
 import path from 'path';
 import webpack from 'webpack';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+
+const GLOBALS = {
+  'process.env.NODE_ENV': JSON.stringify('production')
+};
 
 export default {
-  devtool: 'inline-source-map',
-  entry: [
-    // necessary for hot reloading with IE
-    'eventsource-polyfill',
-    // note that it reloads the page if hot module reloading fails.
-    'webpack-hot-middleware/client?reload=true',
-    path.resolve(__dirname, 'client/src/index.js')
-  ],
+  devtool: 'source-map',
+  entry: path.resolve(__dirname, 'client/src/index.js'),
   target: 'web',
   output: {
     /* Note: Physical files are only output by the
@@ -19,20 +18,27 @@ export default {
     filename: 'bundle.js',
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'src')
+    contentBase: path.resolve(__dirname, 'dist')
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.DefinePlugin(GLOBALS),
+    new ExtractTextPlugin('styles.css'),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin()
   ],
   module: {
     loaders: [
       { test: /(\.css)$/,
-        use: ['style-loader', 'css-loader']
+        use: ExtractTextPlugin.extract({
+          use: 'css-loader'
+        })
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader', 'sass-loader']
+        })
       },
       {
         test: /\.(js|jsx)$/,
