@@ -8,11 +8,11 @@
     "start": "babel-node server.js",
     "start:dev": "nodemon --exec babel-node server.js",
     "open:src": "babel-node tools/srcServer.js",
-    "clean-dist": "npm run remove-dist && mkdir client/dist",
+    "clean-dist": "mkdir client/dist",
     "remove-dist": "node_modules/.bin/rimraf client/dist",
-    "build:html": "babel-node tools/buildHtml.js",
-    "prebuild": "npm-run-all clean-dist build:html",
-    "build": "babel-node tools/build.js",
+    "build:js": "babel-node tools/build.js",
+    "prebuild": "npm-run-all build:js",
+    "build": "babel-node tools/buildHtml.js",
     "postbuild": "babel-node tools/distServer.js"
   },
   "repository": {

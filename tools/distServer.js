@@ -1,12 +1,16 @@
 import path from 'path';
 import open from 'open';
 import express from 'express';
+import bodyParser from 'body-parser';
 
 /* eslint-disable no-console */
 const port = parseInt(process.env.PORT, 10) || 8000;
 const app = express();
 
-app.use(express.static('dist'));
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 require('../server/routes/index')(app);
 

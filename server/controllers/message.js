@@ -1,4 +1,4 @@
-import { Group, Message } from '../models';
+import { Group, Message, User } from '../models';
 
 module.exports = {
   create(req, res) {
@@ -41,7 +41,12 @@ module.exports = {
           if (!result) {
             res.status(400).send({ Message: 'You don\'t belong to this group' });
           } else {
-            group.getMessages().then((messages) => {
+            group.getMessages({
+              include: {
+                model: User,
+                attributes: ['username']
+              }
+            }).then((messages) => {
               res.status(200).send({ messages });
             });
           }

@@ -5,8 +5,7 @@ import open from 'open';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import config from '../webpack.config.dev';
-// import userRoutes from '../server/routes/user';
-// import groupRoutes from '../server/routes/group';
+
 /* eslint-disable no-console */
 
 const port = parseInt(process.env.PORT, 10) || 8000;

@@ -29,7 +29,7 @@ const MessagesList = ({ messages, searchUsers }) => {
 							<div className="msg" key={message.id}>
 								<div>
 									<small className="right time">{message.createdAt}</small>
-									<h6 className="msg-heading">{message.senderId}</h6>
+									<h6 className="msg-heading">{message.User.username}</h6>
 									<h6>{message.content}</h6>
 								</div>
 							</div>
