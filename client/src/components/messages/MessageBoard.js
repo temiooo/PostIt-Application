@@ -53,7 +53,7 @@ class MessageBoard extends React.Component {
   render() {
 	  const {searching} = this.state
 		return(
-			<div className="white message-board">
+			<div className="message-board">
 				<TopNav logout={this.logout}/>
 				<div className="row">
 					<SideNav

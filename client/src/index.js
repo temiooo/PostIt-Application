@@ -1,3 +1,4 @@
+/* eslint-disable import/default */
 import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
@@ -8,7 +9,7 @@ import jwtDecode from 'jwt-decode';
 import routes from './routes';
 import { loginSuccess } from './actions/authActions';
 import setAuthorizationToken from './utils/setAuthorizationToken';
-import './styles/custom.css';
+import './styles/styles.scss';
 
 const store = configureStore();
 

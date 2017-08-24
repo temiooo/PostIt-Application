@@ -62,6 +62,7 @@ class SignupPage extends React.Component {
     const { errors } = this.state;
     
     return (
+      <div className="login teal lighten-1">
       <div className="container">
         <div className="row top-space">
           <div className="col s12 m6 l6">
@@ -121,6 +122,7 @@ class SignupPage extends React.Component {
           </div>
 			  </div> 
 			</div>
+      </div>
     );
   }
   

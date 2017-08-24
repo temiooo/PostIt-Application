@@ -1,36 +1,47 @@
+$primary-color: #FFFFFF;
+$font1: 'Gorditas';
+
 html {
-  background: #ffffff;
-  height: 100%;
+  background: $primary-color !important;
+  height: 100% !important;
+  box-sizing: border-box;
 }
 
  body {
-  height: 100%;
-} 
+  height: 100% !important;
+}
+
+.login {
+ min-height: 100% !important;
+ width:100% !important;
+ position: absolute;
+}
 
 .login-form {
   margin-top: 50px;
 }
 
-.message-board {
+ .message-board {
   height: 100% !important;
-}
+} 
 
-.logo{
-  font-family: 'Gorditas';
-  color: white;
-  padding:10px;
+.logo {
+  font-family: $font1;
+  color: $primary-color;
+  padding: 10px;
   border-radius: 5px 20px 5px;
-  border: 4px solid white;
+  border: 4px solid $primary-color;
 }
 
-.top-space{
+.top-space {
   padding-top: 50px;
 }
-.link{
+
+.link {
   padding:10px;
 }
 
-.side-nav{
+.side-nav {
   top:64px;
 }
 
@@ -39,60 +50,59 @@ html {
   height:460px;
 }
 
-.msg-wrap{
+.msg-wrap {
   padding:10px;
   height:360px;
   overflow: auto;
 }
 
-.msg{
+.msg {
   padding:5px;
   border-bottom:1px solid #ddd;
 }
 
-
-.msg-heading{
+.msg-heading {
   color:#e53935;
   font-weight: 700;
   font-size:1.3rem;
 }
 
-.time{
+.time {
   color:#bfbfbf;
 }
 
-textarea{
+textarea {
   height:4rem;
   padding:5px;
 }
 
-.send-msg{
+.send-msg {
   margin:0;
   position:sticky;
 }
 
-.send-msg button{
+.send-msg button {
   margin:10px 40px 5px 150px;
 }
 
-.priority{
+.priority {
   margin-top:0.5rem;
 }  
 
-/* .select-wrapper input.select-dropdown{
+ .select-wrapper input.select-dropdown {
   margin:0;
-} */
+} 
 
-.modal{
+.modal {
   max-height:70%;
   padding: 15px;
 }
 
-.errors{
+.errors {
   margin-left: 40px;
 }
 
- .input-field select{
+ .input-field select {
   position:relative;
   width:100%;
   height:40px;
@@ -100,7 +110,7 @@ textarea{
   pointer-events: auto;
 } 
 
-.search{
+.search {
   margin-bottom: 5px;
 }
 
@@ -110,7 +120,7 @@ input[type=search]:not(.browser-default) {
   padding: 3px !important;
 }
 
-.search-icon{
+.search-icon {
   margin-top:10px;
 }
 
@@ -119,7 +129,7 @@ input[type=search]:not(.browser-default) {
 }
 
 .search-btn {
-  background: #fff;
+  background: $primary-color;
   color: #000;
   width: 100%;
   padding: 0px;
@@ -130,12 +140,12 @@ input[type=search]:not(.browser-default) {
   font-size: 24px;
 }
 
-.search-btn:hover{
+.search-btn:hover {
   background-color: #f4f4f4;
 }
 
 .search-btn:focus {
-  background-color:#fff;
+  background-color: $primary-color;
 } 
 
 .no-user {

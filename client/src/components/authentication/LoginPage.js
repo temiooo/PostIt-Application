@@ -46,7 +46,8 @@ class LoginPage extends React.Component {
 
 	render() {
 		return (
-			<div className="container">
+			<div className="login teal lighten-1">
+				<div className="container">
         <div className="row top-space">
 					<div className="col s12 m6 l6">
           <Banner/>
@@ -88,6 +89,7 @@ class LoginPage extends React.Component {
 							</div>
 						</form>
 					</div>
+				</div>
 				</div>
 			</div>
 				);
