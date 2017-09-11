@@ -10,6 +10,10 @@ const createGroupSuccess = group => ({
   type: types.CREATE_GROUP_SUCCESS, group
 });
 
+const updateGroupInfo = group => ({
+  type: types.UPDATE_GROUP_INFO, group
+});
+
 const getGroups = user => dispatch => axios
   .get(`/api/user/${user}/groups`)
   .then((response) => {
@@ -32,10 +36,11 @@ const createGroup = groupName => dispatch => axios
 const updateGroup = (groupName, groupId, user) => dispatch => axios
   .put(`/api/group/${groupId}`, groupName)
   .then((response) => {
-    toastr.error(response.data.message);
+    toastr.success(response.data.message);
     axios.get(`/api/user/${user}/groups`)
       .then((result) => {
         dispatch(getGroupsSuccess(result.data));
+        dispatch(updateGroupInfo(groupName));
       });
   })
   .catch((error) => {

@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import randomstring from 'randomstring';
 import { User, Group } from '../models';
+import { transporter, mailOptions } from '../utils/nodemailer';
 
 require('dotenv').config();
 
@@ -68,7 +70,8 @@ module.exports = {
       .catch(error => res.send(error));
   },
 
-  edit(req, res) {
+  forgotPassword(req, res) {
+    const passwordToken = randomstring.generate(50);
     User.findOne({
       where: {
         email: req.body.email
@@ -78,14 +81,106 @@ module.exports = {
         res.status(404).send({ message: 'This email does not exist' });
       } else {
         return user
-          .update({ password: req.body.password })
-          .then(() => res.status(200).send({
-            message: 'Password change successful'
-          }))
+          .update({
+            resetPasswordToken: passwordToken,
+            resetPasswordExpires: Date.now() + 3600000
+          })
+          .then(() => {
+            const to = user.email;
+            const bcc = null;
+            const subject = 'PostIT Password Reset';
+            const html = `<div>
+            <p>You are receiving this because you have
+            requested the reset of the password for your account.
+              <br>
+            Please click on the link below or paste it into your
+            browser to complete the processs.
+              <br>
+            Please note that the link is valid for 1 hour only.
+              <br>
+            http://${req.headers.host}/#/resetpassword/${passwordToken}
+              <br>
+            If you did not request this, please ignore this
+            email and your password will remain unchanged.
+            </p>
+            </div>`;
+            transporter.sendMail(mailOptions(to, bcc, subject, html),
+              (error, info) => {
+                if (error) {
+                  console.log(error);
+                  res.status(400).send({
+                    message: 'A network error occured. Please try again'
+                  });
+                } else {
+                  res.status(200).send({
+                    message: `An email has been sent to ${user.email} with further instructions`
+                  });
+                  console.log('Message sent', info);
+                }
+              });
+          })
           .catch(error => res.status(400).send({ error }));
       }
     })
       .catch(error => res.status(400).send({ error }));
+  },
+
+  resetPassword(req, res) {
+    const passwordToken = req.params.token;
+    if (!req.body.password) {
+      res.status(400).send({
+        message: 'Please provide a new password for your account'
+      });
+    } else {
+      User.findOne({
+        where: {
+          resetPasswordToken: passwordToken,
+          resetPasswordExpires: { $gt: Date.now() }
+        }
+      }).then((user) => {
+        if (!user) {
+          res.status(404).send({
+            message: 'Password Reset Token is Invalid or has Expired'
+          });
+        } else {
+          return user
+            .update({
+              password: req.body.password,
+              resetPasswordToken: null,
+              resetPasswordExpires: null,
+            })
+            .then(() => {
+              const to = user.email;
+              const subject = 'Password Changed Successfully';
+              const html = `<div>
+                <p>Hello ${user.username},
+                  <br>
+                Your password has been successfully changed.
+                  <br>
+                Click <a href='http://${req.headers.host}/#/login'>here</a> 
+                to login
+                </p>
+                </div>`;
+              transporter.sendMail(mailOptions(to, null, subject, html),
+                (error, info) => {
+                  if (error) {
+                    console.log(error);
+                    res.status(400).send({
+                      message: 'A network error occured. Please try again.'
+                    });
+                  } else {
+                    res.status(200).send({
+                      message: 'Password Reset Successful'
+                    });
+                    console.log('Message sent', info);
+                  }
+                });
+            })
+            .catch(error => res.status(400).send({ error }));
+        }
+      })
+        .catch(error => res.status(400).send({ error }));
+    }
   },
 
   searchUser(req, res) {
@@ -98,15 +193,7 @@ module.exports = {
         res.status(400).send({ message: 'Group Not Specified' });
       } else {
         group.getUsers().then((users) => {
-          const getId = (userArray) => {
-            const arr = [];
-            const n = users.length;
-            for (let i = 0; i < n; i++) {
-              arr.push(userArray[i].id);
-            }
-            return arr;
-          };
-          const members = getId(users);
+          const members = users.map(user => user.id);
           User.findAndCountAll({
             where: {
               username: {

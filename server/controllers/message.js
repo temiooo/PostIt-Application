@@ -1,10 +1,10 @@
 import { Group, Message, User } from '../models';
+import { transporter, mailOptions } from '../utils/nodemailer';
 
 module.exports = {
   create(req, res) {
     const groupId = req.params.groupId;
     const userId = req.decoded.userId;
-
     Group.findById(groupId).then((group) => {
       if (!group) {
         res.status(400).send({ message: 'Group Does Not Exist' });
@@ -15,15 +15,54 @@ module.exports = {
               message: 'You don\'t belong to this group.'
             });
           } else {
-            Message.create({
-              senderId: userId,
-              content: req.body.content,
-              priority: req.body.priority,
-              groupId
-            })
-              .then((message) => {
-                res.status(201).send({ message });
+            const priority = req.body.priority;
+            if (priority !== 'Urgent' && priority !== 'Critical' &&
+              priority !== 'Normal') {
+              res.status(400).send({ message:
+                'Message priority has to be Normal, Critical, or Urgent'
               });
+            } else {
+              Message.create({
+                senderId: userId,
+                content: req.body.content,
+                priority: req.body.priority,
+                groupId
+              })
+                .then((message) => {
+                  group.getUsers().then((users) => {
+                    const groupMembers =
+                      users.filter(user => user.id !== userId);
+                    const memberEmails = groupMembers.map(user => user.email);
+                    const bcc = memberEmails;
+                    const subject =
+                  `${message.priority} message from Group: ${group.name}`;
+                    const html = `<div>
+                  <p>Hi there,
+                    <br>
+                  <strong>${req.userDetails.username}</strong> 
+                  just posted a new message on Group: ${group.name}
+                    <br>
+                  Login <a href='http://${req.headers.host}/#/login'>here</a>
+                  to view your messages.
+                  </p>
+                  </div>`;
+                    transporter.sendMail(mailOptions(bcc, bcc, subject, html),
+                      (error, info) => {
+                        if (error) {
+                          console.log(error);
+                          res.status(400).send({
+                            message: 'A network error occured. Please try again.'
+                          });
+                        } else {
+                          res.status(201).send({ message });
+                          console.log('Message sent', info);
+                        }
+                      });
+                    res.status(201).send({ message });
+                  })
+                    .catch(error => res.status(400).send(error));
+                });
+            }
           }
         });
       }

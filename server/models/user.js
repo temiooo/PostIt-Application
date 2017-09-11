@@ -27,7 +27,15 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
+    resetPasswordToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    resetPasswordExpires: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   }, {
     classMethods: {
       associate: (models) => {
@@ -52,7 +60,9 @@ module.exports = (sequelize, DataTypes) => {
         user.hashPassword();
       },
       beforeUpdate(user) {
-        user.hashPassword();
+        if (user.changed('password')) {
+          user.hashPassword();
+        }
       }
     }
   });

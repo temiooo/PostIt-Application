@@ -17,8 +17,8 @@ class SignupPage extends React.Component {
     this.state = {
       email: '',
       username: '',
-      phonenumber: '',
       password: '',
+      confirmpassword: '',
       errors: {},
     };
 
@@ -92,22 +92,22 @@ class SignupPage extends React.Component {
                   error={this.state.errors.username}
                 />
                 <TextInput
-                  icon="phone"
-						      type="tel"
-						      name="phonenumber"
-						      value={this.state.phonenumber}
-						      onChange={this.handleChange}
-                  label="Phone Number"
-                  error={this.state.errors.phonenumber}
-                />
-                <TextInput
-                  icon="lock"
+                  icon="lock_outline"
 						      type="password"
 						      name="password"
 						      value={this.state.password}
 						      onChange={this.handleChange}
                   label="Password"
                   error={this.state.errors.password}
+                />
+                <TextInput
+                  icon="lock"
+						      type="password"
+						      name="confirmpassword"
+						      value={this.state.confirmpassword}
+						      onChange={this.handleChange}
+                  label="Confirm Password"
+                  error={this.state.errors.confirmpassword}
                 />
       			    <div className="row center-align">
                   <Button

@@ -14,7 +14,6 @@ const messageReducer = (state = initialState.messages, action) => {
       return { ...state, groupMessages: action.messages };
 
     case types.UPDATE_GROUP_INFO:
-    console.log(action.group.name, 'dd')
       return { ...state, groupName: action.group.name };
 
     default:

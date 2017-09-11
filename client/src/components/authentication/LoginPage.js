@@ -10,8 +10,8 @@ import TextInput from '../common/TextInput';
 import { login } from '../../actions/authActions';
 
 class LoginPage extends React.Component {
-	constructor(props, context){
-    super(props, context);
+	constructor(props){
+    super(props);
 
     this.state = {
       username: '',
@@ -84,7 +84,7 @@ class LoginPage extends React.Component {
 							</div>
 							<div className="row  right-align">
 								<h6 className="link">
-									<a href="" className="black-text">Forgot Password?</a>
+									<Link to="/forgotpassword" className="black-text">Forgot Password?</Link>
 								</h6>
 							</div>
 						</form>

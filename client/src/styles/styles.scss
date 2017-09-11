@@ -18,7 +18,7 @@ html {
 }
 
 .login-form {
-  margin-top: 50px;
+  margin-top: 6%;
 }
 
 .message-board {
@@ -34,11 +34,16 @@ html {
 }
 
 .top-space {
-  padding-top: 50px;
+  padding-top: 15%;
 }
 
 .link {
   padding:10px;
+}
+
+.nav-wrap {
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .side-nav {
@@ -159,6 +164,20 @@ input[type=search]:not(.browser-default) {
 
 .group-action {
   margin: 15px 20px 0px 0px;
+}
+
+.fgt-pwd {
+  padding: 2% 14%;
+
+  form {
+    margin-top:20px;
+    padding:20px;
+  }
+
+  .success {
+    border-radius:10px;
+    padding: 10px;
+  }
 }
 
 @media only screen and (max-width: 992px) {

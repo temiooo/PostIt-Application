@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const TopNav = ({ logout }) => {
 	return(
 		<div>
 			<nav className="teal darken-1">
-				<div className="nav-wrapper container">
+				<div className="nav-wrapper nav-wrap">
 	  			<a className="brand-logo">
 						<h6 className="logo">POST-IT</h6>
 					</a>
@@ -13,18 +14,36 @@ const TopNav = ({ logout }) => {
 						<i className="material-icons">menu</i>
 					</a>
 	  			<ul className="right hide-on-med-and-down">
-						<li>
-							<a onClick={logout}>
-								Logout
-							</a>
-						</li>
+						{logout ? (
+							<li>
+								<a onClick={logout}>Logout</a>
+							</li>
+						) : (
+							<div>
+								<li>
+									<Link to="/login">Login</Link>
+								</li>
+								<li>
+									<Link to="/">Register</Link>
+								</li>
+							</div>
+						)}
 	  			</ul>
 	  			<ul className="side-nav" id="mobile-demo">
-						<li>
-							<a onClick={logout}>
-								Logout
-							</a>
-						</li>
+						{logout ? (
+							<li>
+								<a onClick={logout}>Logout</a>
+							</li>
+						) : (
+							<div>
+								<li>
+									<Link to="/login">Login</Link>
+								</li>
+								<li>
+									<Link to="/">Register</Link>
+								</li>
+							</div>
+						)}
 	  			</ul>
 				</div>
   		</nav>
@@ -33,7 +52,7 @@ const TopNav = ({ logout }) => {
 };
 
 TopNav.propTypes = {
-	logout: PropTypes.func.isRequired
+	logout: PropTypes.func
 };
 
 export default TopNav;

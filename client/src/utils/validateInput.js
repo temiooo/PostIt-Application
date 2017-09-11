@@ -21,16 +21,14 @@ const validateSignupInput = (state) => {
     errors.username = 'Username cannot end with space characters';
   }
 
-  if (trim(state.phonenumber).length === 0) {
-    errors.phonenumber = 'Phone Number is required';
-  } else if (!validator.isInt(state.phonenumber)) {
-    errors.phonenumber = 'Numbers only';
-  }
-
   if (trim(state.password).length === 0) {
     errors.password = 'Password is required';
   } else if (state.password.length < 8) {
     errors.password = 'Minimum of 8 characters';
+  }
+
+  if (state.confirmpassword !== state.password) {
+    errors.confirmpassword = 'Passwords do not match';
   }
 
   return {
@@ -76,5 +74,37 @@ const validateMessageInput = (state) => {
   };
 };
 
+const validateForgotPasswordEmail = (state) => {
+  const errors = {};
+
+  if (trim(state.email).length === 0) {
+    errors.email = 'Email is empty';
+  }
+
+  return {
+    isValid: isEmpty(errors)
+  };
+};
+
+const validateNewPassword = (state) => {
+  const errors = {};
+
+  if (trim(state.password).length === 0) {
+    errors.password = 'Password is required';
+  } else if (state.password.length < 8) {
+    errors.password = 'Minimum of 8 characters';
+  }
+
+  if (state.confirmpassword !== state.password) {
+    errors.confirmpassword = 'Passwords do not match';
+  }
+
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  };
+};
+
 export { validateSignupInput, validateGroupInput,
-  validateMessageInput };
+  validateMessageInput, validateForgotPasswordEmail,
+  validateNewPassword };

@@ -10,5 +10,6 @@ export default {
     members: [],
     nonMembers: [],
     pagination: {}
-  }
+  },
+  ajaxCallsInProgress: 0
 };

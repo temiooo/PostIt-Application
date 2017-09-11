@@ -10,9 +10,6 @@ const postMessageSuccess = messages => ({
   type: types.POST_MESSAGE_SUCCESS, messages
 });
 
-const updateGroupInfo = group => ({
-  type: types.UPDATE_GROUP_INFO, group
-});
 
 const getMessages = group => dispatch => axios
   .get(`/api/group/${group.id}/messages`)
@@ -39,4 +36,4 @@ const postMessage = (id, message) => dispatch => axios
 
 
 export { getMessages, getMessagesSuccess, postMessage,
-  postMessageSuccess, updateGroupInfo };
+  postMessageSuccess };

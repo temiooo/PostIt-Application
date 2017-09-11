@@ -6,7 +6,6 @@ import Button from '../common/Button';
 import TextInput from '../common/TextInput';
 import { validateGroupInput } from '../../utils/validateInput';
 import { createGroup, updateGroup } from '../../actions/groupActions';
-import { updateGroupInfo } from '../../actions/messageActions';
 
 class CreateGroupModal extends React.Component {
   constructor(props){
@@ -68,10 +67,6 @@ class CreateGroupModal extends React.Component {
 
     if (this.props.edit) {
       this.props.updateGroup(groupName, groupId, user)
-      .then(() => {
-        const group = this.props.groups.filter(group => group.id == groupId)
-        this.props.updateGroupInfo(group)
-      });
     } else {
       this.props.createGroup(groupName);
     }
@@ -83,7 +78,7 @@ class CreateGroupModal extends React.Component {
 		return(
 			<div id="group" className="modal black-text">
         <div className="modal-content">
-          <h5>Create New Group</h5>
+          <h5>Group Name</h5>
             <TextInput
               name="name"
               type="text"
@@ -111,7 +106,6 @@ class CreateGroupModal extends React.Component {
 CreateGroupModal.propTypes = {
   createGroup: PropTypes.func.isRequired,
   updateGroup: PropTypes.func.isRequired,
-  updateGroupInfo: PropTypes.func.isRequired,
   edit: PropTypes.bool.isRequired,
   selectedGroup: PropTypes.object.isRequired,
   groups: PropTypes.array.isRequired,
@@ -126,7 +120,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   createGroup,
-  updateGroup,
-  updateGroupInfo }, dispatch)
+  updateGroup }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupModal);
