@@ -46,24 +46,29 @@ html {
   padding-right: 5%;
 }
 
-.side-nav {
-  top:64px;
+.side-nav-bar {
+  top:64px !important;
 }
 
 .tabcontent {
   padding: 5px 20px;
-  height: 460px;
+  height: 100% !important;
 }
-
+.single-msg {
+  padding:5px;
+  border-bottom:1px solid #ddd;
+}
 .msg-wrap {
   padding:10px;
-  height:360px;
+  height:calc(100vh - 315px) !important;
   overflow: auto;
+  border: 3px groove #69B5AE;
+  border-radius: 15px;
+  margin-bottom: 10px;
 }
 
 .msg {
-  padding:5px;
-  border-bottom:1px solid #ddd;
+  position: relative;
 }
 
 .msg-heading {
@@ -77,17 +82,19 @@ html {
 }
 
 textarea {
-  height:4rem;
-  padding:5px;
+  height:4rem !important;
+  padding:5px !important;
 }
 
 .send-msg {
-  margin:0;
-  position:sticky;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  margin-bottom: 0px;
 }
 
 .send-msg button {
-  margin:10px 40px 5px 150px;
+  margin:10px 30px 5px;
 }
 
 .priority {
@@ -180,12 +187,23 @@ input[type=search]:not(.browser-default) {
   }
 }
 
-@media only screen and (max-width: 992px) {
-  .tabcontent {
-    height: 600px;
-  }
-
-  .msg-wrap {
-    height:420px;
+.nav-row {
+  margin-bottom: 0px !important;
+  h5 {
+    margin-top: 17px !important;
   }
 }
+
+.preloader-wrapper.active {
+  height: 150px;
+  width: 150px;
+  margin:25%
+}
+
+
+@media only screen and (max-width: 500px) {
+    .send-msg button {
+        padding: 0px;
+        margin:10px 0px 5px -15px;
+    }  
+  }

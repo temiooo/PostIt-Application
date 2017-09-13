@@ -1,34 +1,37 @@
 import axios from 'axios';
 import toastr from 'toastr';
 import * as types from './actionTypes';
+import { beginAjaxCall, ajaxCallSuccess,
+  ajaxCallError } from './ajaxStatusActions';
 
-const getMessagesSuccess = (id, name, messages) => ({
-  type: types.GET_MESSAGES_SUCCESS, id, name, messages
+const getMessagesSuccess = (id, data) => ({
+  type: types.GET_MESSAGES_SUCCESS, id, data
 });
 
-const postMessageSuccess = messages => ({
-  type: types.POST_MESSAGE_SUCCESS, messages
+const postMessageSuccess = message => ({
+  type: types.POST_MESSAGE_SUCCESS, message
 });
 
 
-const getMessages = group => dispatch => axios
-  .get(`/api/group/${group.id}/messages`)
-  .then((response) => {
-    const messages = response.data.messages;
-    dispatch(getMessagesSuccess(group.id, group.name, messages));
-  })
-  .catch((error) => {
-    toastr.error(error);
-  });
-
+const getMessages = groupId => (dispatch) => {
+  dispatch(beginAjaxCall());
+  return axios
+    .get(`/api/group/${groupId}/messages`)
+    .then((response) => {
+      const data = response.data;
+      dispatch(getMessagesSuccess(groupId, data));
+      dispatch(ajaxCallSuccess());
+    })
+    .catch((error) => {
+      dispatch(ajaxCallError());
+      toastr.error(error);
+    });
+};
 
 const postMessage = (id, message) => dispatch => axios
   .post(`/api/group/${id}/message`, message)
-  .then(() => {
-    axios.get(`/api/group/${id}/messages`)
-      .then((response) => {
-        dispatch(postMessageSuccess(response.data.messages));
-      });
+  .then((response) => {
+    dispatch(postMessageSuccess(response.data.message));
   })
   .catch((error) => {
     toastr.error(error);

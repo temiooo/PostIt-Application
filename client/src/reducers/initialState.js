@@ -1,5 +1,8 @@
 export default {
-  currentUser: '',
+  auth: {
+    currentUserId: '',
+    isAuthenticated: false,
+  },
   groups: [],
   messages: {
     groupId: '',

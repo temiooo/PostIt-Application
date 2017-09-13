@@ -31,8 +31,6 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/src/index.html'));
 });
 
-
-// Start the server and listen at port
 app.listen(port, (err) => {
   if (err) {
     console.log(err);

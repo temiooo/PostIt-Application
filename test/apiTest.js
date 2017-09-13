@@ -3,13 +3,13 @@ import db from '../server/models';
 
 const expect = require('chai').expect;
 const should = require('chai').should;
-const server = require('../server.js');
+const server = require('../server');
 
 const api = supertest('http://localhost:3000');
 
 describe('To do before running test', () => {
   before((done) => {
-    server.listen(3000);
+    // server.listen(3000);
     db.sequelize.sync({ truncate: true }).then(() => {
       console.log('Database reset succesful');
       done();

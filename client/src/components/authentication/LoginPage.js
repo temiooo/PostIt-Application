@@ -32,14 +32,14 @@ class LoginPage extends React.Component {
 		event.preventDefault();
 		this.props.login(this.state)
 		.then(() => {
-			if (this.props.currentUser) {
+			if (this.props.isAuthenticated) {
 				toastr.success('Welcome Back');
 			} 
 		});
 	}
 
 	render() {
-		if (this.props.currentUser) {
+		if (this.props.isAuthenticated) {
       return (
         <Redirect to = '/messageboard'/>
       );
@@ -98,12 +98,12 @@ class LoginPage extends React.Component {
 
 
 LoginPage.propTypes = {
-  currentUser: PropTypes.number,
+  isAuthenticated: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = dispatch =>

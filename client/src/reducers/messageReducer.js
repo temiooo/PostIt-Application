@@ -6,12 +6,14 @@ const messageReducer = (state = initialState.messages, action) => {
     case types.GET_MESSAGES_SUCCESS:
       return {
         groupId: action.id,
-        groupName: action.name,
-        groupMessages: action.messages
+        groupName: action.data.group.name,
+        groupMessages: action.data.messages
       };
 
     case types.POST_MESSAGE_SUCCESS:
-      return { ...state, groupMessages: action.messages };
+      return { ...state,
+        groupMessages: [...state.groupMessages, action.message]
+      };
 
     case types.UPDATE_GROUP_INFO:
       return { ...state, groupName: action.group.name };

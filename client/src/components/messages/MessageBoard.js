@@ -28,12 +28,19 @@ class MessageBoard extends React.Component {
 		}
 
 	componentWillMount() {
-		this.props.getGroups(this.props.currentUser);
+		if (this.props.auth.isAuthenticated) {
+			this.props.getGroups(this.props.auth.currentUserId);
+		}
 	}
 
-	getMessages(group) {
+	componentDidMount() {
+		$('.button-collapse').sideNav();
+		$('select').material_select();
+	}
+
+	getMessages(groupId) {
 		event.preventDefault();
-		this.props.getMessages(group);
+		this.props.getMessages(groupId);
 	}
 
 	logout(event) {
@@ -52,7 +59,7 @@ class MessageBoard extends React.Component {
 	}
 	
   render() {
-	  if (!this.props.currentUser) {
+	  if (!this.props.auth.isAuthenticated) {
       return (
         <Redirect to = '/login'/>
       );
@@ -78,8 +85,10 @@ class MessageBoard extends React.Component {
 
 						<Route
 							path={`${this.props.match.url}/group/:id/messages`}
-							component={() => <Messages messages={this.props.messages}
-								edit={this.groupEditOn} /> }
+							component={(props) => <Messages
+								edit={this.groupEditOn}
+								urlParams={props.match.params}
+							/> }
 						/>
 
 						<Route
@@ -95,16 +104,15 @@ class MessageBoard extends React.Component {
 }
 
 MessageBoard.propTypes = {
-	currentUser: PropTypes.number,
+	auth: PropTypes.object.isRequired,
 	groups: PropTypes.array.isRequired,
-	messages: PropTypes.object.isRequired,
 	logout: PropTypes.func.isRequired,
 	getGroups: PropTypes.func.isRequired,
 	getMessages: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	currentUser: state.auth.currentUser,
+	auth: state.auth,
 	groups: state.groups,
 	messages: state.messages
 });

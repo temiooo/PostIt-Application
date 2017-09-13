@@ -55,7 +55,7 @@ class ResetPassword extends React.Component {
 	}
 
 	render() {
-		if (this.props.currentUser) {
+		if (this.props.isAuthenticated) {
       return (
         <Redirect to = '/messageboard'/>
       );
@@ -106,13 +106,13 @@ class ResetPassword extends React.Component {
 }
 
 ResetPassword.propTypes = {
-	currentUser: PropTypes.number,
+	isAuthenticated: PropTypes.bool.isRequired,
 	isLoading: PropTypes.number.isRequired,
 	resetPassword: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-	currentUser: state.auth.currentUser,
+	isAuthenticated: state.auth.isAuthenticated,
 	isLoading: state.ajaxCallsInProgress,
 });
 

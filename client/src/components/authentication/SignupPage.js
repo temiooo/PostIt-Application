@@ -45,7 +45,7 @@ class SignupPage extends React.Component {
     if (this.isValid()) {
       this.setState({ errors: {} })
       this.props.signup(this.state).then(() => {
-        if (this.props.currentUser) {
+        if (this.props.isAuthenticated) {
           toastr.success('Welcome to PostIt');
         }
       });
@@ -53,7 +53,7 @@ class SignupPage extends React.Component {
   }
 
   render() {  
-    if (this.props.currentUser) {
+    if (this.props.isAuthenticated) {
       return (
         <Redirect to = '/messageboard'/>
       );
@@ -126,16 +126,16 @@ class SignupPage extends React.Component {
   
 }
 
+SignupPage.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  signup: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = dispatch => 
   bindActionCreators({ signup }, dispatch);
-
-SignupPage.propTypes = {
-  currentUser: PropTypes.number,
-  signup: PropTypes.func.isRequired
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);

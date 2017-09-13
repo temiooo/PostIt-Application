@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const MessagesList = ({ messages, edit }) => {
 	const messageLength = messages.groupMessages.length;
 		return (
-			<div className="tabcontent">
+			<div className="tabcontent s12">
 				<div>
 					<div className="row">
 						<div className="col s12 m12 l8">
@@ -29,7 +29,7 @@ const MessagesList = ({ messages, edit }) => {
 					{ messageLength > 0 ? ( 
 						<div className="msg-wrap">
 						{messages.groupMessages.map(message =>
-							<div className="msg" key={message.id}>
+							<div className="single-msg" key={message.id}>
 								<div>
 									<small className="right time">{message.createdAt.slice(0, 10)}</small>
 									<h6 className="msg-heading">{message.User.username}</h6>
@@ -38,8 +38,10 @@ const MessagesList = ({ messages, edit }) => {
 							</div>
 						)}
 					</div>
-					) : (
+				) : (
+					<div className="msg-wrap">
 						<h4 className="center-align">No Messages here!</h4>
+					</div>
 					)}
 				</div>
 			</div>

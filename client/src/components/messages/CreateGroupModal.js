@@ -22,6 +22,10 @@ class CreateGroupModal extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    $('.modal').modal();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.edit) {
       const group = this.state.name;
@@ -63,10 +67,10 @@ class CreateGroupModal extends React.Component {
     event.preventDefault();
     const groupName = { name: this.state.name };
     const groupId = this.props.selectedGroup.groupId;
-    const user = this.props.user;
+    const userId = this.props.currentUserId;
 
     if (this.props.edit) {
-      this.props.updateGroup(groupName, groupId, user)
+      this.props.updateGroup(groupName, groupId, userId)
     } else {
       this.props.createGroup(groupName);
     }
@@ -109,13 +113,13 @@ CreateGroupModal.propTypes = {
   edit: PropTypes.bool.isRequired,
   selectedGroup: PropTypes.object.isRequired,
   groups: PropTypes.array.isRequired,
-  user: PropTypes.number.isRequired
+  currentUserId: PropTypes.number.isRequired
 }
 
 const mapStateToProps = (state) => ({
   selectedGroup: state.messages,
   groups: state.groups,
-  user: state.auth.currentUser
+  currentUserId: state.auth.currentUserId
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

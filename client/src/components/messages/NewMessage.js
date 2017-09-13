@@ -5,20 +5,23 @@ import { bindActionCreators } from 'redux';
 import Button from '../common/Button';
 import toastr from 'toastr';
 import { isEmpty, trim } from 'lodash';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 import { validateMessageInput } from '../../utils/validateInput';
-import { postMessage } from '../../actions/messageActions';
+import { postMessage, postMessageSuccess } from '../../actions/messageActions';
 
 class NewMessage extends React.Component {
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
 			content: '',
 			priority: '',
-    };
-		
+		};
+
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.logChange = this.logChange.bind(this);
 	}
 
 	handleChange(event) {
@@ -27,12 +30,16 @@ class NewMessage extends React.Component {
 		})
 	}
 
+	logChange(val) {
+		console.log("Selected: " + JSON.stringify(val));
+	}
+
 	isValid() {
 		const { isValid } = validateMessageInput(this.state);
 		return isValid;
 	}
 
-  handleSubmit(event) {
+	handleSubmit(event) {
 		event.preventDefault();
 		const id = this.props.groupId
 		const content = trim(this.state.content)
@@ -40,31 +47,26 @@ class NewMessage extends React.Component {
 			content,
 			priority: this.state.priority
 		}
-		this.props.postMessage(id, message)
-			.then(() =>
-			this.setState({
-				content: '',
-				priority: ''
-			}));
+		this.props.postMessage(id, message);
 	}
 
 	render() {
-		const options = ['Normal', 'Urgent', 'Critical']
+		const options = ['Normal', 'Urgent', 'Critical'];
 
 		return (
-			<div className="row send-msg fixed">
+			<div className="row send-msg s12">
 				<form className="col s12">
 					<div className="col s12">
 						<textarea
-						name="content"
-						value={this.state.content}
-						onChange={this.handleChange}
+							name="content"
+							value={this.state.content}
+							onChange={this.handleChange}
 						/>
 					</div>
 				</form>
-						
-				<div className="col s12 m6 l6">
-					<div className="priority input-field col s12">
+
+				<div className="col s8 m6 l8">
+					<div className="priority input-field">
 						<select
 							name="priority"
 							value={this.state.priority}
@@ -74,17 +76,23 @@ class NewMessage extends React.Component {
 								return <option key={option} value={option}>{option}</option>;
 							})}
 						</select>
+						{/* <Select
+  name="priority"
+  value={this.state.priority}
+  options={options}
+  onChange={this.logChange}
+/> */}
 					</div>
 				</div>
 
-				<div className="col s12 m6 l6">
+				<div className="col s4 m6 l4">
 					<Button
 						className="btn waves-effect waves-light red darken-1"
-      			onClick={this.handleSubmit}
+						onClick={this.handleSubmit}
 						disabled={!this.isValid()}
-           	text="send"
+						text="send"
 						icon="send"
-          />
+					/>
 				</div>
 			</div>
 		);
@@ -92,11 +100,14 @@ class NewMessage extends React.Component {
 }
 
 NewMessage.propTypes = {
-	groupId: PropTypes.number.isRequired,
+	groupId: PropTypes.string.isRequired,
 	postMessage: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ postMessage }, dispatch)
+	bindActionCreators({
+		postMessage,
+		postMessageSuccess
+	}, dispatch)
 
 export default connect(null, mapDispatchToProps)(NewMessage);

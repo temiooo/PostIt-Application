@@ -38,7 +38,7 @@ class ForgotPassword extends React.Component {
 	}
 
 	render() {
-		if (this.props.currentUser) {
+		if (this.props.isAuthenticated) {
       return (
         <Redirect to = '/messageboard'/>
       );
@@ -51,9 +51,9 @@ class ForgotPassword extends React.Component {
 					<h4 className="center-align">
 						Forgot your password?
 					</h4>
-					<h5 className="center-align grey-text text-darken-3">
+					<h6 className="center-align grey-text text-darken-3">
 						Enter your email below to receive your password reset instructions
-					</h5>
+					</h6>
 					<form className="col s12 z-depth-5">
 						
 						<TextInput
@@ -81,13 +81,13 @@ class ForgotPassword extends React.Component {
 
 
 ForgotPassword.propTypes = {
-  currentUser: PropTypes.number,
+  isAuthenticated: PropTypes.bool.isRequired,
 	forgotPassword: PropTypes.func.isRequired,
 	isLoading: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
-	currentUser: state.auth.currentUser,
+	isAuthenticated: state.auth.isAuthenticated,
 	isLoading: state.ajaxCallsInProgress,
 });
 
