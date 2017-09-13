@@ -80,7 +80,11 @@ module.exports = {
       if (!group) {
         res.status(404).send({ message: 'Group Does Not Exist' });
       } else {
-        group.getUsers().then((result) => {
+        group.getUsers({
+          attributes: {
+            exclude: ['password']
+          },
+        }).then((result) => {
           res.status(200).send(result);
         });
       }

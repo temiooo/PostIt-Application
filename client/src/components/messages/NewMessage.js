@@ -5,8 +5,6 @@ import { bindActionCreators } from 'redux';
 import Button from '../common/Button';
 import toastr from 'toastr';
 import { isEmpty, trim } from 'lodash';
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
 import { validateMessageInput } from '../../utils/validateInput';
 import { postMessage, postMessageSuccess } from '../../actions/messageActions';
 
@@ -76,12 +74,6 @@ class NewMessage extends React.Component {
 								return <option key={option} value={option}>{option}</option>;
 							})}
 						</select>
-						{/* <Select
-  name="priority"
-  value={this.state.priority}
-  options={options}
-  onChange={this.logChange}
-/> */}
 					</div>
 				</div>
 
