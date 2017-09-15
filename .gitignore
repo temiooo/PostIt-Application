@@ -1,5 +1,2 @@
-.env
+server/node_modules
 node_modules
-.nyc_output
-coverage
-client/src/store/configureStoreDev.js
