@@ -20,12 +20,12 @@ class MessageBoard extends React.Component {
 		this.state = {
 			toggleEdit: false
 		}
-		
+
 		this.groupEditOn = this.groupEditOn.bind(this);
 		this.groupEditOff = this.groupEditOff.bind(this);
 		this.getMessages = this.getMessages.bind(this);
 		this.logout = this.logout.bind(this);
-		}
+	}
 
 	componentWillMount() {
 		if (this.props.auth.isAuthenticated) {
@@ -52,29 +52,29 @@ class MessageBoard extends React.Component {
 		event.preventDefault();
 		this.setState({ toggleEdit: true });
 	}
-	
+
 	groupEditOff(event) {
 		event.preventDefault();
 		this.setState({ toggleEdit: false })
 	}
-	
-  render() {
-	  if (!this.props.auth.isAuthenticated) {
-      return (
-        <Redirect to = '/login'/>
-      );
+
+	render() {
+		if (!this.props.auth.isAuthenticated) {
+			return (
+				<Redirect to='/login' />
+			);
 		}
 		return (
 			<div className="message-board">
-				<TopNav logout={this.logout}/>
+				<TopNav logout={this.logout} />
 				<div className="row">
 					<SideNav
 						getMessages={this.getMessages}
 						groups={this.props.groups}
 						edit={this.groupEditOff}
-						/>
+					/>
 					<CreateGroupModal
-						edit={this.state.toggleEdit}/> 
+						edit={this.state.toggleEdit} />
 
 					<main>
 						<Route
@@ -88,7 +88,7 @@ class MessageBoard extends React.Component {
 							component={(props) => <Messages
 								edit={this.groupEditOn}
 								urlParams={props.match.params}
-							/> }
+							/>}
 						/>
 
 						<Route

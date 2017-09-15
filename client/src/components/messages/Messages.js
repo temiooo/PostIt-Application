@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getMessages } from '../../actions/messageActions';
 
-class Messages extends React.Component{
+class Messages extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -27,32 +27,32 @@ class Messages extends React.Component{
 	}
 
 	render() {
-		return (	
+		return (
 			<div className="white col s12 m12 l9 msg">
 				{this.props.isLoading === 0 ? (
 					<div>
-						<MessageList messages={ this.props.messages }
-							edit={ this.props.edit } />
-				
-						<NewMessage groupId= { this.props.urlParams.id }/> 
-					</div> 
+						<MessageList messages={this.props.messages}
+							edit={this.props.edit} />
+
+						<NewMessage groupId={this.props.urlParams.id} />
+					</div>
 				) : (
-					<div className="preloader-wrapper small active">
-    				<div className="spinner-layer spinner-teal-only">
-      				<div className="circle-clipper left">
-        				<div className="circle"></div>
-      				</div>
-							<div className="gap-patch">
-        				<div className="circle"></div>
-      				</div>
-							<div className="circle-clipper right">
-        				<div className="circle"></div>
-      				</div>
-    				</div>
-  				</div>
-      	)}	
+						<div className="preloader-wrapper small active">
+							<div className="spinner-layer spinner-teal-only">
+								<div className="circle-clipper left">
+									<div className="circle"></div>
+								</div>
+								<div className="gap-patch">
+									<div className="circle"></div>
+								</div>
+								<div className="circle-clipper right">
+									<div className="circle"></div>
+								</div>
+							</div>
+						</div>
+					)}
 			</div>
-		); 	
+		);
 	}
 }
 

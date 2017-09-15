@@ -58,7 +58,6 @@ module.exports = {
             expiresIn: '24h' // expires in 24 hours
           });
 
-          // Return the information including token as JSON Value
           return res.status(200).send({
             message: 'Signin successful!',
             userId: user.id,
@@ -104,19 +103,18 @@ module.exports = {
             email and your password will remain unchanged.
             </p>
             </div>`;
-            transporter.sendMail(mailOptions(to, bcc, subject, html),
-              (error, info) => {
-                if (error) {
-                  console.log(error);
-                  res.status(400).send({
-                    message: 'A network error occured. Please try again'
-                  });
-                } else {
-                  res.status(200).send({
-                    message: `An email has been sent to ${user.email} with further instructions`
-                  });
-                  console.log('Message sent', info);
-                }
+            transporter.sendMail(mailOptions(to, bcc, subject, html))
+              .then((info) => {
+                res.status(200).send({
+                  message: `An email has been sent to ${user.email} with further instructions`
+                });
+                console.log('Success!', info);
+              })
+              .catch((err) => {
+                res.status(400).send({
+                  message: 'A network error occured. Please try again.', passwordToken
+                });
+                console.log('Error!', err);
               });
           })
           .catch(error => res.status(400).send({ error }));
@@ -200,7 +198,8 @@ module.exports = {
                 $ilike: `%${req.query.q}%`
               },
               $not: [{
-                id: members }]
+                id: members
+              }]
             },
             attributes: {
               exclude: ['password']

@@ -1,3 +1,4 @@
+import validator from 'validator';
 import { User, Group } from '../models';
 
 const validateInput = {
@@ -17,18 +18,24 @@ const validateInput = {
   },
 
   validateEmail(req, res, next) {
-    User.findOne({
-      where: {
-        email: req.body.email
-      }
-    }).then((user) => {
-      if (user) {
-        return res.status(400).send({
-          message: 'Email taken already. Please use another one.'
-        });
-      }
-      next();
-    });
+    if (validator.isEmail(req.body.email)) {
+      User.findOne({
+        where: {
+          email: req.body.email
+        }
+      }).then((user) => {
+        if (user) {
+          return res.status(400).send({
+            message: 'Email taken already. Please use another one.'
+          });
+        }
+        next();
+      });
+    } else {
+      return res.status(400).send({
+        message: 'Invalid email address'
+      });
+    }
   },
 
   validateGroupname(req, res, next) {
