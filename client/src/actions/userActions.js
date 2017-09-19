@@ -14,6 +14,14 @@ const searchUsersFailure = () => ({
   type: types.SEARCH_USERS_FAILURE
 });
 
+const getUserInfoSuccess = userInfo => ({
+  type: types.GET_USER_INFO_SUCCESS, userInfo
+});
+
+const getUserInfoFailure = () => ({
+  type: types.GET_USER_INFO_FAILURE
+});
+
 const getGroupMembers = group => dispatch => axios
   .get(`/api/group/${group}/users`)
   .then((response) => {
@@ -44,6 +52,18 @@ const addUser = (group, userDetail) => dispatch => axios
     toastr.error(error.response);
   });
 
+const getCurrentUserDetails = () => dispatch => axios
+  .get('/api/user/current')
+  .then((response) => {
+    dispatch(getUserInfoSuccess(response.data.user));
+  })
+  .catch(() => {
+    dispatch(getUserInfoFailure());
+  });
 
-export { getGroupMembers, getGroupMembersSuccess, searchUsers,
-  searchUsersSuccess, searchUsersFailure, addUser };
+
+export {
+  getGroupMembers, getGroupMembersSuccess, searchUsers,
+  searchUsersSuccess, searchUsersFailure, addUser,
+  getCurrentUserDetails
+};

@@ -10,6 +10,18 @@ const createGroupSuccess = group => ({
   type: types.CREATE_GROUP_SUCCESS, group
 });
 
+const updateGroupInfo = group => ({
+  type: types.UPDATE_GROUP_INFO, group
+});
+
+const editGroupOn = () => ({
+  type: types.EDIT_GROUP_ON
+});
+
+const editGroupOff = () => ({
+  type: types.EDIT_GROUP_OFF
+});
+
 const getGroups = user => dispatch => axios
   .get(`/api/user/${user}/groups`)
   .then((response) => {
@@ -20,8 +32,8 @@ const getGroups = user => dispatch => axios
   });
 
 
-const createGroup = name => dispatch => axios
-  .post('/api/group', name)
+const createGroup = groupName => dispatch => axios
+  .post('/api/group', groupName)
   .then((response) => {
     dispatch(createGroupSuccess(response.data.group));
   })
@@ -29,6 +41,21 @@ const createGroup = name => dispatch => axios
     toastr.error(error.response.data.message);
   });
 
+const updateGroup = (groupName, groupId, user) => dispatch => axios
+  .put(`/api/group/${groupId}`, groupName)
+  .then((response) => {
+    toastr.success(response.data.message);
+    axios.get(`/api/user/${user}/groups`)
+      .then((result) => {
+        dispatch(getGroupsSuccess(result.data));
+        dispatch(updateGroupInfo(groupName));
+      });
+  })
+  .catch((error) => {
+    toastr.error(error.response.data.message);
+  });
 
-export { getGroups, getGroupsSuccess,
-  createGroup, createGroupSuccess };
+
+export { getGroups, getGroupsSuccess, createGroup,
+  createGroupSuccess, updateGroup, editGroupOn,
+  editGroupOff };

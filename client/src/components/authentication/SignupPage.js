@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
+import { Link, Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import Banner from '../common/Banner';
@@ -16,19 +17,13 @@ class SignupPage extends React.Component {
     this.state = {
       email: '',
       username: '',
-      phonenumber: '',
       password: '',
+      confirmpassword: '',
       errors: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentWillMount() {
-   if(this.props.currentUser) {
-     browserHistory.push('/messageboard');
-   } 
   }
 
   handleChange(event) {
@@ -50,17 +45,20 @@ class SignupPage extends React.Component {
     if (this.isValid()) {
       this.setState({ errors: {} })
       this.props.signup(this.state).then(() => {
-        if (this.props.currentUser) {
-        toastr.success('Welcome to PostIt');
-        browserHistory.push('/messageboard');
+        if (this.props.isAuthenticated) {
+          toastr.success('Welcome to PostIt');
         }
       });
     } 
   }
 
-  render() {
-    const { errors } = this.state;
-    
+  render() {  
+    if (this.props.isAuthenticated) {
+      return (
+        <Redirect to = '/messageboard'/>
+      );
+    }
+
     return (
       <div className="login teal lighten-1">
       <div className="container">
@@ -72,7 +70,7 @@ class SignupPage extends React.Component {
             <form className="white col s12 z-depth-5">
   			      <h6 className="center-align link">
                 Already a member?
-                <Link to="login"> Login</Link>
+                <Link to="/login"> Login</Link>
               </h6>
               <div className="divider"></div>
   				      <TextInput
@@ -82,7 +80,7 @@ class SignupPage extends React.Component {
 						      value={this.state.email}
 						      onChange={this.handleChange}
                   label="Email Address"
-                  error={errors.email}
+                  error={this.state.errors.email}
                 />
                 <TextInput
                   icon="account_circle"
@@ -91,25 +89,25 @@ class SignupPage extends React.Component {
 						      value={this.state.username}
 						      onChange={this.handleChange}
                   label="Username"
-                  error={errors.username}
+                  error={this.state.errors.username}
                 />
                 <TextInput
-                  icon="phone"
-						      type="tel"
-						      name="phonenumber"
-						      value={this.state.phonenumber}
-						      onChange={this.handleChange}
-                  label="Phone Number"
-                  error={errors.phonenumber}
-                />
-                <TextInput
-                  icon="lock"
+                  icon="lock_outline"
 						      type="password"
 						      name="password"
 						      value={this.state.password}
 						      onChange={this.handleChange}
                   label="Password"
-                  error={errors.password}
+                  error={this.state.errors.password}
+                />
+                <TextInput
+                  icon="lock"
+						      type="password"
+						      name="confirmpassword"
+						      value={this.state.confirmpassword}
+						      onChange={this.handleChange}
+                  label="Confirm Password"
+                  error={this.state.errors.confirmpassword}
                 />
       			    <div className="row center-align">
                   <Button
@@ -129,12 +127,12 @@ class SignupPage extends React.Component {
 }
 
 SignupPage.propTypes = {
-  currentUser: PropTypes.number.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   signup: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = dispatch => 

@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
+import { Link, Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import Banner from '../common/Banner';
@@ -9,8 +10,8 @@ import TextInput from '../common/TextInput';
 import { login } from '../../actions/authActions';
 
 class LoginPage extends React.Component {
-	constructor(props, context){
-    super(props, context);
+	constructor(props){
+    super(props);
 
     this.state = {
       username: '',
@@ -19,12 +20,6 @@ class LoginPage extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-	
-	componentWillMount() {
-   if(this.props.currentUser) {
-     browserHistory.push('/messageboard');
-   } 
-  }
 
   handleChange(event) {
 		event.preventDefault();
@@ -37,14 +32,19 @@ class LoginPage extends React.Component {
 		event.preventDefault();
 		this.props.login(this.state)
 		.then(() => {
-			if (this.props.currentUser) {
-			toastr.success('Welcome Back');
-			browserHistory.push('/messageboard');
+			if (this.props.isAuthenticated) {
+				toastr.success('Welcome Back');
 			} 
 		});
 	}
 
 	render() {
+		if (this.props.isAuthenticated) {
+      return (
+        <Redirect to = '/messageboard'/>
+      );
+	 	}
+		
 		return (
 			<div className="login teal lighten-1">
 				<div className="container">
@@ -84,7 +84,7 @@ class LoginPage extends React.Component {
 							</div>
 							<div className="row  right-align">
 								<h6 className="link">
-									<a href="" className="black-text">Forgot Password?</a>
+									<Link to="/forgotpassword" className="black-text">Forgot Password?</Link>
 								</h6>
 							</div>
 						</form>
@@ -98,12 +98,12 @@ class LoginPage extends React.Component {
 
 
 LoginPage.propTypes = {
-  currentUser: PropTypes.number.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = dispatch =>

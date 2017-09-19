@@ -1,14 +1,19 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
-import App from './components/app';
+import { Switch, Route } from 'react-router-dom';
 import SignupPage from './components/authentication/SignupPage';
 import LoginPage from './components/authentication/LoginPage';
-import messageboard from './components/messages/MessageBoard';
+import Messageboard from './components/messages/MessageBoard';
+import ForgotPassword from './components/authentication/ForgotPassword';
+import ResetPassword from './components/authentication/ResetPassword';
 
 export default (
-    <Route path="/" component={App}>
-        <IndexRoute component={SignupPage} />
-        <Route path="login" component={LoginPage} />
-        <Route path="messageboard" component={messageboard} />
-    </Route>
+  <div>
+  <Switch>
+    <Route exact path="/" component={SignupPage} />
+    <Route path="/login" component={LoginPage} />
+    <Route path="/messageboard" component={Messageboard} />
+    <Route path="/forgotpassword" component={ForgotPassword} />
+    <Route path="/resetpassword/:token" component={ResetPassword} />
+  </Switch>
+  </div>
 );

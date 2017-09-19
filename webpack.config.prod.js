@@ -24,12 +24,13 @@ export default {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin(GLOBALS),
     new ExtractTextPlugin('styles.css'),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin()
+
   ],
   module: {
     loaders: [
-      { test: /(\.css)$/,
+      {
+        test: /(\.css)$/,
         use: ExtractTextPlugin.extract({
           use: 'css-loader'
         })

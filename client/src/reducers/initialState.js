@@ -1,5 +1,8 @@
 export default {
-  currentUser: '',
+  auth: {
+    currentUserId: '',
+    isAuthenticated: false,
+  },
   groups: [],
   messages: {
     groupId: '',
@@ -10,5 +13,12 @@ export default {
     members: [],
     nonMembers: [],
     pagination: {}
-  }
+  },
+  currentUserInfo: {
+    username: '',
+    email: '',
+    joinedOn: null,
+  },
+  ajaxCallsInProgress: 0,
+  editGroupStatus: false
 };

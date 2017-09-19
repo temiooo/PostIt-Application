@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { User } from '../models';
 
 require('dotenv').config();
 
@@ -13,7 +14,17 @@ const authenticate = {
           });
         }
         req.decoded = decoded;
-        next();
+        User.findOne({
+          where: {
+            id: decoded.userId
+          },
+          attributes: {
+            exclude: ['password', 'resetPasswordToken', 'resetPasswordExpires']
+          },
+        }).then((user) => {
+          req.userDetails = user;
+          next();
+        });
       });
     } else {
       return res.status(403).send({
