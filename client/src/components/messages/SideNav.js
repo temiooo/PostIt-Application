@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const SideNav = ({ groups, edit }) => {
-	return(
+	return (
 		<div className="col s12 m12 l3 pull-l1 teal lighten-1">
 			<ul id="slide-out" className="side-nav side-nav-bar z-depth-3 fixed">
 				<li className="hide-on-medium">
-					<a className="modal-trigger" to="#group" onClick={edit}>
+					<a className="modal-trigger" href="#group" onClick={edit}>
 						<i className="material-icons">loupe</i>
 						Create New Group
 					</a>
@@ -21,7 +21,7 @@ const SideNav = ({ groups, edit }) => {
 						{group.name}
 					</Link>
 				</li>)}
-			</ul>	
+			</ul>
 			<a href="#" data-activates="slide-out" className="button-collapse">
 				<div className="row nav-row">
 					<div className="col s3 m1">
@@ -30,7 +30,7 @@ const SideNav = ({ groups, edit }) => {
 					<div className="col s9 m11">
 						<h5 className="white-text">Groups</h5>
 					</div>
-				</div>	
+				</div>
 			</a>
 		</div>
 	);
