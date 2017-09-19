@@ -1,35 +1,20 @@
 import { expect } from 'chai';
 import request from 'supertest';
-import db from '../server/models';
-import { insertSeedData } from './seedData';
-import app from '../server';
-import { transporter } from '../server/utils/nodemailer';
+import { insertSeedData } from '../helpers/seedData';
+import app from '../../../server';
+import { transporter } from '../../../server/utils/nodemailer';
 
 
 describe('To do before running test', () => {
   before((done) => {
-    db.sequelize.sync({ force: true }).then(() => {
-      console.log('Database reset succesful');
-      insertSeedData();
-      console.log('Seed data inserted into the database');
-      done();
-    });
-  });
-  afterEach(() => {
-    // Reset the mock back to the defaults after each test
-  });
-  after((done) => {
-    // db.sequelize.sync({ force: true }).then(() => {
-    //   console.log('Database cleared');
-    //   done();
-    // });
+    insertSeedData();
     done();
   });
 
-  let user1token;
+  let user1token, user2token;
 
-  describe('SIGNUP API', () => {
-    it('should create a new user and return a token', (done) => {
+  describe('SIGNUP API - /api/user/signup', () => {
+    it('should create a new user and return a token if signup is successful', (done) => {
       request(app)
         .post('/api/user/signup')
         .set('Accept', 'application/json')
@@ -110,7 +95,7 @@ describe('To do before running test', () => {
     });
   });
 
-  describe('SIGNIN API', () => {
+  describe('SIGNIN API - /api/user/signin', () => {
     it('should allow existing user to sign in and return a token', (done) => {
       request(app)
         .post('/api/user/signin')
@@ -173,7 +158,21 @@ describe('To do before running test', () => {
     });
   });
 
-  describe('FORGET PASSWORD API', () => {
+  describe('GET CURRENT USER DETAILS API - /api/user/current', () => {
+    it('should allow registered user to retrieve their details', (done) => {
+      request(app)
+        .get('/api/user/current')
+        .set('authorization', user1token)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.user).to.have.all.deep.keys('id', 'email', 'username', 'createdAt', 'updatedAt');
+          expect(res.body.user.email).to.equal('user1@gmail.com');
+          done();
+        });
+    });
+  });
+
+  describe('FORGET PASSWORD API -/api/user/forgotpassword', () => {
     it('should send forgot password email if email address exists in the database', (done) => {
       transporter.sendMail = () => Promise.resolve(1);
       request(app)
@@ -219,37 +218,64 @@ describe('To do before running test', () => {
     });
   });
 
-  describe('RESET PASSWORD API', () => {
-    it('should reset user password if password token matches user id', (done) => {
+  describe('RESET PASSWORD API - /api/user/resetpassword/:token', () => {
+    it('should reset user password if password token is associated with a user id', (done) => {
+      transporter.sendMail = () => Promise.resolve(1);
       request(app)
-        .put('/api/user/resetpassword')
+        .put('/api/user/resetpassword/0agwAvILWEVS5xDlaTODlIImxZ5NpHBUxzDiwa2kExG7AnzK6G')
         .set('Accept', 'application/json')
         .send({
-          password: 'bestuserever',
+          password: 'goodrecover',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body.message).to.equal('A network error occured. Please try again');
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('Password Reset Successful');
           done();
         });
     });
 
-    // it('should  not send forgot password email if email address does not exist in the database', (done) => {
-    //   request(app)
-    //     .put('/api/user/forgotpassword')
-    //     .set('Accept', 'application/json')
-    //     .send({
-    //       email: 'reandomuser@gmail.com',
-    //     })
-    //     .end((err, res) => {
-    //       expect(res.status).to.equal(404);
-    //       expect(res.body.message).to.equal('This email does not exist');
-    //       done();
-    //     });
-    // });
+    it('should not reset user password if a network error occurs', (done) => {
+      transporter.sendMail = () => Promise.reject(1);
+      request(app)
+        .put('/api/user/resetpassword/2QVwcHW9OyX6SAKsJhXEgemhgqA7qHjaRCmhJ3gf0re8tSBM3X')
+        .set('Accept', 'application/json')
+        .send({
+          password: 'networkunrecover',
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('A network error occured. Please try again.');
+          done();
+        });
+    });
+
+    it('should not reset user password if password token is not associated with a user id', (done) => {
+      request(app)
+        .put('/api/user/resetpassword/justareallyreallyrandomstring')
+        .set('Accept', 'application/json')
+        .send({
+          password: 'goodluck101',
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Password Reset Token is Invalid or has Expired');
+          done();
+        });
+    });
+
+    it('should not reset user password if a new password is not provided', (done) => {
+      request(app)
+        .put('/api/user/resetpassword/0agwAvILWEVS5xDlaTODlIImxZ5NpHBUxzDiwa2kExG7AnzK6G')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please provide a new password for your account');
+          done();
+        });
+    });
   });
 
-  describe('SEARCH USER API', () => {
+  describe('SEARCH USER API - /api/search/users', () => {
     it('should return array of users if any is found', (done) => {
       request(app)
         .get('/api/search/users?q=a&group=1&limit=1&offset=0')
@@ -308,10 +334,10 @@ describe('To do before running test', () => {
     });
   });
 
-  describe('LIST USER\'S GROUPS API', () => {
+  describe('LIST USER\'S GROUPS API - /api/user/:userId/groups', () => {
     it('should list group user belongs to', (done) => {
       request(app)
-        .get('/api/user/1/groups')
+        .get('/api/user/5/groups')
         .set('authorization', user1token)
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -343,7 +369,7 @@ describe('To do before running test', () => {
     });
   });
 
-  describe('CREATE GROUPS API', () => {
+  describe('CREATE GROUPS API - /api/group', () => {
     it('should allow registered user create a new group', (done) => {
       request(app)
         .post('/api/group')
@@ -392,7 +418,7 @@ describe('To do before running test', () => {
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body.userAddedToGroup).to.be.true;
+          expect(res.body.userAddedToGroup).to.equal(true);
           done();
         });
     });
@@ -412,7 +438,7 @@ describe('To do before running test', () => {
     });
   });
 
-  describe('EDIT GROUP NAME API', () => {
+  describe('EDIT GROUP NAME API - /api/group/:groupId', () => {
     it('should allow group name be changed', (done) => {
       request(app)
         .put('/api/group/2')
@@ -496,205 +522,244 @@ describe('To do before running test', () => {
     });
   });
 
-  // describe('ADD USERS TO GROUPS API', () => {
-  //   it('should allow registered user in group add registered user to group', (done) => {
-  //     request(app)
-  //       .post('/api/group/2/user')
-  //       .set('authorization', token)
-  //       .send({
-  //         userId: firstuserId,
-  //       })
-  //       .expect(201)
-  //       .end((err, res) => {
-  //         expect(res.body.message).to.equal('User Added Successfully');
-  //         done();
-  //       });
-  //   });
+  describe('ADD USER TO GROUP API - /api/group/:groupId/user', () => {
+    it('should allow registered user in a group add another registered user to group', (done) => {
+      request(app)
+        .post('/api/group/2/user')
+        .set('authorization', user1token)
+        .send({
+          userId: 4,
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body.message).to.equal('User Added Successfully');
+          done();
+        });
+    });
 
-  //   it('should not allow unregistered users add registered user to group', (done) => {
-  //     api.post('/api/group/1/user')
-  //       .set('Accept', 'application/json')
-  //       .send({
-  //         userId: firstuserId,
-  //       })
-  //       .expect(400)
-  //       .end((err, res) => {
-  //         expect(res.body.message).to.equal('No token provided');
-  //         done();
-  //       });
-  //   });
+    it('should not allow adding a new user to a group that doesn\'t exist', (done) => {
+      request(app)
+        .post('/api/group/88/user')
+        .set('authorization', user1token)
+        .send({
+          userId: 2,
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Group Does Not Exist');
+          done();
+        });
+    });
 
-  //   it('should not allow adding user to unexisting group', (done) => {
-  //     api.post('/api/group/2/user')
-  //       .set('authorization', token)
-  //       .send({
-  //         userId: firstuserId,
-  //       })
-  //       .expect(400)
-  //       .end((err, res) => {
-  //         expect(res.body.message).to.equal('Group Does Not Exist');
-  //         done();
-  //       });
-  //   });
+    it('should not allow adding unregistered user to a group', (done) => {
+      request(app)
+        .post('/api/group/2/user')
+        .set('authorization', user1token)
+        .send({
+          userId: 54,
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('User Does Not Exist');
+          done();
+        });
+    });
 
-  //   it('should not allow adding unregistered user to a group', (done) => {
-  //     api.post('/api/group/1/user')
-  //       .set('authorization', token)
-  //       .send({
-  //         userId: 54,
-  //       })
-  //       .expect(400)
-  //       .end((err, res) => {
-  //         expect(res.body.message).to.equal('User Does Not Exist');
-  //         done();
-  //       });
-  //   });
+    it('should not allow a user to be added twice in a group', (done) => {
+      request(app)
+        .post('/api/group/2/user')
+        .set('authorization', user1token)
+        .send({
+          userId: 4
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('User Already Exists In This Group');
+          done();
+        });
+    });
+  });
 
-  //   it('should not allow user to be added to a group twice', (done) => {
-  //     api.post('/api/group/1/user')
-  //       .set('authorization', token)
-  //       .send({
-  //         userId: firstuserId
-  //       })
-  //       .expect(400)
-  //       .end((err, res) => {
-  //         expect(res.body.message).to.equal('User Already Exists In This Group');
-  //         done();
-  //       });
-  //   });
-  // });
+  describe('LIST GROUP\'S USERS API - /api/group/:groupId/users', () => {
+    it('should list users of a group that exists', (done) => {
+      request(app)
+        .get('/api/group/2/users')
+        .set('authorization', user1token)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('array');
+          done();
+        });
+    });
 
-  // describe('POST MESSAGE TO GROUP API', () => {
-  //   it('should allow user belonging to group to post message said group', (done) => {
-  //     api.post('/api/group/1/message')
-  //       .set('authorization', token)
-  //       .send({
-  //         content: 'My first message',
-  //       })
-  //       .expect(201)
-  //       .end((err, res) => {
-  //         expect(res.body.message).to.equal('Message Posted Successfully');
-  //         done();
-  //       });
-  //   });
+    it('should not list users of group that doesn\'t exist', (done) => {
+      request(app)
+        .get('/api/group/56/users')
+        .set('authorization', user1token)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Group Does Not Exist');
+          done();
+        });
+    });
+  });
 
-  //   it('should not allow user not in a group to post message to said group', (done) => {
-  //     api.post('/api/user/signup')
-  //       .set('Accept', 'application/json')
-  //       .send({
-  //         username: 'user3',
-  //         email: 'user3@gmail.com',
-  //         password: 'useruser3',
-  //       })
-  //       .expect(201)
-  //       .end((err, res) => {
-  //         token2 = res.body.token;
-  //         api.post('/api/group/1/message')
-  //           .set('authorization', token2)
-  //           .send({
-  //             content: 'Message from user not in this group',
-  //           })
-  //           .expect(400)
-  //           .end((err, res) => {
-  //             expect(res.body.message).to.equal('You don\'t belong to this group so you can\'t post a message here');
-  //             done();
-  //           });
-  //       });
-  //   });
+  describe('POST MESSAGE TO GROUP API - api/group/:groupId/message', () => {
+    it('should allow user post normal message to a group', (done) => {
+      request(app)
+        .post('/api/group/2/message')
+        .set('authorization', user1token)
+        .send({
+          content: 'My first message with normal priority',
+          priority: 'Normal'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message.priority).to.equal('Normal');
+          done();
+        });
+    });
 
-  //   it('should not allow user post message in group that does not exist', (done) => {
-  //     api.post('/api/group/2/message')
-  //       .set('authorization', token)
-  //       .send({
-  //         content: 'Another message again',
-  //       })
-  //       .expect(400)
-  //       .end((err, res) => {
-  //         expect(res.body.message).to.equal('Group Does Not Exist');
-  //         done();
-  //       });
-  //   });
+    it('should not post message if priority is not Normal, Urgent or Critical', (done) => {
+      request(app)
+        .post('/api/group/2/message')
+        .set('authorization', user1token)
+        .send({
+          content: 'Lorem Ipsum sample test',
+          priority: 'Gibberish'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Message priority has to be Normal, Critical, or Urgent');
+          done();
+        });
+    });
 
-  //   it('should allow user add specified priority to message being posted', (done) => {
-  //     api.post('/api/group/1/message')
-  //       .set('authorization', token)
-  //       .send({
-  //         content: 'My second message',
-  //         priority: 'Critical'
-  //       })
-  //       .expect(201)
-  //       .end((err, res) => {
-  //         expect(res.body.message).to.equal('Message Posted Successfully');
-  //         done();
-  //       });
-  //   });
+    it('should send email notifications to group members if message priority is urgent', (done) => {
+      transporter.sendMail = () => Promise.resolve(1);
+      request(app)
+        .post('/api/group/2/message')
+        .set('authorization', user1token)
+        .send({
+          content: 'My second message with urgent priority',
+          priority: 'Urgent'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message.priority).to.equal('Urgent');
+          done();
+        });
+    });
 
-  //   it('should not allow unspecified priority be added to posted message', (done) => {
-  //     api.post('/api/group/1/message')
-  //       .set('authorization', token)
-  //       .send({
-  //         content: 'My third message',
-  //         priority: 'Insignificant'
-  //       })
-  //       .expect(400)
-  //       .end((err, res) => {
-  //         expect(res.status).to.equal(403);
-  //         done();
-  //       });
-  //   });
+    it('should not send email notification if a network error occurs', (done) => {
+      transporter.sendMail = () => Promise.reject(1);
+      request(app)
+        .post('/api/group/2/message')
+        .set('authorization', user1token)
+        .send({
+          content: 'My third message with critical priority',
+          priority: 'Critical'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('A network error occured. Please try again.');
+          done();
+        });
+    });
 
-  //   it('should not allow message content be empty', (done) => {
-  //     api.post('/api/group/1/message')
-  //       .set('authorization', token)
-  //       .send({
-  //         content: '',
-  //       })
-  //       .expect(400)
-  //       .end((err, res) => {
-  //         expect(res.status).to.equal(403);
-  //         done();
-  //       });
-  //   });
-  // });
+    it('should not send email notification but only post message if message sender is the only group member', (done) => {
+      request(app)
+        .post('/api/group/3/message')
+        .set('authorization', user1token)
+        .send({
+          content: 'Hey me, I am the only one in this group',
+          priority: 'Critical'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message.priority).to.equal('Critical');
+          done();
+        });
+    });
 
-  // describe('GET MESSAGES FROM GROUP API', () => {
-  //   it('should allow user in group to get messages', (done) => {
-  //     api.get('/api/group/1/messages')
-  //       .set('authorization', token)
-  //       .expect(200)
-  //       .end((err, res) => {
-  //         expect(res.status).to.equal(200);
-  //         done();
-  //       });
-  //   });
+    it('should not allow user post message in group that does not exist', (done) => {
+      request(app)
+        .post('/api/group/50/message')
+        .set('authorization', user1token)
+        .send({
+          content: 'Another message again for group that doesn\'t exist',
+          priority: 'Normal'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Group Does Not Exist');
+          done();
+        });
+    });
 
-  //   it('should not allow user not in group to get messages', (done) => {
-  //     api.get('/api/group/1/messages')
-  //       .set('authorization', token2)
-  //       .expect(400)
-  //       .end((err, res) => {
-  //         expect(res.body.message).to.equal('You don\'t belong to this group');
-  //         done();
-  //       });
-  //   });
+    it('should not allow user not in the group to post message', (done) => {
+      request(app)
+        .post('/api/user/signup')
+        .set('Accept', 'application/json')
+        .send({
+          username: 'user3',
+          email: 'user3@gmail.com',
+          password: 'useruser3',
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          user2token = res.body.token;
+          request(app)
+            .post('/api/group/1/message')
+            .set('authorization', user2token)
+            .send({
+              content: 'Message from user not in this group',
+            })
+            .end((err, res) => {
+              expect(res.status).to.equal(400);
+              expect(res.body.message).to.equal('You don\'t belong to this group.');
+              done();
+            });
+        });
+    });
+  });
 
-  //   it('should not allow getting messages from unexisting group', (done) => {
-  //     api.get('/api/group/2/messages')
-  //       .set('authorization', token)
-  //       .expect(400)
-  //       .end((err, res) => {
-  //         expect(res.body.message).to.equal('Group Does Not Exist');
-  //         done();
-  //       });
-  //   });
-  // });
+  describe('GET MESSAGES FROM GROUP API - /api/group/:groupId/messages', () => {
+    it('should allow user in group to get messages', (done) => {
+      request(app)
+        .get('/api/group/2/messages')
+        .set('authorization', user1token)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.all.deep.keys('messages', 'group');
+          done();
+        });
+    });
+
+    it('should not allow user not in group to get messages', (done) => {
+      request(app)
+        .get('/api/group/1/messages')
+        .set('authorization', user2token)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('You don\'t belong to this group.');
+          done();
+        });
+    });
+
+    it('should not allow getting messages from unexisting group', (done) => {
+      request(app)
+        .get('/api/group/55/messages')
+        .set('authorization', user1token)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Group Does Not Exist.');
+          done();
+        });
+    });
+  });
 });
-
-// describe('To do before running test', () => {
-//   after((done) => {
-//     db.sequelize.sync({ force: true }).then(() => {
-//       console.log('Database Cleared');
-//     });
-//     done();
-//   });
-// });

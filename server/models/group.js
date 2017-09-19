@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         Group.belongsToMany(models.User, {
           through: 'UserGroup',
           foreignKey: 'groupId',
+          otherKey: 'userId',
           constraints: false,
         });
         Group.hasMany(models.Message, {
@@ -24,3 +25,4 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Group;
 };
+

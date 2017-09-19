@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import db from '../server/models';
+import db from '../../models';
 
 export const users = [
   {
@@ -7,9 +7,9 @@ export const users = [
     username: 'abigail',
     password: bcrypt.hashSync('abigail2000', bcrypt.genSaltSync(10)),
     resetPasswordToken: null,
-    resetPasswordExpires: Date.now() + 36000,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    resetPasswordExpires: null,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
   },
   {
     email: 'aaron@gmail.com',
@@ -17,51 +17,41 @@ export const users = [
     password: bcrypt.hashSync('Ascottish', bcrypt.genSaltSync(10)),
     resetPasswordToken: null,
     resetPasswordExpires: null,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
   },
   {
     email: 'recover@gmail.com',
     username: 'recover',
     password: bcrypt.hashSync('recover101', bcrypt.genSaltSync(10)),
     resetPasswordToken: '0agwAvILWEVS5xDlaTODlIImxZ5NpHBUxzDiwa2kExG7AnzK6G',
-    resetPasswordExpires: new Date() + 36000,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    resetPasswordExpires: Date.now() + 3600000,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
   },
   {
-    email: 'expired@gmail.com',
-    username: 'expired',
-    password: bcrypt.hashSync('expired101', bcrypt.genSaltSync(10)),
+    email: 'recover2@gmail.com',
+    username: 'recover2',
+    password: bcrypt.hashSync('recover202', bcrypt.genSaltSync(10)),
     resetPasswordToken: '2QVwcHW9OyX6SAKsJhXEgemhgqA7qHjaRCmhJ3gf0re8tSBM3X',
-    resetPasswordExpires: new Date() - 36000,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    resetPasswordExpires: Date.now() + 3600000,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
   },
 
 
 ];
 
-export const group = [
+export const group =
   {
     name: 'Gryffindor',
-    createdAt: new Date(),
-    updatedAt: new Date()
   }
-];
-
-const userGroup = [
-  {
-    userId: 1,
-    groupId: 1,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  }
-];
+  ;
 
 export const insertSeedData = () => {
   db.User.bulkCreate(users);
-  db.Group.bulkCreate(group);
-  db.UserGroup.bulkCreate(userGroup);
+  db.Group.create(group)
+    .then((newgroup) => {
+      newgroup.addUser(1);
+    });
 };
-

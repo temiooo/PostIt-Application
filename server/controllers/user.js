@@ -114,13 +114,11 @@ module.exports = {
                 res.status(200).send({
                   message: `An email has been sent to ${user.email} with further instructions`
                 });
-                console.log('Success!', info);
               })
               .catch((err) => {
                 res.status(400).send({
                   message: 'A network error occured. Please try again.', passwordToken
                 });
-                console.log('Error!', err);
               });
           })
           .catch(error => res.status(400).send({ error }));
@@ -165,19 +163,16 @@ module.exports = {
                 to login
                 </p>
                 </div>`;
-              transporter.sendMail(mailOptions(to, null, subject, html),
-                (error, info) => {
-                  if (error) {
-                    console.log(error);
-                    res.status(400).send({
-                      message: 'A network error occured. Please try again.'
-                    });
-                  } else {
-                    res.status(200).send({
-                      message: 'Password Reset Successful'
-                    });
-                    console.log('Message sent', info);
-                  }
+              transporter.sendMail(mailOptions(to, null, subject, html))
+                .then((info) => {
+                  res.status(200).send({
+                    message: 'Password Reset Successful'
+                  });
+                })
+                .catch((err) => {
+                  res.status(400).send({
+                    message: 'A network error occured. Please try again.'
+                  });
                 });
             })
             .catch(error => res.status(400).send({ error }));

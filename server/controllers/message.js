@@ -18,7 +18,8 @@ module.exports = {
             const priority = req.body.priority;
             if (priority !== 'Urgent' && priority !== 'Critical' &&
               priority !== 'Normal') {
-              res.status(400).send({ message:
+              res.status(400).send({
+                message:
                 'Message priority has to be Normal, Critical, or Urgent'
               });
             } else {
@@ -29,18 +30,19 @@ module.exports = {
                 groupId
               })
                 .then((msg) => {
-                  const message = { ...msg.dataValues,
+                  const message = {
+                    ...msg.dataValues,
                     User: { username: req.userDetails.username }
                   };
                   if (priority === 'Urgent' || priority === 'Critical') {
                     group.getUsers().then((users) => {
                       const groupMembers =
-                      users.filter(user => user.id !== userId);
+                        users.filter(user => user.id !== userId);
                       const memberEmails = groupMembers.map(user => user.email);
                       const to = null;
                       const bcc = memberEmails;
                       const subject =
-                  `${msg.priority} message from Group: ${group.name}`;
+                        `${msg.priority} message from Group: ${group.name}`;
                       const html = `<div>
                   <p>Hi there,
                     <br>
@@ -53,29 +55,27 @@ module.exports = {
                   </div>`;
                       if (bcc.length > 0) {
                         transporter.sendMail(mailOptions(to, bcc, subject, html
-                        ), (error, info) => {
-                          if (error) {
-                            console.log(error);
-                            res.status(400).send({ message:
+                        )).then((info) => {
+                          res.status(201).send({ message });
+                        }).catch((err) => {
+                          res.status(400).send({
+                            message:
                             'A network error occured. Please try again.'
-                            });
-                          } else {
-                            res.status(201).send({ message });
-                            console.log('Message sent', info);
-                          }
+                          });
                         });
                       } else {
                         res.status(201).send({ message });
                       }
-                    })
-                      .catch(error => res.status(400).send(error));
+                    });
                   } else {
                     res.status(201).send({ message });
                   }
-                });
+                })
+                .catch(error => res.status(400).send(error));
             }
           }
-        });
+        })
+          .catch(error => res.status(400).send(error));
       }
     })
       .catch(error => res.status(400).send(error));
@@ -87,12 +87,12 @@ module.exports = {
 
     Group.findById(groupId).then((group) => {
       if (!group) {
-        res.status(400).send({ Message: 'Group Does Not Exist' });
+        res.status(400).send({ message: 'Group Does Not Exist.' });
       } else {
         group.hasUser(userId).then((result) => {
           if (!result) {
             res.status(400).send({
-              Message: 'You don\'t belong to this group'
+              message: 'You don\'t belong to this group.'
             });
           } else {
             group.getMessages({
