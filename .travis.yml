@@ -9,11 +9,11 @@ services:
 
 postgres:
   adapter: postgresql
-  database: post-it test
+  database: postit-test
   username: postgres
 before_script:
   -  npm --prefix ./client install ./client
-  - psql -c 'create database post-it test;' -U postgres
+  - psql -c 'create database postit-test;' -U postgres
   - dropdb --if-exists post-it test && createdb post-it test
   - NODE_ENV=test npm run db:migrate
   - npm run test:server
