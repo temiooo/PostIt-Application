@@ -19,6 +19,7 @@ class MessageBoard extends React.Component {
 
 		this.logout = this.logout.bind(this);
 		this.editGroupOff = this.editGroupOff.bind(this);
+
 	}
 
 	componentWillMount() {

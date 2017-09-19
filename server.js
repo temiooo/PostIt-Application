@@ -7,7 +7,7 @@ const app = express();
 const port = parseInt(process.env.PORT, 10) || 5000;
 
 // Allow app to use logger and bodyparser
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
