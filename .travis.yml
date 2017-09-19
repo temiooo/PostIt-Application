@@ -15,5 +15,4 @@ before_script:
   -  npm --prefix ./client install ./client
   - psql -c 'create database postit_test;' -U postgres
   - dropdb --if-exists postit_test && createdb postit_test
-  - NODE_ENV=test npm run db:migrate
   - npm run test:server
