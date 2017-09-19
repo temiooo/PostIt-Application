@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "export NODE_ENV=test && nyc --reporter=text  --reporter=html mocha --compilers js:babel-core/register --reporter spec --timeout 5000",
+    "migrate:db": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
+    "test:server": "npm run migrate:db && NODE_ENV=test nyc --reporter=text  --reporter=html mocha --compilers js:babel-core/register --reporter spec server/test/**/*.spec.js --timeout 5000",
     "start": "babel-node server.js",
     "start:dev": "nodemon --exec babel-node server.js",
     "open:src": "babel-node tools/srcServer.js",
