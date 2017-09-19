@@ -27,7 +27,7 @@ class CreateGroupModal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.edit) {
+    if (nextProps.editGroupStatus) {
       const group = this.state.name;
       if (group !== nextProps.selectedGroup.groupName) {
         this.setState({ name: nextProps.selectedGroup.groupName })
@@ -69,7 +69,7 @@ class CreateGroupModal extends React.Component {
     const groupId = this.props.selectedGroup.groupId;
     const userId = this.props.currentUserId;
 
-    if (this.props.edit) {
+    if (this.props.editGroupStatus) {
       this.props.updateGroup(groupName, groupId, userId)
     } else {
       this.props.createGroup(groupName);
@@ -110,15 +110,16 @@ class CreateGroupModal extends React.Component {
 CreateGroupModal.propTypes = {
   createGroup: PropTypes.func.isRequired,
   updateGroup: PropTypes.func.isRequired,
-  edit: PropTypes.bool.isRequired,
+  editGroupStatus: PropTypes.bool.isRequired,
   selectedGroup: PropTypes.object.isRequired,
   groups: PropTypes.array.isRequired,
   currentUserId: PropTypes.number.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  selectedGroup: state.messages,
   groups: state.groups,
+  selectedGroup: state.messages,
+  editGroupStatus: state.editGroupStatus,
   currentUserId: state.auth.currentUserId
 });
 

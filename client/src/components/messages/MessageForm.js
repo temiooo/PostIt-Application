@@ -8,13 +8,13 @@ import { isEmpty, trim } from 'lodash';
 import { validateMessageInput } from '../../utils/validateInput';
 import { postMessage, postMessageSuccess } from '../../actions/messageActions';
 
-class NewMessage extends React.Component {
+class MessageForm extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			content: '',
-			priority: '',
+			priority: ''
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -45,7 +45,13 @@ class NewMessage extends React.Component {
 			content,
 			priority: this.state.priority
 		}
-		this.props.postMessage(id, message);
+		this.props.postMessage(id, message)
+			.then(() => {
+				this.setState({
+					content: '',
+					priority: ''
+				});
+			});
 	}
 
 	render() {
@@ -66,6 +72,7 @@ class NewMessage extends React.Component {
 				<div className="col s8 m6 l8">
 					<div className="priority input-field">
 						<select
+							className="browser-default"
 							name="priority"
 							value={this.state.priority}
 							onChange={this.handleChange}>
@@ -91,7 +98,7 @@ class NewMessage extends React.Component {
 	}
 }
 
-NewMessage.propTypes = {
+MessageForm.propTypes = {
 	groupId: PropTypes.string.isRequired,
 	postMessage: PropTypes.func.isRequired
 };
@@ -102,4 +109,4 @@ const mapDispatchToProps = dispatch =>
 		postMessageSuccess
 	}, dispatch)
 
-export default connect(null, mapDispatchToProps)(NewMessage);
+export default connect(null, mapDispatchToProps)(MessageForm);

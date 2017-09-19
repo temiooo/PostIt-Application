@@ -14,5 +14,11 @@ export default {
     nonMembers: [],
     pagination: {}
   },
-  ajaxCallsInProgress: 0
+  currentUserInfo: {
+    username: '',
+    email: '',
+    joinedOn: null,
+  },
+  ajaxCallsInProgress: 0,
+  editGroupStatus: false
 };
