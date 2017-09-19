@@ -14,10 +14,17 @@ const authenticate = {
           });
         }
         req.decoded = decoded;
-        User.findById(decoded.userId).then((user) => {
+        User.findOne({
+          where: {
+            id: decoded.userId
+          },
+          attributes: {
+            exclude: ['password', 'resetPasswordToken', 'resetPasswordExpires']
+          },
+        }).then((user) => {
           req.userDetails = user;
+          next();
         });
-        next();
       });
     } else {
       return res.status(403).send({

@@ -14,6 +14,14 @@ const updateGroupInfo = group => ({
   type: types.UPDATE_GROUP_INFO, group
 });
 
+const editGroupOn = () => ({
+  type: types.EDIT_GROUP_ON
+});
+
+const editGroupOff = () => ({
+  type: types.EDIT_GROUP_OFF
+});
+
 const getGroups = user => dispatch => axios
   .get(`/api/user/${user}/groups`)
   .then((response) => {
@@ -47,5 +55,7 @@ const updateGroup = (groupName, groupId, user) => dispatch => axios
     toastr.error(error.response.data.message);
   });
 
+
 export { getGroups, getGroupsSuccess, createGroup,
-  createGroupSuccess, updateGroup };
+  createGroupSuccess, updateGroup, editGroupOn,
+  editGroupOff };

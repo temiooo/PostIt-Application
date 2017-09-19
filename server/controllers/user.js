@@ -23,13 +23,13 @@ module.exports = {
         const token = jwt.sign({
           userId: user.id
         }, process.env.SECRET, {
-          expiresIn: '24h' // expires in 24 hours
-        });
+            expiresIn: '24h' // expires in 24 hours
+          });
 
         res.status(201).send({
           message: 'Signup Successful!',
           userId: user.id,
-          token,
+          token
         });
       })
       .catch(error => res.status(400).send(error));
@@ -55,18 +55,24 @@ module.exports = {
           const token = jwt.sign({
             userId: user.id
           }, process.env.SECRET, {
-            expiresIn: '24h' // expires in 24 hours
-          });
+              expiresIn: '24h' // expires in 24 hours
+            });
 
           return res.status(200).send({
             message: 'Signin successful!',
             userId: user.id,
-            token,
+            token
           });
         }
         return res.status(400).send({ message: 'Password is incorrect' });
       })
       .catch(error => res.send(error));
+  },
+
+  getUserDetails(req, res) {
+    res.status(200).send({
+      user: req.userDetails
+    });
   },
 
   forgotPassword(req, res) {

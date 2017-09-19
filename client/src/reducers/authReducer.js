@@ -4,19 +4,22 @@ import initialState from './initialState';
 const authReducer = (state = initialState.auth, action) => {
   switch (action.type) {
     case types.SIGNUP_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         currentUserId: action.user.userId,
         isAuthenticated: true
       };
 
     case types.LOGIN_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         currentUserId: action.user.userId,
         isAuthenticated: true
       };
 
     case types.LOGOUT:
-      return { ...state,
+      return {
+        ...state,
         currentUserId: '',
         isAuthenticated: false
       };

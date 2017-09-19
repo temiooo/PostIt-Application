@@ -9,6 +9,8 @@ module.exports = (app) => {
   app.post('/api/user/signup', validateInput.validateUsername,
     validateInput.validateEmail, userController.signup);
   app.post('/api/user/signin', userController.signin);
+  app.get('/api/user/current', authenticate.verifyUser,
+    userController.getUserDetails);
   app.put('/api/user/forgotpassword', userController.forgotPassword);
   app.put('/api/user/resetpassword/:token', userController.resetPassword);
   app.get('/api/search/users', authenticate.verifyUser,

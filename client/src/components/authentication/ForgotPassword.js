@@ -10,12 +10,12 @@ import { forgotPassword } from '../../actions/passwordActions';
 import { validateForgotPasswordEmail } from '../../utils/validateInput';
 
 class ForgotPassword extends React.Component {
-	constructor(props){
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
+		this.state = {
 			email: ''
-    };
+		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -25,13 +25,13 @@ class ForgotPassword extends React.Component {
 		return isValid;
 	}
 
-  handleChange(event) {
+	handleChange(event) {
 		event.preventDefault();
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+		this.setState({
+			[event.target.name]: event.target.value
+		});
 	}
-	
+
 	handleSubmit(event) {
 		event.preventDefault();
 		this.props.forgotPassword(this.state)
@@ -39,11 +39,11 @@ class ForgotPassword extends React.Component {
 
 	render() {
 		if (this.props.isAuthenticated) {
-      return (
-        <Redirect to = '/messageboard'/>
-      );
-	 	}
-		
+			return (
+				<Redirect to='/messageboard' />
+			);
+		}
+
 		return (
 			<div>
 				<TopNav />
@@ -55,7 +55,7 @@ class ForgotPassword extends React.Component {
 						Enter your email below to receive your password reset instructions
 					</h6>
 					<form className="col s12 z-depth-5">
-						
+
 						<TextInput
 							type="email"
 							name="email"
@@ -71,17 +71,17 @@ class ForgotPassword extends React.Component {
 								disabled={(!this.isValid()) || this.props.isLoading > 0}
 							/>
 						</div>
-						
+
 					</form>
-					</div>
 				</div>
-				);
-		}
+			</div>
+		);
+	}
 }
 
 
 ForgotPassword.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
+	isAuthenticated: PropTypes.bool.isRequired,
 	forgotPassword: PropTypes.func.isRequired,
 	isLoading: PropTypes.number.isRequired,
 };

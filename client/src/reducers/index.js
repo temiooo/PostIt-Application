@@ -4,6 +4,8 @@ import groups from './groupReducer';
 import messages from './messageReducer';
 import users from './userReducer';
 import ajaxCallsInProgress from './ajaxStatusReducer';
+import editGroupStatus from './editGroupReducer';
+import currentUserInfo from './currentUserReducer';
 import * as types from '../actions/actionTypes';
 
 const appReducer = combineReducers({
@@ -11,7 +13,9 @@ const appReducer = combineReducers({
   groups,
   messages,
   users,
-  ajaxCallsInProgress
+  ajaxCallsInProgress,
+  editGroupStatus,
+  currentUserInfo
 });
 
 const rootReducer = (state, action) => {

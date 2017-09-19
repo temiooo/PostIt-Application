@@ -198,8 +198,15 @@ input[type=search]:not(.browser-default) {
 .preloader-wrapper.active {
   height: 150px;
   width: 150px;
-  margin:25%
+  margin: 10% 35%; 
 }
+
+.welcome-page {
+  position: absolute;
+  padding: 10% 0% 0% 5%;
+  color: #325a56;
+}
+
 
 
 @media only screen and (max-width: 500px) {
