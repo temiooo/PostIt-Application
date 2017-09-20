@@ -9,13 +9,13 @@ services:
 
 postgres:
   adapter: postgresql
-  database: postit-test
+  database: postit_test
   username: postgres
   
 before_script:
   - npm --prefix ./client install ./client
   - psql -c 'create database postit_test;' -U postgres
   - dropdb --if-exists postit_test && createdb postit_test
-  - npm install sequelize -g
+  - npm install sequelize-cli -g
   - NODE_ENV=test npm run migrate:db
   - npm run coveralls
