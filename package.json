@@ -7,6 +7,7 @@
     "migrate:db": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
     "test:server": "npm run migrate:db && NODE_ENV=test nyc --reporter=text  --reporter=html mocha --compilers js:babel-core/register --reporter spec server/test/**/*.spec.js --timeout 5000",
     "start": "babel-node server.js",
+    "coveralls": "NODE_ENV=test && nyc --reporter=text  --reporter=html mocha --compilers js:babel-core/register --reporter spec server/test/**/*.spec.js --timeout 5000",
     "start:dev": "nodemon --exec babel-node server.js",
     "open:src": "babel-node tools/srcServer.js",
     "clean-dist": "npm run remove-dist && mkdir client/dist",

@@ -11,10 +11,10 @@ postgres:
   adapter: postgresql
   database: postit-test
   username: postgres
-
+  
 before_script:
-  -  npm --prefix ./client install ./client
+  - npm --prefix ./client install ./client
   - psql -c 'create database postit_test;' -U postgres
   - dropdb --if-exists postit_test && createdb postit_test
-  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-  - codeclimate-test-reporter < lcov.info
+  - NODE_ENV=test npm run migrate:db
+  - npm run coveralls
