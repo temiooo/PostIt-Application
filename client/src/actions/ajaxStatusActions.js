@@ -12,5 +12,7 @@ const ajaxCallSuccess = () => ({
   type: types.AJAX_CALL_SUCCESS
 });
 
-export { beginAjaxCall, ajaxCallError,
-  ajaxCallSuccess };
+export {
+  beginAjaxCall, ajaxCallError,
+  ajaxCallSuccess
+};

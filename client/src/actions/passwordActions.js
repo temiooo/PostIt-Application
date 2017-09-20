@@ -1,7 +1,9 @@
 import axios from 'axios';
 import toastr from 'toastr';
-import { beginAjaxCall, ajaxCallSuccess,
-  ajaxCallError } from './ajaxStatusActions';
+import {
+  beginAjaxCall, ajaxCallSuccess,
+  ajaxCallError
+} from './ajaxStatusActions';
 
 const forgotPassword = email => (dispatch) => {
   dispatch(beginAjaxCall());

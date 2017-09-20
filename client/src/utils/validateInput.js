@@ -105,6 +105,8 @@ const validateNewPassword = (state) => {
   };
 };
 
-export { validateSignupInput, validateGroupInput,
+export {
+  validateSignupInput, validateGroupInput,
   validateMessageInput, validateForgotPasswordEmail,
-  validateNewPassword };
+  validateNewPassword
+};

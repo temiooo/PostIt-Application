@@ -56,7 +56,7 @@ describe('To do before running test', () => {
           password: 'useruser',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(409);
           expect(res.body.message).to.equal('Username taken already. Please use another one.');
           done();
         });
@@ -72,7 +72,7 @@ describe('To do before running test', () => {
           password: 'useruser',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(409);
           expect(res.body.message).to.equal('Email taken already. Please use another one.');
           done();
         });
@@ -136,7 +136,7 @@ describe('To do before running test', () => {
           password: 'useruser',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('User not found');
           done();
         });
@@ -257,7 +257,7 @@ describe('To do before running test', () => {
           password: 'goodluck101',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(404);
+          expect(res.status).to.equal(400);
           expect(res.body.message).to.equal('Password Reset Token is Invalid or has Expired');
           done();
         });
@@ -305,7 +305,7 @@ describe('To do before running test', () => {
         .get('/api/search/users?q=a&group=1&limit=1&offset=0')
         .set('Accept', 'application/json')
         .end((err, res) => {
-          expect(res.status).to.equal(403);
+          expect(res.status).to.equal(400);
           expect(res.body.message).to.equal('No token provided');
           done();
         });
@@ -351,7 +351,7 @@ describe('To do before running test', () => {
         .get('/api/user/54/groups')
         .set('authorization', user1token)
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('User Does Not Exist');
           done();
         });
@@ -391,7 +391,6 @@ describe('To do before running test', () => {
         .send({
           name: 'Awesome Rockstars',
         })
-        .expect(400)
         .end((err, res) => {
           expect(res.body.message).to.equal('Group name exists already. Please use another one.');
           done();
@@ -431,7 +430,7 @@ describe('To do before running test', () => {
           name: 'Awesome Rockstars',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(403);
+          expect(res.status).to.equal(400);
           expect(res.body.message).to.equal('No token provided');
           done();
         });
@@ -462,7 +461,7 @@ describe('To do before running test', () => {
           name: 'Gryffindor',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(409);
           expect(res.body.message).to.equal('Group name exists already. Please use another one.');
           done();
         });
@@ -476,7 +475,7 @@ describe('To do before running test', () => {
           name: 'Imagine Dragons',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(403);
+          expect(res.status).to.equal(400);
           expect(res.body.message).to.equal('No token provided');
           done();
         });
@@ -515,7 +514,7 @@ describe('To do before running test', () => {
           name: 'Imagine Dragons',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(401);
           expect(res.body.message).to.equal('You don\'t belong to this group');
           done();
         });
@@ -573,7 +572,7 @@ describe('To do before running test', () => {
           userId: 4
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(409);
           expect(res.body.message).to.equal('User Already Exists In This Group');
           done();
         });
@@ -719,7 +718,7 @@ describe('To do before running test', () => {
               content: 'Message from user not in this group',
             })
             .end((err, res) => {
-              expect(res.status).to.equal(400);
+              expect(res.status).to.equal(401);
               expect(res.body.message).to.equal('You don\'t belong to this group.');
               done();
             });
@@ -745,7 +744,7 @@ describe('To do before running test', () => {
         .get('/api/group/1/messages')
         .set('authorization', user2token)
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(401);
           expect(res.body.message).to.equal('You don\'t belong to this group.');
           done();
         });
@@ -756,7 +755,7 @@ describe('To do before running test', () => {
         .get('/api/group/55/messages')
         .set('authorization', user1token)
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('Group Does Not Exist.');
           done();
         });

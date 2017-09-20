@@ -25,8 +25,8 @@ class WelcomePage extends React.Component {
 			<div className="white col s12 m12 l9">
 				<div className="welcome-page">
 					<h4> Hi {currentUserInfo.username}, </h4>
-					<h5>Email : { currentUserInfo.email} </h5>
-					<h5>Your Groups : { groupNo }</h5>
+					<h5>Email : {currentUserInfo.email} </h5>
+					<h5>Your Groups : {groupNo}</h5>
 				</div>
 			</div>
 		);

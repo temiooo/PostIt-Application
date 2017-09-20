@@ -9,7 +9,7 @@ const validateInput = {
       }
     }).then((user) => {
       if (user) {
-        return res.status(400).send({
+        return res.status(409).send({
           message: 'Username taken already. Please use another one.'
         });
       }
@@ -25,7 +25,7 @@ const validateInput = {
         }
       }).then((user) => {
         if (user) {
-          return res.status(400).send({
+          return res.status(409).send({
             message: 'Email taken already. Please use another one.'
           });
         }
@@ -45,7 +45,7 @@ const validateInput = {
       }
     }).then((group) => {
       if (group) {
-        return res.status(400).send({
+        return res.status(409).send({
           message: 'Group name exists already. Please use another one.'
         });
       }

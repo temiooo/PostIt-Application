@@ -10,57 +10,57 @@ import { resetPassword } from '../../actions/passwordActions';
 import { validateNewPassword } from '../../utils/validateInput';
 
 class ResetPassword extends React.Component {
-	constructor(props, context){
-    super(props, context);
+	constructor(props, context) {
+		super(props, context);
 
-    this.state = {
+		this.state = {
 			password: '',
-			confirmpassword:'',
+			confirmpassword: '',
 			errors: {},
-    };
+		};
 		this.handleChange = this.handleChange.bind(this);
-    this.handleFocus= this.handleFocus.bind(this);
+		this.handleFocus = this.handleFocus.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	isValid() {
 		const { errors, isValid } = validateNewPassword(this.state);
-    if(!isValid) {
-      this.setState({errors});
+		if (!isValid) {
+			this.setState({ errors });
 		}
 		return isValid;
 	}
-	
-	handleFocus() {
-    this.setState({ errors: {} })
-  }
 
-  handleChange(event) {
-		event.preventDefault();
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+	handleFocus() {
+		this.setState({ errors: {} })
 	}
-	
+
+	handleChange(event) {
+		event.preventDefault();
+		this.setState({
+			[event.target.name]: event.target.value
+		});
+	}
+
 	handleSubmit(event) {
 		event.preventDefault();
 		if (this.isValid()) {
 			const resetToken = this.props.match.params.token;
 			this.setState({ errors: {} });
 			this.props.resetPassword(resetToken, this.state)
-			.then(() => {
-				this.props.history.push('/login');
-			});
-    };
+				.then(() => {
+					this.props.history.push('/login');
+				});
+		};
 	}
 
 	render() {
 		if (this.props.isAuthenticated) {
-      return (
-        <Redirect to = '/messageboard'/>
-      );
-	 	}
-		
+			return (
+				<Redirect to='/messageboard' />
+			);
+		}
+
 		return (
 			<div>
 				<TopNav />
@@ -99,10 +99,10 @@ class ResetPassword extends React.Component {
 							/>
 						</div>
 					</form>
-					</div>
 				</div>
-				);
-		}
+			</div>
+		);
+	}
 }
 
 ResetPassword.propTypes = {
@@ -117,6 +117,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ resetPassword }, dispatch);
+	bindActionCreators({ resetPassword },
+		dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

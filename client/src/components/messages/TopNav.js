@@ -3,50 +3,50 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const TopNav = ({ logout }) => {
-	return(
+	return (
 		<div>
 			<nav className="teal darken-1">
 				<div className="nav-wrapper nav-wrap">
-	  			<a className="brand-logo">
+					<a className="brand-logo">
 						<h6 className="logo">POST-IT</h6>
 					</a>
-	  			<a href="#" data-activates="mobile-demo" className="button-collapse">
+					<a href="#" data-activates="mobile-demo" className="button-collapse">
 						<i className="material-icons">menu</i>
 					</a>
-	  			<ul className="right hide-on-med-and-down">
+					<ul className="right hide-on-med-and-down">
 						{logout ? (
 							<li>
 								<a onClick={logout}>Logout</a>
 							</li>
 						) : (
-							<div>
-								<li>
-									<Link to="/login">Login</Link>
-								</li>
-								<li>
-									<Link to="/">Register</Link>
-								</li>
-							</div>
-						)}
-	  			</ul>
-	  			<ul className="side-nav" id="mobile-demo">
+								<div>
+									<li>
+										<Link to="/login">Login</Link>
+									</li>
+									<li>
+										<Link to="/">Register</Link>
+									</li>
+								</div>
+							)}
+					</ul>
+					<ul className="side-nav" id="mobile-demo">
 						{logout ? (
 							<li>
 								<a onClick={logout}>Logout</a>
 							</li>
 						) : (
-							<div>
-								<li>
-									<Link to="/login">Login</Link>
-								</li>
-								<li>
-									<Link to="/">Register</Link>
-								</li>
-							</div>
-						)}
-	  			</ul>
+								<div>
+									<li>
+										<Link to="/login">Login</Link>
+									</li>
+									<li>
+										<Link to="/">Register</Link>
+									</li>
+								</div>
+							)}
+					</ul>
 				</div>
-  		</nav>
+			</nav>
 		</div>
 	);
 };

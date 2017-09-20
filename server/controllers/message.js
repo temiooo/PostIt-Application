@@ -11,7 +11,7 @@ module.exports = {
       } else {
         group.hasUser(userId).then((result) => {
           if (!result) {
-            res.status(400).send({
+            res.status(401).send({
               message: 'You don\'t belong to this group.'
             });
           } else {
@@ -71,14 +71,20 @@ module.exports = {
                     res.status(201).send({ message });
                   }
                 })
-                .catch(error => res.status(400).send(error));
+                .catch(() => res.status(500).send({
+                  message: 'Internal Server Error'
+                }));
             }
           }
         })
-          .catch(error => res.status(400).send(error));
+          .catch(() => res.status(500).send({
+            message: 'Internal Server Error'
+          }));
       }
     })
-      .catch(error => res.status(400).send(error));
+      .catch(() => res.status(500).send({
+        message: 'Internal Server Error'
+      }));
   },
 
   list(req, res) {
@@ -87,11 +93,11 @@ module.exports = {
 
     Group.findById(groupId).then((group) => {
       if (!group) {
-        res.status(400).send({ message: 'Group Does Not Exist.' });
+        res.status(404).send({ message: 'Group Does Not Exist.' });
       } else {
         group.hasUser(userId).then((result) => {
           if (!result) {
-            res.status(400).send({
+            res.status(401).send({
               message: 'You don\'t belong to this group.'
             });
           } else {
@@ -107,6 +113,8 @@ module.exports = {
         });
       }
     })
-      .catch(error => res.status(400).send(error));
+      .catch(() => res.status(500).send({
+        message: 'Internal Server Error'
+      }));
   }
 };

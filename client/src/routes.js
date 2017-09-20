@@ -8,12 +8,12 @@ import ResetPassword from './components/authentication/ResetPassword';
 
 export default (
   <div>
-  <Switch>
-    <Route exact path="/" component={SignupPage} />
-    <Route path="/login" component={LoginPage} />
-    <Route path="/messageboard" component={Messageboard} />
-    <Route path="/forgotpassword" component={ForgotPassword} />
-    <Route path="/resetpassword/:token" component={ResetPassword} />
-  </Switch>
+    <Switch>
+      <Route exact path="/" component={SignupPage} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/messageboard" component={Messageboard} />
+      <Route path="/forgotpassword" component={ForgotPassword} />
+      <Route path="/resetpassword/:token" component={ResetPassword} />
+    </Switch>
   </div>
 );

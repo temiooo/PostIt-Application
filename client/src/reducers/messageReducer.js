@@ -11,7 +11,8 @@ const messageReducer = (state = initialState.messages, action) => {
       };
 
     case types.POST_MESSAGE_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         groupMessages: [...state.groupMessages, action.message]
       };
 

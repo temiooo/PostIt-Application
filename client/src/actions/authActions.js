@@ -4,11 +4,13 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 import * as types from './actionTypes';
 
 const signupSuccess = user => ({
-  type: types.SIGNUP_SUCCESS, user
+  type: types.SIGNUP_SUCCESS,
+  user
 });
 
 const loginSuccess = user => ({
-  type: types.LOGIN_SUCCESS, user
+  type: types.LOGIN_SUCCESS,
+  user
 });
 
 const signup = userDetails => dispatch => axios
@@ -43,5 +45,7 @@ const logout = () => {
   return { type: types.LOGOUT };
 };
 
-export { signup, signupSuccess, login,
-  loginSuccess, logout };
+export {
+  signup, signupSuccess, login,
+  loginSuccess, logout
+};

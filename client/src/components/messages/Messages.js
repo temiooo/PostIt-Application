@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MessageList from './MessageList';
-import MessageForm from './MessageForm';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import MessageList from './MessageList';
+import MessageForm from './MessageForm';
 import { getMessages } from '../../actions/messageActions';
 import { editGroupOn } from '../../actions/groupActions';
 

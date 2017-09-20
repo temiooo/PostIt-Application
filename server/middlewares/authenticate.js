@@ -9,7 +9,7 @@ const authenticate = {
     if (token) {
       jwt.verify(token, process.env.SECRET, (err, decoded) => {
         if (err) {
-          return res.status(403).send({
+          return res.status(401).send({
             message: 'Token is no longer Valid'
           });
         }
@@ -27,7 +27,7 @@ const authenticate = {
         });
       });
     } else {
-      return res.status(403).send({
+      return res.status(400).send({
         message: 'No token provided'
       });
     }
