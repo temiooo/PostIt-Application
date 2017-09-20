@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "migrate:db": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
-    "test:server": "npm run migrate:db && NODE_ENV=test nyc --reporter=text  --reporter=html mocha --compilers js:babel-core/register --reporter spec server/test/**/*.spec.js --timeout 5000",
+    "test:server": "npm run migrate:db && NODE_ENV=test mocha --compilers js:babel-core/register --reporter spec server/test/**/*.spec.js --timeout 5000",
+    "cover": "npm run migrate:db && NODE_ENV=test nyc report --reporter=html --reporter=text mocha --reporter spec --compilers js:babel-core/register --reporter spec server/test/**/*.spec.js --timeout 5000",
     "start": "babel-node server.js",
-    "coveralls:ss": "nyc --reporter=lcov --reporter=text-lcov npm run test:server",
-    "coveralls": "NODE_ENV=test && nyc --reporter=text  --reporter=html mocha --compilers js:babel-core/register --reporter spec server/test/**/*.spec.js --timeout 5000",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "start:dev": "nodemon --exec babel-node server.js",
     "open:src": "babel-node tools/srcServer.js",
     "clean-dist": "npm run remove-dist && mkdir client/dist",
