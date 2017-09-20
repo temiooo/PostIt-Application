@@ -1,5 +1,6 @@
 [![Code Climate](https://codeclimate.com/github/temiooo/PostIt-Application/badges/gpa.svg)](https://codeclimate.com/github/temiooo/PostIt-Application)
 [![Build Status](https://travis-ci.org/temiooo/PostIt-Application.svg?branch=Develop)](https://travis-ci.org/temiooo/PostIt-Application)
+[![Coverage Status](https://coveralls.io/repos/github/temiooo/PostIt-Application/badge.svg?branch=chore%2F148576433%2Fintegrate-travisCI)](https://coveralls.io/github/temiooo/PostIt-Application?branch=chore%2F148576433%2Fintegrate-travisCI)
 # PostIt Application
 PostIt is a simple application that allows people to create accounts, create groups and add registered users to the groups, and then send messages out to these groups whenever they want. This way one person can post notifications to everyone in the group by sending a message once. 
 
