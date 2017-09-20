@@ -13,9 +13,11 @@ postgres:
   username: postgres
   
 before_script:
-  - npm --prefix ./client install ./client
   - psql -c 'create database postit_test;' -U postgres
-  - dropdb --if-exists postit_test && createdb postit_test
   - npm install sequelize-cli -g
-  - NODE_ENV=test npm run migrate:db
+
+script:
+  - npm run test:server
+  
+after_success:
   - npm run coveralls
