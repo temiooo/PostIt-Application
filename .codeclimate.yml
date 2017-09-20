@@ -13,5 +13,5 @@ ratings:
 exclude_paths:
   - client/test/
   - client/dist/
-  - test/
+  - server/test/
   - template/
