@@ -56,6 +56,8 @@ const updateGroup = (groupName, groupId, user) => dispatch => axios
   });
 
 
-export { getGroups, getGroupsSuccess, createGroup,
+export {
+  getGroups, getGroupsSuccess, createGroup,
   createGroupSuccess, updateGroup, editGroupOn,
-  editGroupOff };
+  editGroupOff
+};

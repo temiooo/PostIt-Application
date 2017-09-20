@@ -1,10 +1,10 @@
 import React from 'react';
+import toastr from 'toastr';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { isEmpty, trim } from 'lodash';
 import { bindActionCreators } from 'redux';
 import Button from '../common/Button';
-import toastr from 'toastr';
-import { isEmpty, trim } from 'lodash';
 import { validateMessageInput } from '../../utils/validateInput';
 import { postMessage, postMessageSuccess } from '../../actions/messageActions';
 
@@ -19,17 +19,12 @@ class MessageForm extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.logChange = this.logChange.bind(this);
 	}
 
 	handleChange(event) {
 		this.setState({
 			[event.target.name]: event.target.value
 		})
-	}
-
-	logChange(val) {
-		console.log("Selected: " + JSON.stringify(val));
 	}
 
 	isValid() {

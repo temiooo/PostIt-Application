@@ -32,7 +32,9 @@ module.exports = {
           token
         });
       })
-      .catch(error => res.status(400).send(error));
+      .catch(() => res.status(500).send({
+        message: 'Internal Server Error'
+      }));
   },
 
   signin(req, res) {
@@ -48,7 +50,7 @@ module.exports = {
         }
       }).then((user) => {
         if (!user) {
-          return res.status(400).send({ message: 'User not found' });
+          return res.status(404).send({ message: 'User not found' });
         }
 
         if (bcrypt.compareSync(req.body.password, user.password)) {
@@ -121,10 +123,14 @@ module.exports = {
                 });
               });
           })
-          .catch(error => res.status(400).send({ error }));
+          .catch(() => res.status(500).send({
+            message: 'Internal Server Error'
+          }));
       }
     })
-      .catch(error => res.status(400).send({ error }));
+      .catch(() => res.status(500).send({
+        message: 'Internal Server Error'
+      }));
   },
 
   resetPassword(req, res) {
@@ -141,7 +147,7 @@ module.exports = {
         }
       }).then((user) => {
         if (!user) {
-          res.status(404).send({
+          res.status(400).send({
             message: 'Password Reset Token is Invalid or has Expired'
           });
         } else {
@@ -175,10 +181,14 @@ module.exports = {
                   });
                 });
             })
-            .catch(error => res.status(400).send({ error }));
+            .catch(() => res.status(500).send({
+              message: 'Internal Server Error'
+            }));
         }
       })
-        .catch(error => res.status(400).send({ error }));
+        .catch(() => res.status(500).send({
+          message: 'Internal Server Error'
+        }));
     }
   },
 
@@ -222,9 +232,13 @@ module.exports = {
               });
             }
           })
-            .catch(error => res.status(400).send(error));
+            .catch(() => res.status(500).send({
+              message: 'Internal Server Error'
+            }));
         })
-          .catch(error => res.status(400).send(error));
+          .catch(() => res.status(500).send({
+            message: 'Internal Server Error'
+          }));
       }
     });
   },
@@ -234,13 +248,15 @@ module.exports = {
 
     User.findById(userId).then((user) => {
       if (!user) {
-        res.status(400).send({ message: 'User Does Not Exist' });
+        res.status(404).send({ message: 'User Does Not Exist' });
       } else {
         user.getGroups().then((result) => {
           res.status(200).send(result);
         });
       }
     })
-      .catch(error => res.status(400).send(error));
+      .catch(() => res.status(500).send({
+        message: 'Internal Server Error'
+      }));
   }
 };

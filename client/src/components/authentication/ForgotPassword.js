@@ -92,6 +92,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ forgotPassword }, dispatch);
+	bindActionCreators({ forgotPassword },
+		dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);

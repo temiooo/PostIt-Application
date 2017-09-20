@@ -1,8 +1,10 @@
 import axios from 'axios';
 import toastr from 'toastr';
 import * as types from './actionTypes';
-import { beginAjaxCall, ajaxCallSuccess,
-  ajaxCallError } from './ajaxStatusActions';
+import {
+  beginAjaxCall, ajaxCallSuccess,
+  ajaxCallError
+} from './ajaxStatusActions';
 
 const getMessagesSuccess = (id, data) => ({
   type: types.GET_MESSAGES_SUCCESS, id, data
@@ -38,5 +40,7 @@ const postMessage = (id, message) => dispatch => axios
   });
 
 
-export { getMessages, getMessagesSuccess, postMessage,
-  postMessageSuccess };
+export {
+  getMessages, getMessagesSuccess, postMessage,
+  postMessageSuccess
+};

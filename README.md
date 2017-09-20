@@ -13,12 +13,32 @@ PostIt is a simple application that allows people to create accounts, create gro
 * Post a message to a group you belong to.
 * Retrieve a list of messages in a group that you belong to.
 
-## Installation
-To install this application, 
-1. git clone this repository
-2. Open the command line and cd into the folder you just cloned
-3. Run ```npm install``` to install dependencies
-4. Then run ```npm start``` to start the application
+## Getting Started
+**Via Cloning The Repository**
+```
+# Clone the app
+git clone https://github.com/temiooo/PostIt-Application.git
+
+# Switch to directory
+cd PostIt-Application
+
+# Create .env file in the root directory
+touch .env
+
+# add your SECRET, DATABASE_URL, TEST_DATABASE_URL, PRODUCTION_DATABASE_URL, EMAIL_ADDRESS, EMAIL_PASSWORD keys
+**Note that the email address and its password will be used by the application to send email notifications to users as required**
+
+# Install Package dependencies
+npm install
+
+# Run your migrations
+npm run db:migrate
+```
+
+## Testing
+```
+Run `npm run test:server`
+```
 
 ## Built with
 * [NodeJS](https://nodejs.org/en/) - A Javscript runtime built runtime that uses an event-driven non-blocking I/O model that makes it lightweight and efficient.
@@ -26,24 +46,19 @@ To install this application,
 * [PostgreSQL](https://www.postgresql.org/) - A powerful, open source object-relational database system.
 * [Sequelize](http://docs.sequelizejs.com/) - An ORM for Node.js that supports the dialects of PostgreSQL and features solid transaction support an relations.
 
-## API
-The routes specified in the application are as follows:
-- **'/api/user/signup'**
-    - **POST** - Creates a new user using a unique username, unique email and password.
+## API Documentation
+* https://temiooo.github.io/slate
 
-- **'/api/user/signin'**
-    - **POST** - Allows an already existing user to sign in into the application with a username and password.
+## Contributing
+If you are interested in contributing to development of PostIt-Application,
 
-```
-Routes speccified below are protected. Authentication is required before they can be accessed.
-```
-- **'api/group'**
-    - **POST** - Creates a new group. You have to pass it the name of the group you want to create.
+Follow the instructions below to contribute.
+* Fork the repository
 
-- **'api/group/:groupId/user'**
-    - **POST** - Adds a registered user to an already existing group. Specify the ID of the user you want to add to the group.
-- **'api/group/:groupId/message'**
-    - **POST** - Post a message to an already existing group
-    Specify the content of the message you want to post to the group
-- **'api/group/:groupId/messages**
-    - **GET** Retrieve all the messages that have been posted to a group
+* Make your change
+
+* Commit your change to your forked repository
+
+* Provide a detailed commit description
+
+* Create a pull request

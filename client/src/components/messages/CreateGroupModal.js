@@ -8,7 +8,7 @@ import { validateGroupInput } from '../../utils/validateInput';
 import { createGroup, updateGroup } from '../../actions/groupActions';
 
 class CreateGroupModal extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -50,9 +50,9 @@ class CreateGroupModal extends React.Component {
 
   hasErrors() {
     const { errors, isValid } = validateGroupInput(this.state);
-    if(!isValid) {
-      this.setState({errors});
-    } 
+    if (!isValid) {
+      this.setState({ errors });
+    }
   }
 
   handleBlur() {
@@ -76,35 +76,35 @@ class CreateGroupModal extends React.Component {
     }
   }
 
-	render() {
+  render() {
     const { errors } = this.state;
 
-		return(
-			<div id="group" className="modal black-text">
+    return (
+      <div id="group" className="modal black-text">
         <div className="modal-content">
           <h5>Group Name</h5>
-            <TextInput
-              name="name"
-              type="text"
-              value={this.state.name}
-              placeholder="Enter group name here"
-              onChange={this.handleChange}
-              onBlur={this.handleBlur}
-              onFocus={this.handleFocus}
-              error={errors.name}
-            />
+          <TextInput
+            name="name"
+            type="text"
+            value={this.state.name}
+            placeholder="Enter group name here"
+            onChange={this.handleChange}
+            onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
+            error={errors.name}
+          />
         </div>
         <div className="modal-footer">
-					<Button
-						className="btn modal-action modal-close waves-effect waves-green red darken-1"
-						text="SAVE GROUP"
+          <Button
+            className="btn modal-action modal-close waves-effect waves-green red darken-1"
+            text="SAVE GROUP"
             onClick={this.handleSubmit}
             disabled={!this.isValid()}
-					/>
-				</div>
+          />
+        </div>
       </div>
-		);
-	}
+    );
+  }
 }
 
 CreateGroupModal.propTypes = {
@@ -125,6 +125,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   createGroup,
-  updateGroup }, dispatch)
+  updateGroup
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupModal);

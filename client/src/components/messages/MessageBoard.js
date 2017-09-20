@@ -58,7 +58,6 @@ class MessageBoard extends React.Component {
 						groups={this.props.groups}
 						edit={this.editGroupOff}
 					/>
-
 					<CreateGroupModal />
 
 					<main>

@@ -3,22 +3,24 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactPaginate from 'react-paginate';
-import { getGroupMembers, searchUsers, searchUsersFailure, 
-  addUser } from '../../actions/userActions';
+import {
+  getGroupMembers, searchUsers, searchUsersFailure,
+  addUser
+} from '../../actions/userActions';
 
 class GroupMember extends React.Component {
   constructor(props) {
-		super(props);
-		
-		this.state = {
-			searchTerm: ''
+    super(props);
+
+    this.state = {
+      searchTerm: ''
     };
-			
-		this.handleChange = this.handleChange.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.addUserToGroup = this.addUserToGroup.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
-	}
+  }
 
   componentWillMount() {
     const group = this.props.messages.groupId || this.props.match.params.id;
@@ -28,7 +30,7 @@ class GroupMember extends React.Component {
   componentWillUnmount() {
     this.props.searchUsersFailure();
   }
-  
+
   handleChange(event) {
     this.setState({
       searchTerm: event.target.value
@@ -45,18 +47,18 @@ class GroupMember extends React.Component {
 
   handleSearch(event) {
     event.preventDefault();
-      this.searchUser();
+    this.searchUser();
   }
 
   addUserToGroup(user) {
     event.preventDefault();
     const group = this.props.messages.groupId;
-    const userDetail = { userId : user }
+    const userDetail = { userId: user }
     this.props.addUser(group, userDetail)
-    .then(() => {
-      this.props.getGroupMembers(group);
-      this.searchUser();
-    })
+      .then(() => {
+        this.props.getGroupMembers(group);
+        this.searchUser();
+      })
   }
 
   handlePageClick(data) {
@@ -66,7 +68,7 @@ class GroupMember extends React.Component {
     this.searchUser(offset);
   }
 
-  render () {
+  render() {
     const { members, nonMembers, pagination } = this.props.users;
     const paginationSize = Object.keys(pagination).length;
 
@@ -79,11 +81,11 @@ class GroupMember extends React.Component {
               <div className="search row z-depth-3">
                 <div className="col s10">
                   <input
-                  id="search"
-                  type="search"
-                  placeholder="Search"
-                  value={this.state.searchTerm}
-                  onChange={this.handleChange}
+                    id="search"
+                    type="search"
+                    placeholder="Search"
+                    value={this.state.searchTerm}
+                    onChange={this.handleChange}
                   />
                 </div>
                 <div className=" search-icon col s2 center-align">
@@ -95,37 +97,37 @@ class GroupMember extends React.Component {
                 </div>
               </div>
             </form>
-            
+
             {nonMembers.length > 0 ? (
               <ul className="collection"> {nonMembers.map(user =>
                 <li className="collection-item" key={user.id}>
                   <div>{user.username}
                     <a className=" waves-effect secondary-content"
-                        onClick={() => this.addUserToGroup(user.id)}>
+                      onClick={() => this.addUserToGroup(user.id)}>
                       <i className="material-icons">add</i>
                     </a>
                   </div>
-                </li> )}
+                </li>)}
               </ul>
-              ) : (
+            ) : (
                 <h4 className="no-user center-align"> No Users Found</h4>
               )
             }
 
-            {paginationSize > 0 && 
-            <ReactPaginate
-              previousLabel={<i className="material-icons">chevron_left</i>}
-              nextLabel={<i className="material-icons">chevron_right</i>}
-              breakLabel={<a href="">...</a>}
-              breakClassName={"break-me"}
-              pageCount={pagination.pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              forcePage={pagination.pageNumber - 1}
-              onPageChange={this.handlePageClick}
-              containerClassName={"pagination center-align"}
-              activeClassName={"active"}
-            />}
+            {paginationSize > 0 &&
+              <ReactPaginate
+                previousLabel={<i className="material-icons">chevron_left</i>}
+                nextLabel={<i className="material-icons">chevron_right</i>}
+                breakLabel={<a href="">...</a>}
+                breakClassName={"break-me"}
+                pageCount={pagination.pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                forcePage={pagination.pageNumber - 1}
+                onPageChange={this.handlePageClick}
+                containerClassName={"pagination center-align"}
+                activeClassName={"active"}
+              />}
           </div>
 
           <div className="col s12 m4 l4">
@@ -152,8 +154,8 @@ GroupMember.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    messages: state.messages,
-    users: state.users
+  messages: state.messages,
+  users: state.users
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

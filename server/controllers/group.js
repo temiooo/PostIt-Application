@@ -19,7 +19,9 @@ module.exports = {
             });
           });
         })
-        .catch(error => res.status(400).send({ error }));
+        .catch(() => res.status(500).send({
+          message: 'Internal Server Error'
+        }));
     }
   },
 
@@ -36,7 +38,7 @@ module.exports = {
         } else {
           group.hasUser(userId).then((result) => {
             if (!result) {
-              res.status(400).send({
+              res.status(401).send({
                 message: 'You don\'t belong to this group'
               });
             } else {
@@ -48,12 +50,16 @@ module.exports = {
                   group,
                   message: 'Group updated sucessfully'
                 }))
-                .catch(error => res.status(400).send({ error }));
+                .catch(() => res.status(500).send({
+                  message: 'Internal Server Error'
+                }));
             }
           });
         }
       })
-        .catch(error => res.status(400).send({ error }));
+        .catch(() => res.status(500).send({
+          message: 'Internal Server Error'
+        }));
     }
   },
 
@@ -71,7 +77,7 @@ module.exports = {
           } else {
             group.hasUser(userId).then((result) => {
               if (result) {
-                res.status(400).send({
+                res.status(409).send({
                   message: 'User Already Exists In This Group'
                 });
               } else {
@@ -83,7 +89,9 @@ module.exports = {
         });
       }
     })
-      .catch(error => res.status(400).send({ error }));
+      .catch(() => res.status(500).send({
+        message: 'Internal Server Error'
+      }));
   },
 
   listUsers(req, res) {
@@ -102,6 +110,8 @@ module.exports = {
         });
       }
     })
-      .catch(error => res.status(400).send({ error }));
+      .catch(() => res.status(500).send({
+        message: 'Internal Server Error'
+      }));
   }
 };
