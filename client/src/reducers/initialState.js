@@ -1,7 +1,7 @@
 export default {
   auth: {
-    currentUserId: '',
     isAuthenticated: false,
+    currentUser: {}
   },
   groups: [],
   messages: {
@@ -13,11 +13,6 @@ export default {
     members: [],
     nonMembers: [],
     pagination: {}
-  },
-  currentUserInfo: {
-    username: '',
-    email: '',
-    joinedOn: null,
   },
   ajaxCallsInProgress: 0,
   editGroupStatus: false

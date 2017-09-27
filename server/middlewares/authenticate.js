@@ -10,13 +10,13 @@ const authenticate = {
       jwt.verify(token, process.env.SECRET, (err, decoded) => {
         if (err) {
           return res.status(401).send({
-            message: 'Token is no longer Valid'
+            message: 'Token is no longer valid so we can\'t authenticate you.'
           });
         }
         req.decoded = decoded;
         User.findOne({
           where: {
-            id: decoded.userId
+            id: decoded.user.id
           },
           attributes: {
             exclude: ['password', 'resetPasswordToken', 'resetPasswordExpires']
@@ -27,8 +27,8 @@ const authenticate = {
         });
       });
     } else {
-      return res.status(400).send({
-        message: 'No token provided'
+      return res.status(401).send({
+        message: 'No token provided so we can\'t authenticate you.'
       });
     }
   }

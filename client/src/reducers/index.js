@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux';
 import auth from './authReducer';
+import users from './userReducer';
 import groups from './groupReducer';
 import messages from './messageReducer';
-import users from './userReducer';
-import ajaxCallsInProgress from './ajaxStatusReducer';
-import editGroupStatus from './editGroupReducer';
-import currentUserInfo from './currentUserReducer';
 import * as types from '../actions/actionTypes';
+import editGroupStatus from './editGroupReducer';
+import ajaxCallsInProgress from './ajaxStatusReducer';
 
 const appReducer = combineReducers({
   auth,
@@ -14,8 +13,7 @@ const appReducer = combineReducers({
   messages,
   users,
   ajaxCallsInProgress,
-  editGroupStatus,
-  currentUserInfo
+  editGroupStatus
 });
 
 const rootReducer = (state, action) => {

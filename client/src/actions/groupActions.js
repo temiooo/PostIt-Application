@@ -2,12 +2,28 @@ import axios from 'axios';
 import toastr from 'toastr';
 import * as types from './actionTypes';
 
-const getGroupsSuccess = groups => ({
-  type: types.GET_GROUPS_SUCCESS, groups
+const getUserGroupsSuccess = groups => ({
+  type: types.GET_USER_GROUPS_SUCCESS, groups
+});
+
+const getUserGroupsFailure = () => ({
+  type: types.GET_USER_GROUPS_FAILURE
+});
+
+const getGroupSuccess = group => ({
+  type: types.GET_GROUP_SUCCESS, group
+});
+
+const getGroupFailure = () => ({
+  type: types.GET_GROUP_FAILURE
 });
 
 const createGroupSuccess = group => ({
   type: types.CREATE_GROUP_SUCCESS, group
+});
+
+const createGroupFailure = () => ({
+  type: types.CREATE_GROUP_FAILURE
 });
 
 const updateGroupInfo = group => ({
@@ -22,15 +38,24 @@ const editGroupOff = () => ({
   type: types.EDIT_GROUP_OFF
 });
 
-const getGroups = user => dispatch => axios
+const getUserGroups = user => dispatch => axios
   .get(`/api/user/${user}/groups`)
   .then((response) => {
-    dispatch(getGroupsSuccess(response.data));
+    dispatch(getUserGroupsSuccess(response.data));
   })
   .catch((error) => {
-    toastr.error(error);
+    toastr(error.response.data.message);
+    dispatch(getUserGroupsFailure());
   });
 
+const getGroup = id => dispatch => axios
+  .get(`/api/group/${id}`)
+  .then((response) => {
+    dispatch(getGroupSuccess(response.data));
+  })
+  .catch(() => {
+    dispatch(getGroupFailure());
+  });
 
 const createGroup = groupName => dispatch => axios
   .post('/api/group', groupName)
@@ -38,6 +63,7 @@ const createGroup = groupName => dispatch => axios
     dispatch(createGroupSuccess(response.data.group));
   })
   .catch((error) => {
+    dispatch(createGroupFailure());
     toastr.error(error.response.data.message);
   });
 
@@ -47,17 +73,18 @@ const updateGroup = (groupName, groupId, user) => dispatch => axios
     toastr.success(response.data.message);
     axios.get(`/api/user/${user}/groups`)
       .then((result) => {
-        dispatch(getGroupsSuccess(result.data));
+        dispatch(getUserGroupsSuccess(result.data));
         dispatch(updateGroupInfo(groupName));
       });
   })
   .catch((error) => {
+    dispatch(getUserGroupsFailure());
     toastr.error(error.response.data.message);
   });
 
 
 export {
-  getGroups, getGroupsSuccess, createGroup,
+  getUserGroups, getGroupSuccess, getGroupFailure, createGroup,
   createGroupSuccess, updateGroup, editGroupOn,
-  editGroupOff
+  editGroupOff, getGroup
 };

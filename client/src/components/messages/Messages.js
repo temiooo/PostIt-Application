@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import MessageList from './MessageList';
 import MessageForm from './MessageForm';
 import { getMessages } from '../../actions/messageActions';
-import { editGroupOn } from '../../actions/groupActions';
+import { editGroupOn, getGroup } from '../../actions/groupActions';
 
 class Messages extends React.Component {
 
@@ -18,13 +18,15 @@ class Messages extends React.Component {
 
 	componentWillMount() {
 		const groupId = this.props.match.params.id;
+		this.props.getGroup(groupId);
 		this.props.getMessages(groupId);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.match.params.id !== this.props.match.params.id) {
 			const groupId = nextProps.match.params.id;
-			this.props.getMessages(groupId)
+			this.props.getGroup(groupId);
+			this.props.getMessages(groupId);
 		}
 	}
 
@@ -54,6 +56,7 @@ class Messages extends React.Component {
 }
 
 Messages.propTypes = {
+	getGroup: PropTypes.func.isRequired,
 	messages: PropTypes.object.isRequired,
 	getMessages: PropTypes.func.isRequired,
 	isLoading: PropTypes.number.isRequired,
@@ -67,7 +70,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	getMessages,
-	editGroupOn
+	editGroupOn,
+	getGroup
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Messages);

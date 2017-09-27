@@ -14,7 +14,7 @@ const validateSignupInput = (state) => {
   if (trim(state.username).length === 0) {
     errors.username = 'Username is required';
   } else if (trim(state.username).length < 5) {
-    errors.username = 'Minimum of 5 characters';
+    errors.username = 'Username is too short (min of 5 characters).';
   } else if (state.username.charAt(0) === ' ') {
     errors.username = 'Username cannot begin with space characters';
   } else if (state.username.charAt(len - 1) === ' ') {
@@ -24,7 +24,7 @@ const validateSignupInput = (state) => {
   if (trim(state.password).length === 0) {
     errors.password = 'Password is required';
   } else if (state.password.length < 8) {
-    errors.password = 'Minimum of 8 characters';
+    errors.password = 'Password is too short (min of 8 characters).';
   }
 
   if (state.confirmpassword !== state.password) {
@@ -44,7 +44,7 @@ const validateGroupInput = (state) => {
   if (trim(state.name).length === 0) {
     errors.name = 'Group Name is required';
   } else if (trim(state.name).length < 5) {
-    errors.name = 'Minimum of 5 characters';
+    errors.name = 'Group Name is too short (min of 5 characters).';
   } else if (state.name.charAt(0) === ' ') {
     errors.name = 'Group Name cannot begin with a space character';
   } else if (state.name.charAt(len - 1) === ' ') {
@@ -65,7 +65,7 @@ const validateMessageInput = (state) => {
   }
 
   if (trim(state.priority).length === 0) {
-    errors.priority = 'Please select a priority';
+    errors.priority = 'Please include a priority';
   }
 
   return {
@@ -92,7 +92,7 @@ const validateNewPassword = (state) => {
   if (trim(state.password).length === 0) {
     errors.password = 'Password is required';
   } else if (state.password.length < 8) {
-    errors.password = 'Minimum of 8 characters';
+    errors.password = 'Password is too short (min of 8 characters).';
   }
 
   if (state.confirmpassword !== state.password) {

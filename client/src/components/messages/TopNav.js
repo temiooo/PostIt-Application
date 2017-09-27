@@ -7,9 +7,11 @@ const TopNav = ({ logout }) => {
 		<div>
 			<nav className="teal darken-1">
 				<div className="nav-wrapper nav-wrap">
-					<a className="brand-logo">
-						<h6 className="logo">POST-IT</h6>
-					</a>
+				<Link to="/messageboard" className="brand-logo">
+						<h6 className="logo">
+							POST-IT
+						</h6>
+				</Link>
 					<a href="#" data-activates="mobile-demo" className="button-collapse">
 						<i className="material-icons">menu</i>
 					</a>

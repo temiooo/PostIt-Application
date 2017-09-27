@@ -1,23 +1,26 @@
 import { Group, User } from '../models';
 
-module.exports = {
+const groupController = {
   create(req, res) {
-    if (!req.body.name) {
-      res.status(400).send({ message: 'Group name not provided' });
+    const groupName = req.body.name;
+    if (!groupName || groupName.trim().length === 0) {
+      res.status(400).send({ message: 'Group name is required' });
     } else {
       return Group
         .create({
-          name: req.body.name,
+          name: groupName,
         })
         .then((group) => {
-          const user = req.decoded.userId;
-          group.addUser(user).then((userInfo) => {
+          const user = req.decoded.user.id;
+          group.addUser(user).then(() => {
             res.status(201).send({
               message: 'Group Created Successfully',
-              group,
-              userAddedToGroup: Boolean(userInfo),
+              group
             });
-          });
+          })
+            .catch(() => res.status(500).send({
+              message: 'Internal Server Error'
+            }));
         })
         .catch(() => res.status(500).send({
           message: 'Internal Server Error'
@@ -27,9 +30,10 @@ module.exports = {
 
   edit(req, res) {
     const groupId = req.params.groupId;
-    const userId = req.decoded.userId;
+    const userId = req.decoded.user.id;
+    const groupName = req.body.name;
 
-    if (!req.body.name) {
+    if (!groupName || groupName.trim().length === 0) {
       res.status(400).send({ message: 'Group name not provided' });
     } else {
       Group.findById(groupId).then((group) => {
@@ -38,7 +42,7 @@ module.exports = {
         } else {
           group.hasUser(userId).then((result) => {
             if (!result) {
-              res.status(401).send({
+              res.status(403).send({
                 message: 'You don\'t belong to this group'
               });
             } else {
@@ -54,13 +58,34 @@ module.exports = {
                   message: 'Internal Server Error'
                 }));
             }
-          });
+          })
+            .catch(() => res.status(500).send({
+              message: 'Internal Server Error'
+            }));
         }
       })
         .catch(() => res.status(500).send({
           message: 'Internal Server Error'
         }));
     }
+  },
+
+  get(req, res) {
+    const groupId = req.params.groupId;
+
+    Group.findOne({
+      where: { id: groupId }
+    })
+      .then((group) => {
+        if (!group) {
+          res.status(404).send({ message: 'Group Does Not Exist' });
+        } else {
+          res.status(200).send(group);
+        }
+      })
+      .catch(() => res.status(500).send({
+        message: 'Internal Server Error'
+      }));
   },
 
   addUser(req, res) {
@@ -82,11 +107,19 @@ module.exports = {
                 });
               } else {
                 group.addUser(userId);
-                res.status(201).send({ message: 'User Added Successfully' });
+                res.status(201).send({
+                  message: 'User Added Successfully'
+                });
               }
-            });
+            })
+              .catch(() => res.status(500).send({
+                message: 'Internal Server Error'
+              }));
           }
-        });
+        })
+          .catch(() => res.status(500).send({
+            message: 'Internal Server Error'
+          }));
       }
     })
       .catch(() => res.status(500).send({
@@ -96,18 +129,19 @@ module.exports = {
 
   listUsers(req, res) {
     const groupId = req.params.groupId;
-
-    Group.findById(groupId).then((group) => {
+    Group.findOne({
+      where: { id: groupId },
+      attributes: [],
+      include: [{
+        model: User,
+        attributes: { exclude: ['password'] },
+        through: { attributes: [] },
+      }]
+    }).then((group) => {
       if (!group) {
         res.status(404).send({ message: 'Group Does Not Exist' });
       } else {
-        group.getUsers({
-          attributes: {
-            exclude: ['password']
-          },
-        }).then((result) => {
-          res.status(200).send(result);
-        });
+        res.status(200).send(group.Users);
       }
     })
       .catch(() => res.status(500).send({
@@ -115,3 +149,5 @@ module.exports = {
       }));
   }
 };
+
+export default groupController;
