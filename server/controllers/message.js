@@ -22,7 +22,7 @@ const messageController = {
             Message.create({
               senderId: userId,
               content: req.body.content,
-              priority: req.body.priority,
+              priority,
               groupId
             })
               .then((msg) => {

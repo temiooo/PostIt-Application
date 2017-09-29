@@ -95,7 +95,7 @@ const userController = {
               .then(() => {
                 res.status(200).send({
                   message: 'An email has been sent to ' + user.email +
-                    'with further instructions.'
+                    ' with further instructions.'
                 });
               })
               .catch(() => {

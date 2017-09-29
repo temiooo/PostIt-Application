@@ -51,10 +51,10 @@ export const group =
 
 export const insertSeedData = () => {
   db.User.bulkCreate(users);
-  // db.Group.create(group)
-  //   .then((newgroup) => {
-  //     newgroup.addUser(1);
-  //   });
+  db.Group.create(group)
+    .then((newgroup) => {
+      newgroup.addUser(1);
+    });
 };
 
 export const generateToken = (id, user) => {
@@ -66,3 +66,7 @@ export const generateToken = (id, user) => {
 
   return token;
 };
+
+export const user1token = generateToken(1, users[0]);
+
+export const user2token = generateToken(2, users[1]);

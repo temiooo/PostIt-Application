@@ -89,15 +89,13 @@ const validateInput = {
       return res.status(400).send({
         message: 'Message content is required'
       });
-    }
-
-    if (trim(priority).length === 0) {
-      res.status(400).send({
+    } else if (trim(priority).length === 0) {
+      return res.status(400).send({
         message: 'Message priority is required'
       });
     } else if (priority !== 'Urgent' && priority !== 'Critical' &&
       priority !== 'Normal') {
-      res.status(400).send({
+      return res.status(400).send({
         message:
         'Message priority has to be Normal, Critical, or Urgent'
       });

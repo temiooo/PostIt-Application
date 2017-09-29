@@ -1,36 +1,15 @@
 import { expect } from 'chai';
 import request from 'supertest';
 import app from '../../../server';
-import { insertSeedData, generateToken, users } from '../helpers/seedData';
-// import { generateToken } from '../helpers/see'
-// import { transporter } from '../../../server/utils/nodemailer';
-
+import { insertSeedData, user1token, user2token } from '../helpers/seedData';
 
 describe('To do before running test', () => {
   before((done) => {
     insertSeedData();
-
-    // request(app)
-    //   .post('/api/user/signin')
-    //   .set('Accept', 'application/json')
-    //   .send({
-    //     username: 'user1',
-    //     password: 'useruser',
-    //   })
-    //   .end((err, res) => {
-    //     user1token = res.body.token;
-    //     expect(res.status).to.equal(200);
-    //     expect(res.body).to.have.all.deep.keys('message', 'userId', 'token');
-    //     done();
-    //      });
-
-
     done();
   });
 
-  const user1token = generateToken(users[0]);
-
-  describe('CREATE GROUPS API - /api/group', () => {
+  describe('CREATE GROUP API - /api/group', () => {
     it('should allow registered user create a new group', (done) => {
       request(app)
         .post('/api/group')
@@ -41,7 +20,7 @@ describe('To do before running test', () => {
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body).to.have.all.deep.keys('message', 'group');
-          expect(res.body.group.id).to.equal(1);
+          expect(res.body.group.id).to.equal(2);
           expect(res.body.group.name).to.equal('Awesome Rockstars');
           expect(res.body.message).to.equal('Group Created Successfully');
           done();
@@ -72,18 +51,17 @@ describe('To do before running test', () => {
         });
     });
 
-    // it('should add user creating the group to the group member\'s list', (done) => {
-    //   request(app)
-    //     .get('/api/group/1/users')
-    //     .set('authorization', user1token)
-    //     .end((err, res) => {
-    //       expect(res.status).to.equal(200);
-    //       console.log(res.body, '.................');
-    //       // expect(res.body.email).to.equal('abigail@gmail.com');
-    //       // expect(res.body[0].name).to.equal('abigail');
-    //       done();
-    //     });
-    // });
+    it('should add user creating the group to the group member\'s list', (done) => {
+      request(app)
+        .get('/api/group/2/users')
+        .set('authorization', user1token)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body[0].email).to.equal('abigail@gmail.com');
+          expect(res.body[0].username).to.equal('abigail');
+          done();
+        });
+    });
 
     it('should not allow unregistered user to create new group', (done) => {
       request(app)
@@ -93,8 +71,8 @@ describe('To do before running test', () => {
           name: 'Awesome Rockstars',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body.message).to.equal('No token provided');
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('No token provided so we can\'t authenticate you.');
           done();
         });
     });
@@ -112,6 +90,7 @@ describe('To do before running test', () => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.all.deep.keys('message', 'group');
           expect(res.body.group.name).to.equal('Ravenclaw');
+          expect(res.body.message).to.equal('Group updated sucessfully');
           done();
         });
     });
@@ -138,8 +117,8 @@ describe('To do before running test', () => {
           name: 'Imagine Dragons',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body.message).to.equal('No token provided');
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('No token provided so we can\'t authenticate you.');
           done();
         });
     });
@@ -172,13 +151,50 @@ describe('To do before running test', () => {
     it('should not allow user not in the group to edit the group\'s name', (done) => {
       request(app)
         .put('/api/group/1')
-        .set('authorization', user1token)
+        .set('authorization', user2token)
         .send({
           name: 'Imagine Dragons',
         })
         .end((err, res) => {
-          expect(res.status).to.equal(401);
+          expect(res.status).to.equal(403);
           expect(res.body.message).to.equal('You don\'t belong to this group');
+          done();
+        });
+    });
+  });
+
+  describe('GET GROUP API - /api/group/:groupId', () => {
+    it('should get group details', (done) => {
+      request(app)
+        .get('/api/group/1')
+        .set('authorization', user1token)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body.id).to.equal(1);
+          expect(res.body.name).to.equal('Gryffindor');
+          done();
+        });
+    });
+
+    it('should not get details of group that doesn\'t exist', (done) => {
+      request(app)
+        .get('/api/group/500')
+        .set('authorization', user1token)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Group Does Not Exist');
+          done();
+        });
+    });
+
+    it('should not allow unregistered user to get group details', (done) => {
+      request(app)
+        .get('/api/group/1')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('No token provided so we can\'t authenticate you.');
           done();
         });
     });
@@ -250,6 +266,8 @@ describe('To do before running test', () => {
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('array');
+          expect(res.body[0].email).to.equal('abigail@gmail.com');
+          expect(res.body[1].username).to.equal('recover2');
           done();
         });
     });
