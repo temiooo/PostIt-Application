@@ -9,6 +9,9 @@ const GLOBALS = {
 export default {
   devtool: 'source-map',
   entry: path.resolve(__dirname, 'client/src/index.js'),
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   target: 'web',
   output: {
     path: `${__dirname}/client/dist`,

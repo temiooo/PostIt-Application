@@ -9,6 +9,10 @@ const messageReducer = (state = initialState.messages, action) => {
         groupId: action.id,
         groupMessages: action.data
       };
+
+    case types.GET_MESSAGES_FAILURE:
+      return state;
+
     case types.GET_GROUP_SUCCESS:
       return {
         ...state,
@@ -26,6 +30,9 @@ const messageReducer = (state = initialState.messages, action) => {
         ...state,
         groupMessages: [...state.groupMessages, action.message]
       };
+
+    case types.POST_MESSAGE_FAILURE:
+      return state;
 
     case types.UPDATE_GROUP_INFO:
       return { ...state, groupName: action.group.name };

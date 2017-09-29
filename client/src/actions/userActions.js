@@ -6,6 +6,10 @@ const getGroupMembersSuccess = members => ({
   type: types.GET_GROUP_MEMBERS_SUCCESS, members
 });
 
+const getGroupMembersFailure = () => ({
+  type: types.GET_GROUP_MEMBERS_FAILURE
+});
+
 const searchUsersSuccess = users => ({
   type: types.SEARCH_USERS_SUCCESS, users
 });
@@ -19,8 +23,8 @@ const getGroupMembers = group => dispatch => axios
   .then((response) => {
     dispatch(getGroupMembersSuccess(response.data));
   })
-  .catch((error) => {
-    toastr.error(error.response);
+  .catch(() => {
+    dispatch(getGroupMembersFailure());
   });
 
 

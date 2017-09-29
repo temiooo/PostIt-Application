@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import db from '../../models';
 
 export const users = [
@@ -50,8 +51,18 @@ export const group =
 
 export const insertSeedData = () => {
   db.User.bulkCreate(users);
-  db.Group.create(group)
-    .then((newgroup) => {
-      newgroup.addUser(1);
-    });
+  // db.Group.create(group)
+  //   .then((newgroup) => {
+  //     newgroup.addUser(1);
+  //   });
+};
+
+export const generateToken = (id, user) => {
+  const token = jwt.sign({
+    user: { id, name: user.username, email: user.email }
+  }, process.env.SECRET, {
+    expiresIn: '24h'
+  });
+
+  return token;
 };

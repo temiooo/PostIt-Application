@@ -9,6 +9,9 @@ const userReducer = (state = initialState.users, action) => {
         members: action.members,
       };
 
+    case types.GET_GROUP_MEMBERS_FAILURE:
+      return state;
+
     case types.SEARCH_USERS_SUCCESS:
       return {
         ...state,
