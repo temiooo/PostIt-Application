@@ -2,17 +2,15 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import randomstring from 'randomstring';
 import { User, Group } from '../models';
-import { transporter, mailOptions } from '../utils/nodemailer';
+import {
+  transporter, mailOptions, forgotPasswordMail,
+  resetPasswordMail
+} from '../utils/nodemailer';
 
 require('dotenv').config();
 
-module.exports = {
+const userController = {
   signup(req, res) {
-    if (!req.body.email || !req.body.username || !req.body.password) {
-      return res.status(400).send({
-        message: 'Email, Username and Password must be provided'
-      });
-    }
     return User
       .create({
         email: req.body.email,
@@ -21,14 +19,14 @@ module.exports = {
       })
       .then((user) => {
         const token = jwt.sign({
-          userId: user.id
+          user: { id: user.id, name: user.username, email: user.email }
         }, process.env.SECRET, {
-            expiresIn: '24h' // expires in 24 hours
-          });
+          expiresIn: '24h'
+        });
 
         res.status(201).send({
           message: 'Signup Successful!',
-          userId: user.id,
+          user: { id: user.id, name: user.username, email: user.email },
           token
         });
       })
@@ -39,7 +37,7 @@ module.exports = {
 
   signin(req, res) {
     if (!req.body.username || !req.body.password) {
-      return res.status(400).send({
+      return res.status(401).send({
         message: 'Please provide a username and password'
       });
     }
@@ -50,31 +48,27 @@ module.exports = {
         }
       }).then((user) => {
         if (!user) {
-          return res.status(404).send({ message: 'User not found' });
+          return res.status(401).send({ message: 'User not found' });
         }
 
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const token = jwt.sign({
-            userId: user.id
+            user: { id: user.id, name: user.username, email: user.email }
           }, process.env.SECRET, {
-              expiresIn: '24h' // expires in 24 hours
-            });
+            expiresIn: '24h'
+          });
 
           return res.status(200).send({
             message: 'Signin successful!',
-            userId: user.id,
+            user: { id: user.id, name: user.username, email: user.email },
             token
           });
         }
-        return res.status(400).send({ message: 'Password is incorrect' });
+        return res.status(401).send({ message: 'Password is incorrect' });
       })
-      .catch(error => res.send(error));
-  },
-
-  getUserDetails(req, res) {
-    res.status(200).send({
-      user: req.userDetails
-    });
+      .catch(() => res.status(500).send({
+        message: 'Internal Server Error'
+      }));
   },
 
   forgotPassword(req, res) {
@@ -96,30 +90,17 @@ module.exports = {
             const to = user.email;
             const bcc = null;
             const subject = 'PostIT Password Reset';
-            const html = `<div>
-            <p>You are receiving this because you have
-            requested the reset of the password for your account.
-              <br>
-            Please click on the link below or paste it into your
-            browser to complete the processs.
-              <br>
-            Please note that the link is valid for 1 hour only.
-              <br>
-            http://${req.headers.host}/#/resetpassword/${passwordToken}
-              <br>
-            If you did not request this, please ignore this
-            email and your password will remain unchanged.
-            </p>
-            </div>`;
-            transporter.sendMail(mailOptions(to, bcc, subject, html))
-              .then((info) => {
+            transporter.sendMail(mailOptions(to, bcc, subject,
+              forgotPasswordMail(req.headers.host, passwordToken)))
+              .then(() => {
                 res.status(200).send({
-                  message: `An email has been sent to ${user.email} with further instructions`
+                  message: 'An email has been sent to ' + user.email +
+                    ' with further instructions.'
                 });
               })
-              .catch((err) => {
-                res.status(400).send({
-                  message: 'A network error occured. Please try again.', passwordToken
+              .catch(() => {
+                res.status(500).send({
+                  message: 'An error occured. Please try again.'
                 });
               });
           })
@@ -160,24 +141,16 @@ module.exports = {
             .then(() => {
               const to = user.email;
               const subject = 'Password Changed Successfully';
-              const html = `<div>
-                <p>Hello ${user.username},
-                  <br>
-                Your password has been successfully changed.
-                  <br>
-                Click <a href='http://${req.headers.host}/#/login'>here</a> 
-                to login
-                </p>
-                </div>`;
-              transporter.sendMail(mailOptions(to, null, subject, html))
-                .then((info) => {
+              transporter.sendMail(mailOptions(to, null, subject,
+                resetPasswordMail(user.username, req.headers.host)))
+                .then(() => {
                   res.status(200).send({
                     message: 'Password Reset Successful'
                   });
                 })
-                .catch((err) => {
-                  res.status(400).send({
-                    message: 'A network error occured. Please try again.'
+                .catch(() => {
+                  res.status(500).send({
+                    message: 'An error occured. Please try again.'
                   });
                 });
             })
@@ -206,7 +179,7 @@ module.exports = {
           User.findAndCountAll({
             where: {
               username: {
-                $ilike: `%${req.query.q}%`
+                $ilike: `%${req.query.searchTerm}%`
               },
               $not: [{
                 id: members
@@ -223,8 +196,10 @@ module.exports = {
               res.status(404).send({ message: 'No users found' });
             } else {
               const pagination = {
+                page: Math.floor(offset / limit) + 1,
                 pageCount: Math.ceil(result.count / limit),
-                pageNumber: Math.floor(offset / limit) + 1,
+                pageSize: result.rows.length,
+                totalCount: result.count
               };
               res.status(200).send({
                 users: result.rows,
@@ -245,18 +220,32 @@ module.exports = {
 
   listGroups(req, res) {
     const userId = req.params.userId;
-
-    User.findById(userId).then((user) => {
-      if (!user) {
-        res.status(404).send({ message: 'User Does Not Exist' });
-      } else {
-        user.getGroups().then((result) => {
-          res.status(200).send(result);
-        });
-      }
+    User.findOne({
+      where: { id: userId },
+      attributes: [],
+      include: [{
+        model: Group,
+        through: { attributes: [] }
+      }]
     })
+      .then((user) => {
+        if (!user) {
+          res.status(404).send({
+            message: 'User Does Not Exist'
+          });
+        } else {
+          if (user.Groups.length === 0) {
+            return res.status(404).send({
+              message: 'You don\'t belong to any group.'
+            });
+          }
+          res.status(200).send(user.Groups);
+        }
+      })
       .catch(() => res.status(500).send({
         message: 'Internal Server Error'
       }));
   }
 };
+
+export default userController;

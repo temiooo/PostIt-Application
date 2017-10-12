@@ -10,8 +10,16 @@ const getMessagesSuccess = (id, data) => ({
   type: types.GET_MESSAGES_SUCCESS, id, data
 });
 
+const getMessagesFailure = (id, data) => ({
+  type: types.GET_MESSAGES_FAILURE, id, data
+});
+
 const postMessageSuccess = message => ({
   type: types.POST_MESSAGE_SUCCESS, message
+});
+
+const postMessageFailure = message => ({
+  type: types.POST_MESSAGE_FAILURE, message
 });
 
 
@@ -26,7 +34,8 @@ const getMessages = groupId => (dispatch) => {
     })
     .catch((error) => {
       dispatch(ajaxCallError());
-      toastr.error(error);
+      dispatch(getMessagesFailure());
+      toastr.error(error.response.data.message);
     });
 };
 
@@ -36,7 +45,8 @@ const postMessage = (id, message) => dispatch => axios
     dispatch(postMessageSuccess(response.data.message));
   })
   .catch((error) => {
-    toastr.error(error);
+    dispatch(postMessageFailure());
+    toastr.error(error.response.data.message);
   });
 
 

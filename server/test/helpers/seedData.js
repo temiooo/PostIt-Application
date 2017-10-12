@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import db from '../../models';
 
 export const users = [
@@ -54,4 +55,90 @@ export const insertSeedData = () => {
     .then((newgroup) => {
       newgroup.addUser(1);
     });
+};
+
+export const generateToken = (id, user) => {
+  const token = jwt.sign({
+    user: { id, name: user.username, email: user.email }
+  }, process.env.SECRET, {
+      expiresIn: '24h'
+    });
+
+  return token;
+};
+
+export const user1token = generateToken(1, users[0]);
+
+export const user2token = generateToken(2, users[1]);
+
+export const newGroup = {
+  name: 'Europeans'
+};
+
+export const updatedGroup = {
+  name: 'Africans'
+};
+
+export const newMessage = {
+  content: 'Maiores ut enim ratione voluptas accusamus lorem.',
+  priority: 'Urgent',
+  senderId: 1,
+  groupId: 1
+};
+
+export const invalidPriorityMessage = {
+  content: 'Maiores ut enim ratione voluptas accusamus lorem.',
+  priority: 'Uncertain',
+  senderId: 1,
+  groupId: 1
+};
+
+export const invalidSenderId = {
+  content: 'Maiores ut enim ratione voluptas accusamus lorem.',
+  priority: 'Urgent',
+  senderId: 'most',
+  groupId: 1
+};
+
+export const invalidGroupId = {
+  content: 'Maiores ut enim ratione voluptas accusamus lorem.',
+  priority: 'Urgent',
+  senderId: 1,
+  groupId: 'president'
+};
+
+export const forDefaultValue = {
+  content: 'Maiores ut enim ratione voluptas accusamus et.',
+  senderId: 1,
+  groupId: 1
+};
+
+export const validUser = {
+  email: 'coconutmilk@fruits.com',
+  username: 'coconutmilk',
+  password: 'sweetcoconut100'
+};
+
+export const duplicateUsername = {
+  email: 'coconut@fruits.com',
+  username: 'coconutmilk',
+  password: 'coconut100'
+};
+
+export const badEmail = {
+  email: 'pineapples@',
+  username: 'pineapplejuice',
+  password: 'pine100apples'
+};
+
+export const duplicateEmail = {
+  email: 'coconutmilk@fruits.com',
+  username: 'coconutchips',
+  password: 'coco100fruits'
+};
+
+export const checkPassword = {
+  email: 'grapes@fruits.com',
+  username: 'grapejuice',
+  password: 'grapejuiced800'
 };

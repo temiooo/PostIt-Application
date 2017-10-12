@@ -1,6 +1,6 @@
-const user = require('./user');
-const group = require('./group');
-const message = require('./message');
+import user from './user';
+import group from './group';
+import message from './message';
 
 module.exports = {
   user,

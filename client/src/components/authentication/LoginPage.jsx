@@ -1,12 +1,12 @@
 import React from 'react';
+import toastr from 'toastr';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import toastr from 'toastr';
-import LandingPage from '../common/LandingPage';
+import { Link, Redirect } from 'react-router-dom';
 import Button from '../common/Button';
 import TextInput from '../common/TextInput';
+import LandingPage from '../common/LandingPage';
 import { login } from '../../actions/authActions';
 
 class LoginPage extends React.Component {
@@ -84,7 +84,9 @@ class LoginPage extends React.Component {
 								</div>
 								<div className="row  right-align">
 									<h6 className="link">
-										<Link to="/forgotpassword" className="black-text">Forgot Password?</Link>
+										<Link to="/forgotpassword" className="black-text">
+											Forgot Password?
+										</Link>
 									</h6>
 								</div>
 							</form>

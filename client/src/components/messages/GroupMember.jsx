@@ -38,11 +38,11 @@ class GroupMember extends React.Component {
   }
 
   searchUser(offset) {
-    const query = this.state.searchTerm;
+    const { searchTerm } = this.state;
     const group = this.props.messages.groupId || this.props.match.params.id;
     const limit = 9;
     offset = offset || 0;
-    this.props.searchUsers(query, group, limit, offset);
+    this.props.searchUsers(searchTerm, group, limit, offset);
   }
 
   handleSearch(event) {
@@ -52,7 +52,7 @@ class GroupMember extends React.Component {
 
   addUserToGroup(user) {
     event.preventDefault();
-    const group = this.props.messages.groupId;
+    const group = this.props.match.params.id;
     const userDetail = { userId: user }
     this.props.addUser(group, userDetail)
       .then(() => {
@@ -75,7 +75,7 @@ class GroupMember extends React.Component {
     return (
       <div className="col s12 m12 l9">
         <div className="row">
-          <div className="col s12 m8 l8">
+          <div className="col s12 m8 l8 search-user">
             <h4 className="center-align"> Add New Member </h4>
             <form>
               <div className="search row z-depth-3">
@@ -110,7 +110,9 @@ class GroupMember extends React.Component {
                 </li>)}
               </ul>
             ) : (
-                <h4 className="no-user center-align"> No Users Found</h4>
+                <h5 className="no-user center-align grey-text text-darken-3">
+                  No Users Found
+                </h5>
               )
             }
 
@@ -130,11 +132,15 @@ class GroupMember extends React.Component {
               />}
           </div>
 
-          <div className="col s12 m4 l4">
-            <h4 className="center-align">Group Members({members.length})</h4>
-            <ul className="group-members collection">
+          <div className="col s12 m4 l4 group-members">
+            <h5 className="center-align grey-text text-darken-3">
+              Group Members ({members.length})
+            </h5>
+            <ul className="collection">
               {members.map(member =>
-                <li className="collection-item" key={member.id}>{member.username}</li>
+                <li className="collection-item" key={member.id}>
+                  {member.username}
+                </li>
               )}
             </ul>
           </div>

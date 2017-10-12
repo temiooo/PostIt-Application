@@ -1,14 +1,14 @@
 import React from 'react';
+import toastr from 'toastr';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import toastr from 'toastr';
-import LandingPage from '../common/LandingPage';
 import Button from '../common/Button';
 import TextInput from '../common/TextInput';
-import { validateSignupInput } from '../../utils/validateInput';
+import LandingPage from '../common/LandingPage';
+import { Link, Redirect } from 'react-router-dom';
 import { signup } from '../../actions/authActions';
+import { validateSignupInput } from '../../utils/validateInput';
 
 class SignupPage extends React.Component {
   constructor(props) {

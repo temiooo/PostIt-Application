@@ -1,32 +1,28 @@
 import authenticate from '../middlewares/authenticate';
 import validateInput from '../middlewares/validateInput';
-
-const userController = require('../controllers').user;
-const groupController = require('../controllers').group;
-const messageController = require('../controllers').message;
+import { user, group, message } from '../controllers';
 
 module.exports = (app) => {
-  app.post('/api/user/signup', validateInput.validateUsername,
-    validateInput.validateEmail, userController.signup);
-  app.post('/api/user/signin', userController.signin);
-  app.get('/api/user/current', authenticate.verifyUser,
-    userController.getUserDetails);
-  app.put('/api/user/forgotpassword', userController.forgotPassword);
-  app.put('/api/user/resetpassword/:token', userController.resetPassword);
+  app.post('/api/user/signup', validateInput.validateSignupInput,
+    user.signup);
+  app.post('/api/user/signin', user.signin);
+  app.put('/api/user/forgotpassword', user.forgotPassword);
+  app.put('/api/user/resetpassword/:token', user.resetPassword);
   app.get('/api/search/users', authenticate.verifyUser,
-    userController.searchUser);
+    user.searchUser);
   app.get('/api/user/:userId/groups', authenticate.verifyUser,
-    userController.listGroups);
+    user.listGroups);
   app.post('/api/group', authenticate.verifyUser,
-    validateInput.validateGroupname, groupController.create);
+    validateInput.validateGroupname, group.create);
   app.put('/api/group/:groupId', authenticate.verifyUser,
-    validateInput.validateGroupname, groupController.edit);
+    validateInput.validateGroupname, group.edit);
+  app.get('/api/group/:groupId', authenticate.verifyUser, group.get);
   app.post('/api/group/:groupId/user', authenticate.verifyUser,
-    groupController.addUser);
+    group.addUser);
   app.get('/api/group/:groupId/users', authenticate.verifyUser,
-    groupController.listUsers);
+    group.listUsers);
   app.post('/api/group/:groupId/message', authenticate.verifyUser,
-    messageController.create);
+    validateInput.validateMessageInput, message.create);
   app.get('/api/group/:groupId/messages', authenticate.verifyUser,
-    messageController.list);
+    message.list);
 };

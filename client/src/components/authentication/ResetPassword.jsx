@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, Redirect } from 'react-router-dom';
 import Button from '../common/Button';
-import TextInput from '../common/TextInput';
 import TopNav from '../messages/TopNav';
+import TextInput from '../common/TextInput';
 import { resetPassword } from '../../actions/passwordActions';
 import { validateNewPassword } from '../../utils/validateInput';
 

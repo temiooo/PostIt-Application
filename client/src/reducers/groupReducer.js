@@ -3,11 +3,17 @@ import initialState from './initialState';
 
 const groupReducer = (state = initialState.groups, action) => {
   switch (action.type) {
-    case types.GET_GROUPS_SUCCESS:
+    case types.GET_USER_GROUPS_SUCCESS:
       return action.groups;
+
+    case types.GET_USER_GROUPS_FAILURE:
+      return state;
 
     case types.CREATE_GROUP_SUCCESS:
       return [...state, action.group];
+
+    case types.CREATE_GROUP_FAILURE:
+      return state;
 
     default:
       return state;

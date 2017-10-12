@@ -166,8 +166,14 @@ input[type=search]:not(.browser-default) {
 }
 
 .group-members {
-  max-height:450px;
+  ul {
+  max-height:500px;
   overflow: auto;
+  }
+
+  h5 {
+    margin-top: 10%;
+  }
 }
 
 .group-action {
@@ -210,8 +216,18 @@ input[type=search]:not(.browser-default) {
 
 
 @media only screen and (max-width: 500px) {
-    .send-msg button {
-        padding: 0px;
-        margin:10px 0px 5px -15px;
-    }  
+  .send-msg button {
+      padding: 0px;
+      margin:10px 0px 5px -15px;
+  }  
+}
+
+@media only screen and (max-width: 1140px) and (min-width: 993px) {
+  .search-user {
+    padding-left: 5vw !important;
   }
+
+  .msg{
+    @extend .search-user
+  }
+}

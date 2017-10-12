@@ -5,9 +5,24 @@ const messageReducer = (state = initialState.messages, action) => {
   switch (action.type) {
     case types.GET_MESSAGES_SUCCESS:
       return {
+        ...state,
         groupId: action.id,
-        groupName: action.data.group.name,
-        groupMessages: action.data.messages
+        groupMessages: action.data
+      };
+
+    case types.GET_MESSAGES_FAILURE:
+      return state;
+
+    case types.GET_GROUP_SUCCESS:
+      return {
+        ...state,
+        groupName: action.group.name,
+      };
+
+    case types.GET_GROUP_FAILURE:
+      return {
+        ...state,
+        groupName: '',
       };
 
     case types.POST_MESSAGE_SUCCESS:
@@ -15,6 +30,9 @@ const messageReducer = (state = initialState.messages, action) => {
         ...state,
         groupMessages: [...state.groupMessages, action.message]
       };
+
+    case types.POST_MESSAGE_FAILURE:
+      return state;
 
     case types.UPDATE_GROUP_INFO:
       return { ...state, groupName: action.group.name };

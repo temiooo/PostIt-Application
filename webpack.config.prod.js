@@ -9,10 +9,11 @@ const GLOBALS = {
 export default {
   devtool: 'source-map',
   entry: path.resolve(__dirname, 'client/src/index.js'),
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   target: 'web',
   output: {
-    /* Note: Physical files are only output by the
-    production build task `npm run build`. */
     path: `${__dirname}/client/dist`,
     publicPath: '/',
     filename: 'bundle.js',

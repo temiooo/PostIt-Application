@@ -8,9 +8,17 @@ const signupSuccess = user => ({
   user
 });
 
+const signupFailure = () => ({
+  type: types.SIGNUP_FAILURE,
+});
+
 const loginSuccess = user => ({
   type: types.LOGIN_SUCCESS,
   user
+});
+
+const loginFailure = () => ({
+  type: types.LOGIN_FAILURE
 });
 
 const signup = userDetails => dispatch => axios
@@ -19,9 +27,10 @@ const signup = userDetails => dispatch => axios
     const token = response.data.token;
     localStorage.setItem('jwtToken', token);
     setAuthorizationToken(token);
-    dispatch(signupSuccess(response.data));
+    dispatch(signupSuccess(response.data.user));
   })
   .catch((error) => {
+    dispatch(signupFailure());
     toastr.error(error.response.data.message);
   });
 
@@ -32,9 +41,10 @@ const login = userDetails => dispatch => axios
     const token = response.data.token;
     localStorage.setItem('jwtToken', token);
     setAuthorizationToken(token);
-    dispatch(loginSuccess(response.data));
+    dispatch(loginSuccess(response.data.user));
   })
   .catch((error) => {
+    dispatch(loginFailure());
     toastr.error(error.response.data.message);
   });
 

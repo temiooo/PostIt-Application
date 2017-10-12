@@ -16,7 +16,7 @@ const store = configureStore();
 
 if (localStorage.jwtToken) {
   setAuthorizationToken(localStorage.jwtToken);
-  store.dispatch(loginSuccess(jwt.decode(localStorage.jwtToken)));
+  store.dispatch(loginSuccess(jwt.decode(localStorage.jwtToken).user));
 }
 
 render(

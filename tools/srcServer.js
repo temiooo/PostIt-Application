@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, '../client/src')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/api-docs', express.static(path.join(__dirname, '../server/api-docs')));
 
 require('../server/routes/index')(app);
 

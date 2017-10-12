@@ -120,7 +120,7 @@ const mapStateToProps = (state) => ({
   groups: state.groups,
   selectedGroup: state.messages,
   editGroupStatus: state.editGroupStatus,
-  currentUserId: state.auth.currentUserId
+  currentUserId: state.auth.currentUser.id
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
