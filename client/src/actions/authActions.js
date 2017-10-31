@@ -56,6 +56,6 @@ const logout = () => {
 };
 
 export {
-  signup, signupSuccess, login,
-  loginSuccess, logout
+  signup, signupSuccess, signupFailure, login,
+  loginSuccess, loginFailure, logout
 };

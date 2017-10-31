@@ -1,0 +1,69 @@
+import { expect } from 'chai';
+import authReducer from '../../reducers/authReducer';
+import initialState from '../../reducers/initialState';
+import {
+  signupSuccess, signupFailure,
+  loginSuccess, loginFailure, logout
+} from '../../actions/authActions';
+
+let action;
+let newState;
+const user = { id: 6, name: 'ronald' };
+
+describe('Auth Reducer', () => {
+  it('should return the initial state for unknown action type', () => {
+    action = {
+      type: null
+    };
+    newState = authReducer(initialState.auth, action);
+
+    expect(newState).to.equal(initialState.auth);
+    expect(newState.isAuthenticated).to.equal(false);
+    expect(newState.currentUser).to.eql({});
+  });
+
+  it('should handle action type SIGNUP_SUCCESS', () => {
+    action = signupSuccess(user);
+    newState = authReducer(initialState.auth, action);
+
+    expect(newState).to.not.equal(initialState.auth);
+    expect(newState.isAuthenticated).to.equal(true);
+    expect(newState.currentUser).to.equal(user);
+  });
+
+  it('should handle action type SIGNUP_FAILURE', () => {
+    action = signupFailure();
+    newState = (authReducer(initialState.auth, action));
+
+    expect(newState).to.equal(initialState.auth);
+  });
+
+  it('should handle action type LOGIN_SUCCESS', () => {
+    action = loginSuccess(user);
+    newState = (authReducer(initialState.auth, action));
+
+    expect(newState).to.not.equal(initialState.auth);
+    expect(newState.isAuthenticated).to.equal(true);
+    expect(newState.currentUser).to.equal(user);
+  });
+
+  it('should handle action type LOGIN_FAILURE', () => {
+    action = loginFailure();
+    newState = authReducer(initialState.auth, action);
+
+    expect(newState).to.equal(initialState.auth);
+  });
+
+  // it('should handle action type LOGOUT', () => {
+  //   const firstState = {
+  //     isAuthenticated: true,
+  //     user: { id: 5, name: 'Bolu' }
+  //   };
+  //   action = {
+  //     type: 'LOGOUT'
+  //   };
+  //   newState = authReducer(firstState, action);
+  //   console.log(newState);
+  //   expect(newState).to.equal(initialState.auth);
+  // });
+});

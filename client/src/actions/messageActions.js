@@ -51,6 +51,6 @@ const postMessage = (id, message) => dispatch => axios
 
 
 export {
-  getMessages, getMessagesSuccess, postMessage,
-  postMessageSuccess
+  getMessages, getMessagesSuccess, getMessagesFailure,
+  postMessage, postMessageSuccess, postMessageFailure
 };

@@ -49,6 +49,6 @@ const addUser = (group, userDetail) => dispatch => axios
   });
 
 export {
-  getGroupMembers, getGroupMembersSuccess, searchUsers,
-  searchUsersSuccess, searchUsersFailure, addUser
+  getGroupMembers, getGroupMembersSuccess, getGroupMembersFailure,
+  searchUsers, searchUsersSuccess, searchUsersFailure, addUser
 };
