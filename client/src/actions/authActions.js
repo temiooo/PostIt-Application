@@ -9,7 +9,7 @@ const signupSuccess = user => ({
 });
 
 const signupFailure = () => ({
-  type: types.SIGNUP_FAILURE,
+  type: types.SIGNUP_FAILURE
 });
 
 const loginSuccess = user => ({

@@ -70,6 +70,8 @@ If you are interested in contributing, follow the instructions below.
 
 * Raise a pull request against Develop
 
+Ensure your codes follow the [AirBnB Javascript Styles Guide](https://github.com/airbnb/javascript)`
+
 `See project wiki for commit message, pull request and branch naming conventions.`
 
 `All Pull requests must be made against Develop branch. PRs against master would be rejected.`
