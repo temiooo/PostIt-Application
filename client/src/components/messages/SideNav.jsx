@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const SideNav = ({ groups, edit }) => {
 	return (
-		<div className="col s12 m12 l3 pull-l1 teal lighten-1">
+		<div className="col s12 m12 l3 pull-l2 teal lighten-1">
 			<ul id="slide-out" className="side-nav side-nav-bar z-depth-3 fixed">
 				<li className="hide-on-medium">
 					<a className="modal-trigger" href="#group" onClick={edit}>
