@@ -66,8 +66,9 @@ const userController = {
         }
         return res.status(401).send({ message: 'Password is incorrect' });
       })
-      .catch(() => res.status(500).send({
-        message: 'Internal Server Error'
+      .catch(error => res.status(500).send({
+        message: 'Internal Server Error',
+        error
       }));
   },
 

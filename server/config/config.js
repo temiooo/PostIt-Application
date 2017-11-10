@@ -14,7 +14,10 @@ const config = {
   },
   production: {
     url: process.env.PRODUCTION_DATABASE_URL,
-    dialect: 'postgres'
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: true
+    }
   }
 };
 
