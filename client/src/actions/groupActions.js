@@ -43,8 +43,7 @@ const getUserGroups = user => dispatch => axios
   .then((response) => {
     dispatch(getUserGroupsSuccess(response.data));
   })
-  .catch((error) => {
-    toastr.error(error.response.data.message);
+  .catch(() => {
     dispatch(getUserGroupsFailure());
   });
 

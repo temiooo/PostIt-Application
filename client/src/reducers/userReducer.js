@@ -20,7 +20,11 @@ const userReducer = (state = initialState.users, action) => {
       };
 
     case types.SEARCH_USERS_FAILURE:
-      return state;
+      return {
+        ...state,
+        nonMembers: [],
+        pagination: {}
+      };
 
     default:
       return state;
