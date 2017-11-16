@@ -44,7 +44,7 @@ const getUserGroups = user => dispatch => axios
     dispatch(getUserGroupsSuccess(response.data));
   })
   .catch((error) => {
-    toastr(error.response.data.message);
+    toastr.error(error.response.data.message);
     dispatch(getUserGroupsFailure());
   });
 
@@ -71,11 +71,11 @@ const updateGroup = (groupName, groupId, user) => dispatch => axios
   .put(`/api/group/${groupId}`, groupName)
   .then((response) => {
     toastr.success(response.data.message);
-    axios.get(`/api/user/${user}/groups`)
-      .then((result) => {
-        dispatch(getUserGroupsSuccess(result.data));
-        dispatch(updateGroupInfo(groupName));
-      });
+    return axios.get(`/api/user/${user}/groups`);
+  })
+  .then((result) => {
+    dispatch(getUserGroupsSuccess(result.data));
+    dispatch(updateGroupInfo(groupName));
   })
   .catch((error) => {
     dispatch(getUserGroupsFailure());

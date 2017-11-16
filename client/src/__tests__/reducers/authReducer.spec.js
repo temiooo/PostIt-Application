@@ -3,7 +3,7 @@ import authReducer from '../../reducers/authReducer';
 import initialState from '../../reducers/initialState';
 import {
   signupSuccess, signupFailure,
-  loginSuccess, loginFailure, logout
+  loginSuccess, loginFailure
 } from '../../actions/authActions';
 
 let action;
@@ -53,17 +53,4 @@ describe('Auth Reducer', () => {
 
     expect(newState).to.equal(initialState.auth);
   });
-
-  // it('should handle action type LOGOUT', () => {
-  //   const firstState = {
-  //     isAuthenticated: true,
-  //     user: { id: 5, name: 'Bolu' }
-  //   };
-  //   action = {
-  //     type: 'LOGOUT'
-  //   };
-  //   newState = authReducer(firstState, action);
-  //   console.log(newState);
-  //   expect(newState).to.equal(initialState.auth);
-  // });
 });

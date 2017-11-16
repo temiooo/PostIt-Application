@@ -6,7 +6,7 @@
   "scripts": {
     "migrate:db": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
     "test:server": "npm run migrate:db && NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-register server/test/**/*.spec.js --timeout 5000",
-    "test:client": "",
+    "test:client": "jest /client",
     "start": "babel-node server.js",
     "start:dev": "nodemon --exec babel-node server.js",
     "open:app": "babel-node tools/srcServer.js",
@@ -24,6 +24,13 @@
   "nyc": {
     "exclude": [
       "server/test"
+    ]
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true,
+    "testPathIgnorePatterns": [
+      "client/src/__tests__/__mocks__"
     ]
   },
   "keywords": [],
@@ -111,6 +118,7 @@
     "babel-jest": "^21.2.0",
     "enzyme": "^3.1.1",
     "jest": "^21.2.1",
-    "moxios": "^0.4.0"
+    "moxios": "^0.4.0",
+    "sinon": "^4.1.2"
   }
 }
