@@ -9,7 +9,7 @@ import TextInput from '../common/TextInput';
 import LandingPage from '../common/LandingPage';
 import { login } from '../../actions/authActions';
 
-class LoginPage extends React.Component {
+export class LoginPage extends React.Component {
 	constructor(props) {
 		super(props);
 

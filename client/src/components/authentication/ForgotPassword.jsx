@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+
 import Button from '../common/Button';
 import TopNav from '../messages/TopNav';
 import TextInput from '../common/TextInput';
 import { forgotPassword } from '../../actions/passwordActions';
 import { validateForgotPasswordEmail } from '../../utils/validateInput';
 
-class ForgotPassword extends React.Component {
+export class ForgotPassword extends React.Component {
 	constructor(props) {
 		super(props);
 

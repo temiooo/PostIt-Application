@@ -9,7 +9,7 @@ import TextInput from '../common/TextInput';
 import { resetPassword } from '../../actions/passwordActions';
 import { validateNewPassword } from '../../utils/validateInput';
 
-class ResetPassword extends React.Component {
+export class ResetPassword extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 

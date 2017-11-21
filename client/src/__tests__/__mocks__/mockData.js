@@ -73,5 +73,25 @@ export default ({
       email: 'snapemarshal@blue.com'
     },
     token: 'eyJhbGci.I6MQ0fQ.mqnk8I'
+  },
+  validSignupDetails: {
+    username: 'amity',
+    email: 'amity@gmail.com',
+    password: 'Amity2.0'
+  },
+  invalidEmail: {
+    username: 'isaac',
+    email: '@issac',
+    password: 'IsAaC000'
+  },
+  invalidUserName: {
+    username: '   isaac',
+    email: 'isaac@gmail.com',
+    password: 'IsAaC000'
+  },
+  invalidPassword: {
+    username: 'isaac',
+    email: 'isaac@',
+    password: 'IsAaC0'
   }
 });
