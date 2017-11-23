@@ -10,6 +10,7 @@ const SideNav = ({ groups, edit }) => {
           <a className="modal-trigger" href="#group" onClick={edit}>
             <i className="material-icons">loupe</i>
             Create New Group
+
 					</a>
         </li>
         <li>
