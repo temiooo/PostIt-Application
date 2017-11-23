@@ -22,7 +22,7 @@ const forgotPassword = email => (dispatch) => {
 const resetPassword = (resetToken, password) => (dispatch) => {
   dispatch(beginAjaxCall());
   return axios
-    .put(`api/user/resetpassword/${resetToken}`, password)
+    .put(`/api/user/resetpassword/${resetToken}`, password)
     .then((response) => {
       dispatch(ajaxCallSuccess());
       toastr.success(response.data.message);

@@ -28,7 +28,7 @@ cd PostIt-Application
 touch .env
 
 # use the .env.sample file as a guideline for keys that should be in your .env file
-**Note that the email address and its password will be used by the application to send email notifications to users as required**
+** Note that the email address and its password will be used by the application to send email notifications to users as required**
 
 # Install Package dependencies
 npm install
