@@ -10,16 +10,16 @@ const getMessagesSuccess = (id, data) => ({
   type: types.GET_MESSAGES_SUCCESS, id, data
 });
 
-const getMessagesFailure = (id, data) => ({
-  type: types.GET_MESSAGES_FAILURE, id, data
+const getMessagesFailure = () => ({
+  type: types.GET_MESSAGES_FAILURE
 });
 
 const postMessageSuccess = message => ({
   type: types.POST_MESSAGE_SUCCESS, message
 });
 
-const postMessageFailure = message => ({
-  type: types.POST_MESSAGE_FAILURE, message
+const postMessageFailure = () => ({
+  type: types.POST_MESSAGE_FAILURE
 });
 
 
@@ -51,6 +51,6 @@ const postMessage = (id, message) => dispatch => axios
 
 
 export {
-  getMessages, getMessagesSuccess, postMessage,
-  postMessageSuccess
+  getMessages, getMessagesSuccess, getMessagesFailure,
+  postMessage, postMessageSuccess, postMessageFailure
 };

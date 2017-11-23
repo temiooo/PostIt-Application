@@ -9,7 +9,7 @@ const signupSuccess = user => ({
 });
 
 const signupFailure = () => ({
-  type: types.SIGNUP_FAILURE,
+  type: types.SIGNUP_FAILURE
 });
 
 const loginSuccess = user => ({
@@ -56,6 +56,6 @@ const logout = () => {
 };
 
 export {
-  signup, signupSuccess, login,
-  loginSuccess, logout
+  signup, signupSuccess, signupFailure, login,
+  loginSuccess, loginFailure, logout
 };

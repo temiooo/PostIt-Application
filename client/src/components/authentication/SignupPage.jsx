@@ -10,7 +10,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { signup } from '../../actions/authActions';
 import { validateSignupInput } from '../../utils/validateInput';
 
-class SignupPage extends React.Component {
+export class SignupPage extends React.Component {
   constructor(props) {
     super(props);
 

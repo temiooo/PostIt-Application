@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactPaginate from 'react-paginate';
 import {
-  getGroupMembers, searchUsers, searchUsersFailure,
-  addUser
+  getGroupMembers, searchUsers, searchUsersFailure, addUser
 } from '../../actions/userActions';
 
-class GroupMember extends React.Component {
+export class GroupMember extends React.Component {
   constructor(props) {
     super(props);
 
@@ -51,7 +50,6 @@ class GroupMember extends React.Component {
   }
 
   addUserToGroup(user) {
-    event.preventDefault();
     const group = this.props.match.params.id;
     const userDetail = { userId: user }
     this.props.addUser(group, userDetail)
@@ -70,7 +68,7 @@ class GroupMember extends React.Component {
 
   render() {
     const { members, nonMembers, pagination } = this.props.users;
-    const paginationSize = Object.keys(pagination).length;
+    const paginationSize = nonMembers.length;
 
     return (
       <div className="col s12 m12 l9">
@@ -102,7 +100,7 @@ class GroupMember extends React.Component {
               <ul className="collection"> {nonMembers.map(user =>
                 <li className="collection-item" key={user.id}>
                   <div>{user.username}
-                    <a className=" waves-effect secondary-content"
+                    <a className=" waves-effect secondary-content non-members"
                       onClick={() => this.addUserToGroup(user.id)}>
                       <i className="material-icons">add</i>
                     </a>

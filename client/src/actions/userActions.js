@@ -28,18 +28,20 @@ const getGroupMembers = group => dispatch => axios
   });
 
 
-const searchUsers = (searchTerm, group, limit, offset) => dispatch => axios
-  .get(`/api/search/users?searchTerm=${searchTerm}&group=${group}
-    &limit=${limit}&offset=${offset}`)
-  .then((response) => {
-    dispatch(searchUsersSuccess(response.data));
-  })
-  .catch((error) => {
-    dispatch(searchUsersFailure(error.response.data.message));
-  });
+const searchUsers = (searchTerm, group, limit, offset) => (dispatch) => {
+  let queryString = `searchTerm=${searchTerm}&group=${group}&limit=${limit}`;
+  queryString += `&offset=${offset}`;
+  return axios
+    .get(`/api/search/users?${queryString}`)
+    .then((response) => {
+      dispatch(searchUsersSuccess(response.data));
+    })
+    .catch((error) => {
+      dispatch(searchUsersFailure(error.response.data.message));
+    });
+};
 
-
-const addUser = (group, userDetail) => dispatch => axios
+const addUser = (group, userDetail) => () => axios
   .post(`/api/group/${group}/user`, userDetail)
   .then((response) => {
     toastr.success(response.data.message);
@@ -49,6 +51,6 @@ const addUser = (group, userDetail) => dispatch => axios
   });
 
 export {
-  getGroupMembers, getGroupMembersSuccess, searchUsers,
-  searchUsersSuccess, searchUsersFailure, addUser
+  getGroupMembers, getGroupMembersSuccess, getGroupMembersFailure,
+  searchUsers, searchUsersSuccess, searchUsersFailure, addUser
 };
