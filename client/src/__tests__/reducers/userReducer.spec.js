@@ -56,7 +56,6 @@ describe('User Reducer', () => {
   it('should handle action type SEARCH_USERS_FAILURE', () => {
     action = searchUsersFailure();
     newState = userReducer(initialState.users, action);
-
-    expect(newState).to.equal(initialState.users);
+    expect(newState).to.eql(initialState.users);
   });
 });

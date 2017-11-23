@@ -5,15 +5,11 @@
   "main": "index.js",
   "scripts": {
     "migrate:db": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
-    "test": "npm run migrate:db && NODE_ENV=test mocha --compilers js:babel-core/register --reporter spec server/test/**/*.spec.js --timeout 5000",
-    "test:server": "npm run migrate:db && NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register --reporter spec server/test/**/*.spec.js --timeout 5000",
-    "test:client": "mocha --compilers js:babel-core/register --reporter spec client/src/test/actions/*.spec.js --timeout 5000",
-    "testclient": "nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register --reporter spec client/src/test/**/*.spec.js --timeout 5000",
-    "cover": "npm run migrate:db && NODE_ENV=test nyc report --reporter=html --reporter=text mocha --reporter spec --compilers js:babel-core/register --reporter spec server/test/**/*.spec.js --timeout 5000",
+    "test:server": "npm run migrate:db && NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-register server/test/**/*.spec.js --timeout 5000",
+    "test:client": "jest /client",
     "start": "babel-node server.js",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "start:dev": "nodemon --exec babel-node server.js",
-    "open:src": "babel-node tools/srcServer.js",
+    "open:app": "babel-node tools/srcServer.js",
     "clean-dist": "npm run remove-dist && mkdir client/dist",
     "remove-dist": "node_modules/.bin/rimraf client/dist",
     "build:js": "babel-node tools/build.js",
@@ -26,12 +22,18 @@
     "url": "git+https://github.com/temiooo/PostIt-Application.git"
   },
   "nyc": {
-    "sourceMap": false,
-    "instrument": false,
     "exclude": [
-      "server/test",
-      "client/src/test"
+      "server/test"
     ]
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true,
+    "testPathIgnorePatterns": [
+      "client/src/__tests__/__mocks__",
+      "client/src/__tests__/setup.js"
+    ],
+    "setupTestFrameworkScriptFile": "./client/src/__tests__/setup.js"
   },
   "keywords": [],
   "author": "",
@@ -115,6 +117,12 @@
     "webpack-hot-middleware": "^2.18.2"
   },
   "devDependencies": {
-    "moxios": "^0.4.0"
+    "babel-jest": "^21.2.0",
+    "enzyme": "^3.0.0",
+    "enzyme-adapter-react-15": "^1.0.5",
+    "jest": "21.2.1",
+    "moxios": "^0.4.0",
+    "react-test-renderer": "15.6.2",
+    "sinon": "^4.1.2"
   }
 }

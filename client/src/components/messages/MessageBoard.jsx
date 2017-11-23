@@ -13,93 +13,93 @@ import { logout } from '../../actions/authActions';
 import { getMessages } from '../../actions/messageActions';
 import { getUserGroups, editGroupOff } from '../../actions/groupActions';
 
-class MessageBoard extends React.Component {
-	constructor(props) {
-		super(props);
+export class MessageBoard extends React.Component {
+  constructor(props) {
+    super(props);
 
-		this.logout = this.logout.bind(this);
-		this.editGroupOff = this.editGroupOff.bind(this);
+    this.logout = this.logout.bind(this);
+    this.editGroupOff = this.editGroupOff.bind(this);
 
-	}
+  }
 
-	componentWillMount() {
-		if (this.props.auth.isAuthenticated) {
-			this.props.getUserGroups(this.props.auth.currentUser.id);
-		}
-	}
+  componentWillMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.getUserGroups(this.props.auth.currentUser.id);
+    }
+  }
 
-	componentDidMount() {
-		$('.button-collapse').sideNav();
-		$('select').material_select();
-	}
+  componentDidMount() {
+    $('.button-collapse').sideNav();
+    $('select').material_select();
+  }
 
-	editGroupOff(event) {
-		event.preventDefault();
-		this.props.editGroupOff();
-	}
+  editGroupOff(event) {
+    event.preventDefault();
+    this.props.editGroupOff();
+  }
 
-	logout(event) {
-		event.preventDefault();
-		this.props.logout();
-	}
+  logout(event) {
+    event.preventDefault();
+    this.props.logout();
+  }
 
-	render() {
-		if (!this.props.auth.isAuthenticated) {
-			return (
-				<Redirect to='/login' />
-			);
-		}
-		return (
-			<div className="message-board">
-				<TopNav logout={this.logout} />
-				<div className="row">
+  render() {
+    if (!this.props.auth.isAuthenticated) {
+      return (
+        <Redirect to='/login' />
+      );
+    }
+    return (
+      <div className="message-board">
+        <TopNav logout={this.logout} />
+        <div className="row">
 
-					<SideNav
-						groups={this.props.groups}
-						edit={this.editGroupOff}
-					/>
-					<CreateGroupModal />
+          <SideNav
+            groups={this.props.groups}
+            edit={this.editGroupOff}
+          />
+          <CreateGroupModal />
 
-					<main>
-						<Route
-							exact path={`${this.props.match.url}`}
-							component={WelcomePage}
-						/>
+          <main>
+            <Route
+              exact path={`${this.props.match.url}`}
+              component={WelcomePage}
+            />
 
-						<Route
-							path={`${this.props.match.url}/group/:id/messages`}
-							component={Messages}
-						/>
+            <Route
+              path={`${this.props.match.url}/group/:id/messages`}
+              component={Messages}
+            />
 
-						<Route
-							path={`${this.props.match.url}/group/:id/members`}
-							component={GroupMember}
-						/>
-					</main>
+            <Route
+              path={`${this.props.match.url}/group/:id/members`}
+              component={GroupMember}
+            />
+          </main>
 
-				</div>
-			</div>
-		);
-	}
+        </div>
+      </div>
+    );
+  }
 }
 
 MessageBoard.propTypes = {
-	auth: PropTypes.object.isRequired,
-	groups: PropTypes.array.isRequired,
-	logout: PropTypes.func.isRequired,
-	getUserGroups: PropTypes.func.isRequired,
-	editGroupOff: PropTypes.func.isRequired
+  auth: PropTypes.object.isRequired,
+  groups: PropTypes.array.isRequired,
+  logout: PropTypes.func.isRequired,
+  getUserGroups: PropTypes.func.isRequired,
+  editGroupOff: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	auth: state.auth,
-	groups: state.groups
+  auth: state.auth,
+  groups: state.groups
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	logout,
-	getUserGroups,
-	editGroupOff
+  logout,
+  getUserGroups,
+  editGroupOff
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageBoard);

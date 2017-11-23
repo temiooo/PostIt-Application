@@ -7,7 +7,7 @@ import TextInput from '../common/TextInput';
 import { validateGroupInput } from '../../utils/validateInput';
 import { createGroup, updateGroup } from '../../actions/groupActions';
 
-class CreateGroupModal extends React.Component {
+export class CreateGroupModal extends React.Component {
   constructor(props) {
     super(props);
 
@@ -38,6 +38,7 @@ class CreateGroupModal extends React.Component {
   }
 
   handleChange(event) {
+    event.preventDefault();
     this.setState({
       name: event.target.value
     });
@@ -112,12 +113,10 @@ CreateGroupModal.propTypes = {
   updateGroup: PropTypes.func.isRequired,
   editGroupStatus: PropTypes.bool.isRequired,
   selectedGroup: PropTypes.object.isRequired,
-  groups: PropTypes.array.isRequired,
   currentUserId: PropTypes.number.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  groups: state.groups,
   selectedGroup: state.messages,
   editGroupStatus: state.editGroupStatus,
   currentUserId: state.auth.currentUser.id
