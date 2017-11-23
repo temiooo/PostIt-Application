@@ -12,20 +12,21 @@ const setup = (groups) => {
 }
 
 describe('Side Nav Component', () => {
-  it('renders a div', () => {
+  it('should render without crashing', () => {
     const wrapper = setup([]);
-    const wrapperDiv = wrapper.find('div');
-    expect(wrapperDiv.length).toBeGreaterThan(0);
+    expect(wrapper.getElement().type).toBe('div');
+    expect(wrapper.find('div').length).toBeGreaterThan(0);
   });
 
-  it('calls edit function when create new group link is clicked', () => {
-    const wrapper = setup([]);
-    const editLink = wrapper.find('a').first();
-    editLink.simulate('click')
-    expect(props.edit).toHaveBeenCalled();
-  });
+  it('should call the edit function when create new group link is clicked',
+    () => {
+      const wrapper = setup([]);
+      const editLink = wrapper.find('a').first();
+      editLink.simulate('click');
+      expect(props.edit).toHaveBeenCalled();
+    });
 
-  it('renders a list of groups if length of group array is greater than 1',
+  it('should render group list if length of groups is greater than 0',
     () => {
       const wrapper = setup([{ id: 1, name: 'A' }, { id: 2, name: 'B' }]);
       const groupList = wrapper.find('Link');
@@ -33,5 +34,4 @@ describe('Side Nav Component', () => {
       expect(groupList.length).toBe(2)
       expect(groupName).toEqual(['A', 'B'])
     });
-
 });

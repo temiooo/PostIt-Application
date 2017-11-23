@@ -31,22 +31,9 @@ export default ({
     id: 1,
     name: 'Second group Ever'
   },
-  groups: [
-    {
-      id: 1,
-      name: 'Team Matterhorn'
-    },
-    {
-      id: 2,
-      name: 'Music Bandits'
-    }
-  ],
   userDetail: {
     userId: 2
   },
-  resetToken: 'TjDkmRh3mYTayaN2NKBWUrtmG4',
-  email: 'user@gmail.com',
-  password: 'graphyl09',
   messages: [
     {
       id: 1,
@@ -74,24 +61,73 @@ export default ({
     },
     token: 'eyJhbGci.I6MQ0fQ.mqnk8I'
   },
-  validSignupDetails: {
-    username: 'amity',
-    email: 'amity@gmail.com',
-    password: 'Amity2.0'
+  id: '5',
+  passwordActions: {
+    resetToken: 'TjDkmRh3mYTayaN2NKBWUrtmG4',
+    password: 'forever21',
+    email: 'olayemi@gmail.com'
   },
-  invalidEmail: {
-    username: 'isaac',
-    email: '@issac',
-    password: 'IsAaC000'
-  },
-  invalidUserName: {
-    username: '   isaac',
-    email: 'isaac@gmail.com',
-    password: 'IsAaC000'
-  },
-  invalidPassword: {
-    username: 'isaac',
-    email: 'isaac@',
-    password: 'IsAaC0'
+  componentData: {
+    signup: {
+      validSignupDetails: {
+        username: 'amity',
+        email: 'amity@gmail.com',
+        password: 'Amity2.0'
+      },
+      invalidEmail: {
+        username: 'isaac',
+        email: '@issac',
+        password: 'IsAaC000'
+      },
+      invalidUserName: {
+        username: '   isaac',
+        email: 'isaac@gmail.com',
+        password: 'IsAaC000'
+      },
+      invalidPassword: {
+        username: 'isaac',
+        email: 'isaac@',
+        password: 'IsAaC0'
+      }
+    },
+    welcomePage: {
+      groups: [
+        {
+          id: 1,
+          name: 'Team Matterhorn'
+        },
+        {
+          id: 2,
+          name: 'Music Bandits'
+        }
+      ],
+      currentUser: {
+        name: 'Mike',
+        email: 'mike@gmail.com'
+      }
+    },
+    resetPassword: {
+      resetToken: 'TjDkmRh3mYTayaN2NKBWUrtmG4'
+    },
+    messageList: [
+      {
+        id: 1,
+        content: 'A',
+        createdAt: '2017-11-14 12:15:42.121+01',
+        User: { username: 'tim' }
+      }
+    ],
+    groupMember: {
+      users: {
+        members: [
+          { id: 1, username: 'Abigail' }
+        ],
+        nonMembers: [
+          { id: 3, username: 'Andrew' }
+        ],
+        pagination: {}
+      },
+      groupId: 2
+    }
   }
 });

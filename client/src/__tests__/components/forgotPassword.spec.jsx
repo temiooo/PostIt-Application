@@ -6,6 +6,8 @@ import ConnectedForgotPassword, { ForgotPassword } from
   '../../components/authentication/ForgotPassword';
 
 let props;
+let event;
+
 const setup = (isAuthenticated) => {
   props = {
     isAuthenticated: isAuthenticated,
@@ -13,7 +15,8 @@ const setup = (isAuthenticated) => {
     forgotPassword: jest.fn()
   }
   return shallow(<ForgotPassword {...props} />);
-}
+};
+
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 const store = mockStore({
@@ -22,54 +25,54 @@ const store = mockStore({
 });
 
 describe('Forgot Password Component', () => {
-  it('always renders a div', () => {
+  it('should render without crashing', () => {
     const wrapper = setup(false);
-    const wrapperDiv = wrapper.find('div');
-    expect(wrapperDiv.length).toBeGreaterThan(0);
+    expect(wrapper.getElement().type).toBe('div')
+    expect(wrapper.find('div').length).toBeGreaterThan(0);
   });
 
-  it('calls handleChange', () => {
+  it('should call the handleChange method', () => {
     const wrapper = setup(false);
     const handleChangeSpy = jest.spyOn(
       wrapper.instance(), 'handleChange'
     );
-
-    const event = {
+    event = {
       preventDefault: jest.fn(),
       target: {
         email: 'user@email.com'
       }
     };
-
     wrapper.instance().handleChange(event);
-    expect(handleChangeSpy).toHaveBeenCalled();
+    expect(handleChangeSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('calls handleSubmit', () => {
+  it('should call the handleSubmit method', () => {
     const wrapper = setup(false);;
-
     const handleSubmitSpy = jest.spyOn(
       wrapper.instance(), 'handleSubmit'
     );
-
-    const event = {
-      preventDefault: jest.fn()
-    }
-
     wrapper.instance().handleSubmit(event);
-    expect(handleSubmitSpy).toHaveBeenCalled();
+    expect(handleSubmitSpy).toHaveBeenCalledTimes(1);
+    expect(props.forgotPassword).toHaveBeenCalledTimes(1)
   });
 
-  it('does not render if user is unauthenticated', () => {
+  it('should not render if user is unauthenticated', () => {
     const wrapper = setup(true);
     const wrapperDiv = wrapper.find('div');
     expect(wrapperDiv.length).toBe(0);
   });
 
-  it('renders the connected component', () => {
+  it('should render the right elements', () => {
+    const wrapper = setup(false);
+    expect(wrapper.find('TopNav').length).toBe(1);
+    expect(wrapper.find('TextInput').length).toBe(1);
+    expect(wrapper.find('Button').length).toBe(1);
+  });
+
+  it('should render the connected component', () => {
     const connectedComponent = shallow(
       <ConnectedForgotPassword {...props} store={store} />
-    )
+    );
     expect(connectedComponent.length).toBe(1);
   });
 });

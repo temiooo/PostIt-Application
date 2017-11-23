@@ -8,7 +8,7 @@ export default {
     return localStorage[key];
   },
   removeItem(key) {
-    localStorage = {};
+    delete localStorage[key];
   },
   clear() {
     localStorage = {};

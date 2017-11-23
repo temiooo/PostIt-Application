@@ -8,6 +8,7 @@ import { forgotPassword, resetPassword } from '../../actions/passwordActions';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
+const { passwordActions } = mockData;
 
 describe('Password Actions', () => {
   beforeEach(() => moxios.install());
@@ -15,7 +16,7 @@ describe('Password Actions', () => {
 
   it(`creates BEGIN_AJAX_CALL and AJAX_CALL_SUCCESS when forgotPassword action
    is successful`, () => {
-      const { email } = mockData;
+      const { email } = passwordActions;
       moxios.stubRequest('/api/user/forgotpassword', {
         status: 200,
         response: {
@@ -37,7 +38,7 @@ describe('Password Actions', () => {
 
   it(`creates BEGIN_AJAX_CALL and AJAX_CALL_ERROR when forgotPassword action
     fails`, () => {
-      const { email } = mockData;
+      const { email } = passwordActions;
       moxios.stubRequest('/api/user/forgotpassword', {
         status: 400,
         response: {
@@ -59,7 +60,7 @@ describe('Password Actions', () => {
 
   it(`creates BEGIN_AJAX_CALL and AJAX_CALL_SUCCESS when resetPassword action
     is successful`, () => {
-      const { resetToken, password } = mockData;
+      const { resetToken, password } = passwordActions;
       moxios.stubRequest('/api/user/resetpassword/TjDkmRh3mYTayaN2NKBWUrtmG4', {
         status: 200,
         response: {
@@ -81,7 +82,7 @@ describe('Password Actions', () => {
 
   it(`creates BEGIN_AJAX_CALL and AJAX_CALL_ERROR when resetPassword action
     fails`, () => {
-      const { resetToken, password } = mockData;
+      const { resetToken, password } = passwordActions;
       moxios.stubRequest('/api/user/resetpassword/TjDkmRh3mYTayaN2NKBWUrtmG4', {
         status: 400,
         response: {

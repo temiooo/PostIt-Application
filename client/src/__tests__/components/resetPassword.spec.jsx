@@ -7,17 +7,22 @@ import ConnectedResetPassword, { ResetPassword } from
   '../../components/authentication/ResetPassword';
 
 let props;
+let event;
+
+const { resetPassword } = mockData.componentData;
+
 const setup = (isAuthenticated, isLoading) => {
   props = {
     isAuthenticated: isAuthenticated,
     isLoading: isLoading,
     resetPassword: jest.fn(() => Promise.resolve()),
     match: {
-      params: { token: mockData.resetToken }
+      params: { token: resetPassword.resetToken }
     }
   }
   return shallow(<ResetPassword {...props} />);
-}
+};
+
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 const store = mockStore({
@@ -26,56 +31,46 @@ const store = mockStore({
 });
 
 describe('Reset Password Component', () => {
-  it('always renders a div', () => {
+  it('should render without crashing', () => {
     const wrapper = setup(false, 0);
-    const wrapperDiv = wrapper.find('div');
-    expect(wrapperDiv.length).toBeGreaterThan(0);
+    expect(wrapper.find('div').length).toBeGreaterThan(0);
   });
 
-  it('calls handleFocus', () => {
+  it('should call the handleFocus method', () => {
     const wrapper = setup(false, 0);
     const handleFocusSpy = jest.spyOn(
       wrapper.instance(), 'handleFocus'
     );
-
     wrapper.instance().handleFocus();
-    expect(handleFocusSpy).toHaveBeenCalled();
+    expect(handleFocusSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('calls handleChange', () => {
+  it('should call the handleChange method', () => {
     const wrapper = setup(false, 0);
     const handleChangeSpy = jest.spyOn(
       wrapper.instance(), 'handleChange'
     );
-
-    const event = {
+    event = {
       preventDefault: jest.fn(),
       target: {
         email: 'user@email.com'
       }
     };
-
     wrapper.instance().handleChange(event);
-    expect(handleChangeSpy).toHaveBeenCalled();
+    expect(handleChangeSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('calls handleSubmit', () => {
+  it('should call the handleSubmit method', () => {
     const wrapper = setup(false, 0);
     const handleSubmitSpy = jest.spyOn(
       wrapper.instance(), 'handleSubmit'
     );
-
-    const event = {
-      preventDefault: jest.fn()
-    }
-
     wrapper.setState({
       password: 'funsho@gmail.com',
       confirmpassword: 'funsho@gmail.com'
     })
-
     wrapper.instance().handleSubmit(event);
-    expect(handleSubmitSpy).toHaveBeenCalled();
+    expect(handleSubmitSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should return password validation error', () => {
@@ -83,16 +78,10 @@ describe('Reset Password Component', () => {
     const handleSubmitSpy = jest.spyOn(
       wrapper.instance(), 'handleSubmit'
     );
-
-    const event = {
-      preventDefault: jest.fn()
-    }
-
     wrapper.setState({
       password: 'pick',
       confirmpassword: 'pic'
     })
-
     wrapper.instance().handleSubmit(event);
     expect(wrapper.state().errors.password)
       .toBe('Password is too short (min of 8 characters).');
@@ -100,23 +89,22 @@ describe('Reset Password Component', () => {
       .toBe('Passwords do not match')
   });
 
-  it(`reset password button should be disabled if isLoading prop is greater
-    than 1`, () => {
+  it(`should ensure reset password button is disabled if isLoading prop is
+    greater than 1`, () => {
       const wrapper = setup(false, 1);
       const button = wrapper.find('Button');
       expect(button.props().disabled).toBe(true);
     });
 
-  it('does not render if user is unauthenticated', () => {
+  it('should not render if user is unauthenticated', () => {
     const wrapper = setup(true, 0);
-    const wrapperDiv = wrapper.find('div');
-    expect(wrapperDiv.length).toBe(0);
+    expect(wrapper.find('div').length).toBe(0);
   });
 
-  it('renders the connected component', () => {
+  it('should render the connected component', () => {
     const connectedComponent = shallow(
       <ConnectedResetPassword {...props} store={store} />
-    )
+    );
     expect(connectedComponent.length).toBe(1);
   });
 });

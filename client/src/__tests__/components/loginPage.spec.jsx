@@ -6,13 +6,16 @@ import ConnectedLoginPage, { LoginPage } from
   '../../components/authentication/LoginPage';
 
 let props;
+let event;
+
 const setup = (isAuthenticated) => {
   props = {
     isAuthenticated: isAuthenticated,
     login: jest.fn(() => Promise.resolve())
   }
   return shallow(<LoginPage {...props} />);
-}
+};
+
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 const store = mockStore({
@@ -20,19 +23,18 @@ const store = mockStore({
 });
 
 describe('Login Page Component', () => {
-  it('always renders a div', () => {
+  it('should render without crashing', () => {
     const wrapper = setup(false);
     const wrapperDiv = wrapper.find('div');
     expect(wrapperDiv.length).toBeGreaterThan(0);
   });
 
-  it('calls handleChange', () => {
+  it('should call the handleChange method', () => {
     const wrapper = setup(false);
     const handleChangeSpy = jest.spyOn(
       wrapper.instance(), 'handleChange'
     );
-
-    const event = {
+    event = {
       preventDefault: jest.fn(),
       target: {
         username: 'user'
@@ -43,31 +45,24 @@ describe('Login Page Component', () => {
     expect(handleChangeSpy).toHaveBeenCalled();
   });
 
-  it('calls handleSubmit', () => {
+  it('should call the handleSubmit method', () => {
     const wrapper = setup(false);
     const handleSubmitSpy = jest.spyOn(
       wrapper.instance(), 'handleSubmit'
     );
-
-    const event = {
-      preventDefault: jest.fn()
-    }
-
     wrapper.instance().handleSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
   });
 
-  it('does not render if user is unauthenticated', () => {
+  it('should not render if user is unauthenticated', () => {
     const wrapper = setup(true);
-    const wrapperDiv = wrapper.find('div');
-    expect(wrapperDiv.length).toBe(0);
+    expect(wrapper.find('div').length).toBe(0);
   });
 
-  it('renders the connected components', () => {
+  it('should render the connected component', () => {
     const connectedComponent = shallow(
       <ConnectedLoginPage {...props} store={store} />
-    )
-    console.log(connectedComponent.debug())
+    );
     expect(connectedComponent.length).toBe(1);
   });
 });

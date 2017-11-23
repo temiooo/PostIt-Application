@@ -30,8 +30,10 @@
     "verbose": true,
     "collectCoverage": true,
     "testPathIgnorePatterns": [
-      "client/src/__tests__/__mocks__"
-    ]
+      "client/src/__tests__/__mocks__",
+      "client/src/__tests__/setup.js"
+    ],
+    "setupTestFrameworkScriptFile": "./client/src/__tests__/setup.js"
   },
   "keywords": [],
   "author": "",
@@ -116,10 +118,11 @@
   },
   "devDependencies": {
     "babel-jest": "^21.2.0",
-    "enzyme": "^2.9.1",
-    "jest": "^21.2.1",
+    "enzyme": "^3.0.0",
+    "enzyme-adapter-react-15": "^1.0.5",
+    "jest": "21.2.1",
     "moxios": "^0.4.0",
-    "react-addons-test-utils": "^15.6.2",
+    "react-test-renderer": "15.6.2",
     "sinon": "^4.1.2"
   }
 }

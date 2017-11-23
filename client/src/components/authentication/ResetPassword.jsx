@@ -10,114 +10,114 @@ import { resetPassword } from '../../actions/passwordActions';
 import { validateNewPassword } from '../../utils/validateInput';
 
 export class ResetPassword extends React.Component {
-	constructor(props, context) {
-		super(props, context);
+  constructor(props, context) {
+    super(props, context);
 
-		this.state = {
-			password: '',
-			confirmpassword: '',
-			errors: {},
-		};
-		this.handleChange = this.handleChange.bind(this);
-		this.handleFocus = this.handleFocus.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
+    this.state = {
+      password: '',
+      confirmpassword: '',
+      errors: {},
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-	isValid() {
-		const { errors, isValid } = validateNewPassword(this.state);
-		if (!isValid) {
-			this.setState({ errors });
-		}
-		return isValid;
-	}
+  isValid() {
+    const { errors, isValid } = validateNewPassword(this.state);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+    return isValid;
+  }
 
-	handleFocus() {
-		this.setState({ errors: {} })
-	}
+  handleFocus() {
+    this.setState({ errors: {} })
+  }
 
-	handleChange(event) {
-		event.preventDefault();
-		this.setState({
-			[event.target.name]: event.target.value
-		});
-	}
+  handleChange(event) {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
 
-	handleSubmit(event) {
-		event.preventDefault();
-		if (this.isValid()) {
-			const resetToken = this.props.match.params.token;
-			this.setState({ errors: {} });
-			this.props.resetPassword(resetToken, this.state)
-				.then(() => {
-					this.props.history.push('/login');
-				});
-		};
-	}
+  handleSubmit(event) {
+    event.preventDefault();
+    if (this.isValid()) {
+      const resetToken = this.props.match.params.token;
+      this.setState({ errors: {} });
+      this.props.resetPassword(resetToken, this.state)
+        .then(() => {
+          this.props.history.push('/login');
+        });
+    };
+  }
 
-	render() {
-		if (this.props.isAuthenticated) {
-			return (
-				<Redirect to='/messageboard' />
-			);
-		}
+  render() {
+    if (this.props.isAuthenticated) {
+      return (
+        <Redirect to='/messageboard' />
+      );
+    }
 
-		return (
-			<div>
-				<TopNav />
-				<div className="container fgt-pwd">
-					<h4 className="center-align grey-text text-darken-3">
-						Reset Password
+    return (
+      <div>
+        <TopNav />
+        <div className="container fgt-pwd">
+          <h4 className="center-align grey-text text-darken-3">
+            Reset Password
 					</h4>
-					<div className="divider"></div>
-					<form className="col s12 z-depth-5">
-						<TextInput
-							icon="lock_outline"
-							type="password"
-							name="password"
-							value={this.state.password}
-							onChange={this.handleChange}
-							label="Password"
-							onFocus={this.handleFocus}
-							error={this.state.errors.password}
-						/>
-						<TextInput
-							icon="lock"
-							type="password"
-							name="confirmpassword"
-							value={this.state.confirmpassword}
-							onChange={this.handleChange}
-							label="Confirm Password"
-							onFocus={this.handleFocus}
-							error={this.state.errors.confirmpassword}
-						/>
-						<div className="row  center-align">
-							<Button
-								className="btn waves-effect waves-light red lighten-2"
-								onClick={this.handleSubmit}
-								text="RESET PASSWORD"
-								disabled={this.props.isLoading > 0}
-							/>
-						</div>
-					</form>
-				</div>
-			</div>
-		);
-	}
+          <div className="divider"></div>
+          <form className="col s12 z-depth-5">
+            <TextInput
+              icon="lock_outline"
+              type="password"
+              name="password"
+              value={this.state.password}
+              onChange={this.handleChange}
+              label="Password"
+              onFocus={this.handleFocus}
+              error={this.state.errors.password}
+            />
+            <TextInput
+              icon="lock"
+              type="password"
+              name="confirmpassword"
+              value={this.state.confirmpassword}
+              onChange={this.handleChange}
+              label="Confirm Password"
+              onFocus={this.handleFocus}
+              error={this.state.errors.confirmpassword}
+            />
+            <div className="row  center-align">
+              <Button
+                className="btn waves-effect waves-light red lighten-2"
+                onClick={this.handleSubmit}
+                text="RESET PASSWORD"
+                disabled={this.props.isLoading > 0}
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
 }
 
 ResetPassword.propTypes = {
-	isAuthenticated: PropTypes.bool.isRequired,
-	isLoading: PropTypes.number.isRequired,
-	resetPassword: PropTypes.func.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  isLoading: PropTypes.number.isRequired,
+  resetPassword: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-	isAuthenticated: state.auth.isAuthenticated,
-	isLoading: state.ajaxCallsInProgress,
+  isAuthenticated: state.auth.isAuthenticated,
+  isLoading: state.ajaxCallsInProgress,
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ resetPassword },
-		dispatch);
+  bindActionCreators({ resetPassword },
+    dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

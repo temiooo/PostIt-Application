@@ -2,8 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import TextInput from '../../components/common/TextInput';
 
-const props = (icon, error) => {
-  return {
+let props;
+
+const setup = (icon, error) => {
+  props = {
     icon: icon,
     onChange: jest.fn(),
     text: 'send',
@@ -12,26 +14,29 @@ const props = (icon, error) => {
     value: 'email',
     error: error
   }
+
+  return shallow(<TextInput {...props } />);
 };
 
 describe('Text Input Component', () => {
-  it('renders a div and an input', () => {
-    const wrapper = shallow(<TextInput {...props() } />)
-    const wrapperDiv = wrapper.find('div');
-    const input = wrapper.find('input')
-    expect(wrapperDiv.length).toBeGreaterThan(0);
-    expect(input.length).toBe(1);
+  it('should render without crashing', () => {
+    const wrapper = setup();
+    expect(wrapper.getElement().type).toBe('div');
+    expect(wrapper.find('div').length).toBe(2);
+    expect(wrapper.find('input').length).toBe(1);
   });
 
-  it('renders a icon if it receives an icon prop', () => {
-    const wrapper = shallow(<TextInput {...props('email') } />)
+  it('should display an icon if it receives an icon prop', () => {
+    const wrapper = setup('email');
     const icon = wrapper.find('i');
     expect(icon.length).toBe(1);
+    expect(icon.text()).toBe('email');
   });
 
-  it('renders a span if it receives an error prop', () => {
-    const wrapper = shallow(<TextInput {...props('', 'Text too short') } />)
+  it('should render a span if it receives an error prop', () => {
+    const wrapper = setup('', 'Text too short');
     const span = wrapper.find('span');
     expect(span.length).toBe(1);
+    expect(span.text()).toBe('Text too short');
   });
 });

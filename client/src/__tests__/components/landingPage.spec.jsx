@@ -4,9 +4,14 @@ import LandingPage from
   '../../components/common/LandingPage.jsx';
 
 describe('Landing Page Component', () => {
-  it('renders a div', () => {
-    const wrapper = shallow(<LandingPage />)
-    const wrapperDiv = wrapper.find('div');
-    expect(wrapperDiv.length).toBeGreaterThan(0)
+  it('should render without crashing', () => {
+    const wrapper = shallow(<LandingPage />);
+    expect(wrapper.find('div').length).toBeGreaterThan(0)
   });
+
+  it('should render four icons', () => {
+    const wrapper = shallow(<LandingPage />)
+    const icons = wrapper.find('i');
+    expect(icons.length).toBe(4)
+  })
 });
