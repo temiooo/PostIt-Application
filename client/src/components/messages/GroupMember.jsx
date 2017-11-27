@@ -88,6 +88,7 @@ export class GroupMember extends React.Component {
                 </div>
                 <div className=" search-icon col s2 center-align">
                   <button
+                    id="search"
                     className="btn search-btn waves-effect waves-light"
                     onClick={this.handleSearch}>
                     <i className="material-icons">search</i>
@@ -97,10 +98,10 @@ export class GroupMember extends React.Component {
             </form>
 
             {nonMembers.length > 0 ? (
-              <ul className="collection"> {nonMembers.map(user =>
+              <ul id="search-results" className="collection"> {nonMembers.map(user =>
                 <li className="collection-item" key={user.id}>
                   <div>{user.username}
-                    <a className=" waves-effect secondary-content non-members"
+                    <a className="waves-effect secondary-content non-members"
                       onClick={() => this.addUserToGroup(user.id)}>
                       <i className="material-icons">add</i>
                     </a>

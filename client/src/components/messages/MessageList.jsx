@@ -14,12 +14,14 @@ const MessagesList = ({ messages, edit, isLoading }) => {
           </div>
           <div className="col s12 m12 l4">
             <a
+              id="edit-group"
               className="group-action btn-floating waves-effect waves-light modal-trigger"
               href="#group"
               onClick={edit}
             ><i className="material-icons right">edit</i>
             </a>
             <Link
+              id="add-user"
               to={`/messageboard/group/${messages.groupId}/members`}
               className="group-action btn-floating waves-effect waves-light">
               <i className="material-icons right">person_add</i>

@@ -52,7 +52,7 @@ const groupController = {
                 })
                 .then(() => res.status(200).send({
                   group,
-                  message: 'Group updated sucessfully'
+                  message: 'Group updated successfully'
                 }))
                 .catch(() => res.status(500).send({
                   message: 'Internal Server Error'

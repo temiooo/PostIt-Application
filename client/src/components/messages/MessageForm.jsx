@@ -57,6 +57,7 @@ export class MessageForm extends React.Component {
         <form className="col s12">
           <div className="col s12">
             <textarea
+              id="message"
               name="content"
               value={this.state.content}
               onChange={this.handleChange}
@@ -67,6 +68,7 @@ export class MessageForm extends React.Component {
         <div className="col s8 m6 l8">
           <div className="priority input-field">
             <select
+              id="message-priority"
               className="browser-default"
               name="priority"
               value={this.state.priority}

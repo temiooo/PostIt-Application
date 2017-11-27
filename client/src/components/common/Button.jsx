@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const Button = ({ onClick, className, text, icon, disabled }) => {
   return (
     <button
+      id={text.split(' ').join('-')}
       onClick={onClick}
       className={className}
       type="submit"
@@ -17,7 +18,7 @@ const Button = ({ onClick, className, text, icon, disabled }) => {
 Button.PropTypes = {
   onClick: PropTypes.func,
   className: PropTypes.string,
-  text: PropTypes.string,
+  text: PropTypes.string.isRequired,
   icon: PropTypes.string,
   disabled: PropTypes.bool
 }

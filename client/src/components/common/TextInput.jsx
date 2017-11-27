@@ -18,7 +18,7 @@ const TextInput = ({ icon, type, name, value, label, placeholder,
           onFocus={onFocus}
         />
         <label htmlFor={name}>{label}</label>
-        {error && <span className="red-text errors">{error}</span>}
+        {error && <span className="red-text errors" id={name + "-error"} >{error}</span>}
       </div>
     </div>
   )

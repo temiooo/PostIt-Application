@@ -18,7 +18,7 @@ const TopNav = ({ logout }) => {
           <ul className="right hide-on-med-and-down">
             {logout ? (
               <li>
-                <a onClick={logout}>Logout</a>
+                <a id="logout-button" onClick={logout}>Logout</a>
               </li>
             ) : (
                 <div>

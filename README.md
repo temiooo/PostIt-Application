@@ -1,6 +1,6 @@
 [![Code Climate](https://codeclimate.com/github/temiooo/PostIt-Application/badges/gpa.svg)](https://codeclimate.com/github/temiooo/PostIt-Application)
 [![Build Status](https://travis-ci.org/temiooo/PostIt-Application.svg?branch=Develop)](https://travis-ci.org/temiooo/PostIt-Application)
-[![Coverage Status](https://coveralls.io/repos/github/temiooo/PostIt-Application/badge.svg?branch=chore%2F148576433%2Fintegrate-travisCI)](https://coveralls.io/github/temiooo/PostIt-Application?branch=chore%2F148576433%2Fintegrate-travisCI)
+[![Coverage Status](https://coveralls.io/repos/github/temiooo/PostIt-Application/badge.svg)](https://coveralls.io/github/temiooo/PostIt-Application)
 # PostIt Application
 PostIt is a simple application that allows people to create accounts, create groups, add registered users to the groups, and send messages to these groups whenever they want. This way, everyone in the group can view messages that has been sent to that group. 
 
@@ -41,9 +41,10 @@ npm run open:src
 ```
 
 ## Testing
-```
-Run `npm run test:server`
-```
+* Server side tests - Run `npm run test:server`
+* Client side tests - Run `npm run test:client`
+* End to End tests - Run `npm e2e-server` and `npm test:e2e` respectively(ensure application is running)
+
 
 ## Built with
 * [NodeJS](https://nodejs.org/en/) - A Javscript runtime built runtime that uses an event-driven non-blocking I/O model that makes it lightweight and efficient.
