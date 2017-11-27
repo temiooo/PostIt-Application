@@ -111,9 +111,10 @@ export class SignupPage extends React.Component {
                 />
                 <div className="row center-align">
                   <Button
-                    className="btn waves-effect waves-light red lighten-2"
+                    className=
+                    "btn waves-effect waves-light red lighten-2 signup-button"
                     onClick={this.handleSubmit}
-                    text="Create Account"
+                    text="create account"
                   />
                 </div>
               </form>

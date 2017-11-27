@@ -90,7 +90,7 @@ describe('To do before running test', () => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.all.deep.keys('message', 'group');
           expect(res.body.group.name).to.equal('Ravenclaw');
-          expect(res.body.message).to.equal('Group updated sucessfully');
+          expect(res.body.message).to.equal('Group updated successfully');
           done();
         });
     });

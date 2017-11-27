@@ -98,7 +98,7 @@ export class CreateGroupModal extends React.Component {
         <div className="modal-footer">
           <Button
             className="btn modal-action modal-close waves-effect waves-green red darken-1"
-            text="SAVE GROUP"
+            text="save group"
             onClick={this.handleSubmit}
             disabled={!this.isValid()}
           />

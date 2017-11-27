@@ -17,7 +17,9 @@ const SideNav = ({ groups, edit }) => {
           <div className="divider"></div>
         </li>
         {groups.map(group => <li key={group.id}>
-          <Link to={`/messageboard/group/${group.id}/messages`}
+          <Link
+            id={group.name.toLowerCase().split(' ').join('-')}
+            to={`/messageboard/group/${group.id}/messages`}
             className="waves-effect">
             {group.name}
           </Link>

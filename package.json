@@ -6,6 +6,7 @@
   "scripts": {
     "migrate:db": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
     "test:server": "npm run migrate:db && NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-register server/test/**/*.spec.js --timeout 5000",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test:client": "jest /client",
     "start": "babel-node server.js",
     "start:dev": "nodemon --exec babel-node server.js",
@@ -15,7 +16,10 @@
     "build:js": "babel-node tools/build.js",
     "prebuild": "npm-run-all clean-dist build:js",
     "build": "babel-node tools/buildHtml.js",
-    "postbuild": "babel-node tools/distServer.js"
+    "postbuild": "babel-node tools/distServer.js",
+    "e2e-setup": "selenium-standalone install",
+    "e2e-server": "selenium-standalone start",
+    "test:e2e": "sequelize db:migrate:undo:all && sequelize db:migrate && nightwatch"
   },
   "repository": {
     "type": "git",
@@ -45,6 +49,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -122,7 +127,9 @@
     "enzyme-adapter-react-15": "^1.0.5",
     "jest": "21.2.1",
     "moxios": "^0.4.0",
+    "nightwatch": "^0.9.16",
     "react-test-renderer": "15.6.2",
+    "selenium-standalone": "^6.11.0",
     "sinon": "^4.1.2"
   }
 }

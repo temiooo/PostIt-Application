@@ -1,0 +1,46 @@
+module.exports = {
+  'signup tests': (client) => {
+    client
+      .resizeWindow(1280, 800)
+      .url('http://localhost:8000')
+      .waitForElementVisible('body', 1000)
+      .setValue('input#email', 'shade')
+      .setValue('input#username', 'sh')
+      .setValue('input#password', 'shadyshade')
+      .setValue('input#confirmpassword', 'shady100')
+      .click('button#create-account')
+      .pause(1000)
+      .assert.containsText('#email-error', 'Email is Invalid')
+      .assert.containsText('#username-error', 'Username is too short'
+      + ' (min of 5 characters).')
+      .assert.containsText('#confirmpassword-error', 'Passwords do not match')
+      .pause(2000)
+      .clearValue('input#email')
+      .setValue('input#email', 'shade@gmail.com')
+      .clearValue('input#username')
+      .setValue('input#username', 'shade')
+      .clearValue('input#confirmpassword')
+      .setValue('input#confirmpassword', 'shadyshade')
+      .click('button#create-account')
+      .pause(1000)
+      .assert.urlEquals('http://localhost:8000/#/messageboard')
+      .pause(2000)
+      .click('a#logout-button')
+      .assert.urlEquals('http://localhost:8000/#/login')
+      .url('http://localhost:8000')
+      .pause(2000)
+      .setValue('input#email', 'shade@gmail.com')
+      .setValue('input#username', 'segun')
+      .setValue('input#password', 'shadyshade')
+      .setValue('input#confirmpassword', 'shadyshade')
+      .click('button#create-account')
+      .pause(1000)
+      .waitForElementVisible('.toast-message', 2000)
+      .assert.containsText('.toast-message', 'Email taken already.'
+      + ' Please use another one')
+      .pause(2000)
+      .url('http://localhost:8000/#/messageboard')
+      .assert.urlEquals('http://localhost:8000/#/login')
+      .end();
+  }
+};
