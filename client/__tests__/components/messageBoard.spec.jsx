@@ -4,8 +4,7 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import MockData from '../__mocks__/mockData';
 import ConnectedMessageBoard, { MessageBoard } from
-  '../../components/messages/MessageBoard';
-import { editGroupOff } from '../../actions/groupActions';
+  '../../src/components/messages/MessageBoard';
 
 let event;
 

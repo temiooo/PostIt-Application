@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Button from '../../components/common/Button.jsx';
+import Button from '../../src/components/common/Button.jsx';
 
 describe('Button Component', () => {
   it('should render without crashing', () => {

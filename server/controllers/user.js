@@ -10,6 +10,13 @@ import {
 require('dotenv').config();
 
 const userController = {
+  /**
+   * Creates a new user
+   * ROUTE: POST: /api/user/signup
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} contains auth token and details of the newly created user
+   */
   signup(req, res) {
     return User
       .create({
@@ -35,6 +42,13 @@ const userController = {
       }));
   },
 
+  /**
+   * Authenticates and logs in a user
+   * ROUTE: POST: /api/user/signin
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} contains auth token and details of the user
+   */
   signin(req, res) {
     if (!req.body.username || !req.body.password) {
       return res.status(401).send({
@@ -71,6 +85,14 @@ const userController = {
       }));
   },
 
+  /**
+   * Generates a reset password token for users
+   * that have forgotten their password
+   * ROUTE: PUT: /api/user/forgotpassword
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} message object stating if user has been sent an email
+   */
   forgotPassword(req, res) {
     const passwordToken = randomstring.generate(50);
     User.findOne({
@@ -94,8 +116,8 @@ const userController = {
               forgotPasswordMail(req.headers.host, passwordToken)))
               .then(() => {
                 res.status(200).send({
-                  message: 'An email has been sent to ' + user.email +
-                    ' with further instructions.'
+                  message: `An email has been sent to ${user.email
+                  } with further instructions.`
                 });
               })
               .catch(() => {
@@ -114,6 +136,13 @@ const userController = {
       }));
   },
 
+  /**
+   * Resets a user's password
+   * ROUTE: PUT: /api/user/resetpassword/:token
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} message object stating if password reset was successful
+   */
   resetPassword(req, res) {
     const passwordToken = req.params.token;
     if (!req.body.password) {
@@ -165,6 +194,13 @@ const userController = {
     }
   },
 
+  /**
+   * Searches for users that match the specified search query
+   * ROUTE: GET: /api/search/users
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} contains search results
+   */
   searchUser(req, res) {
     const limit = req.query.limit || null;
     const offset = req.query.offset || null;
@@ -218,6 +254,13 @@ const userController = {
     });
   },
 
+  /**
+   * Retrieves a list of group  a user belongs to
+   * ROUTE: GET: /api/user/:userId/groups
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {array} lsit of groups specified user belongs to
+   */
   listGroups(req, res) {
     const userId = req.params.userId;
     User.findOne({

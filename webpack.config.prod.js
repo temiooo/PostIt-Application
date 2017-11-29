@@ -8,7 +8,7 @@ const GLOBALS = {
 
 export default {
   devtool: 'source-map',
-  entry: path.resolve(__dirname, 'client/src/index.js'),
+  entry: path.resolve(__dirname, 'client/src/index.jsx'),
   resolve: {
     extensions: ['.js', '.jsx']
   },

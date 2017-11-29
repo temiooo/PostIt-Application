@@ -5,6 +5,13 @@ import {
 } from '../utils/nodemailer';
 
 const messageController = {
+  /**
+   * Posts a new message to a group
+   * ROUTE: POST: /api/group/:groupId/message
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} contains details of the newly posted message
+   */
   create(req, res) {
     const groupId = req.params.groupId;
     const userId = req.decoded.user.id;
@@ -50,7 +57,7 @@ const messageController = {
                       }).catch(() => {
                         res.status(400).send({
                           message:
-                          'A network error occured. Please try again.'
+                            'A network error occured. Please try again.'
                         });
                       });
                     } else {
@@ -76,6 +83,13 @@ const messageController = {
       }));
   },
 
+  /**
+   * Retrieves messages from a specified group
+   * ROUTE: GET: /api/group/:groupId/messages
+   * @param {object} req - request object
+   * @param {object} res -r esponse object
+   * @returns {array} contains messages retrieved from a group
+   */
   list(req, res) {
     const groupId = req.params.groupId;
     const userId = req.decoded.user.id;

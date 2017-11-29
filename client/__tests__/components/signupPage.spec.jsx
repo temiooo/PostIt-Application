@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import mockData from '../__mocks__/mockData'
 import ConnectedSignupPage, { SignupPage } from
-  '../../components/authentication/SignupPage';
+  '../../src/components/authentication/SignupPage';
 
 let props;
 let event;

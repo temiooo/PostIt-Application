@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedMessageForm, { MessageForm } from
-  '../../components/messages/MessageForm';
+  '../../src/components/messages/MessageForm';
 
 let props;
 

@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * TextInput component
+ * @param {object} props
+ * @returns {JSX} jsx representation of the component
+ */
 const TextInput = ({ icon, type, name, value, label, placeholder,
   onChange, error, onBlur, onFocus }) => {
   return (

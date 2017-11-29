@@ -1,10 +1,10 @@
 import { expect } from 'chai';
-import userReducer from '../../reducers/userReducer';
-import initialState from '../../reducers/initialState';
+import userReducer from '../../src/reducers/userReducer';
+import initialState from '../../src/reducers/initialState';
 import {
   getGroupMembersSuccess, getGroupMembersFailure,
   searchUsersSuccess, searchUsersFailure
-} from '../../actions/userActions';
+} from '../../src/actions/userActions';
 
 let action;
 let newState;

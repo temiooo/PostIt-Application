@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedCreateGroupModal, { CreateGroupModal } from
-  '../../components/messages/CreateGroupModal';
+  '../../src/components/messages/CreateGroupModal';
 
 let props;
 const setup = () => {

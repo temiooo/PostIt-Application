@@ -13,7 +13,17 @@ import { logout } from '../../actions/authActions';
 import { getMessages } from '../../actions/messageActions';
 import { getUserGroups, editGroupOff } from '../../actions/groupActions';
 
+/**
+ * MessageBoard component
+ * @class MessageBoard
+ * @extends {React.Component}
+ */
 export class MessageBoard extends React.Component {
+
+  /**
+   * Creates an instance of MessageBoard
+   * @param {object} props 
+   */
   constructor(props) {
     super(props);
 
@@ -22,27 +32,49 @@ export class MessageBoard extends React.Component {
 
   }
 
+  /**
+   * lifecycle method invoked before component mounts
+   * @returns {void} no return value 
+   */
   componentWillMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.getUserGroups(this.props.auth.currentUser.id);
     }
   }
 
+  /**
+   * lifecycle method invoked when component mounts
+   * @returns {void} no return value
+   */
   componentDidMount() {
     $('.button-collapse').sideNav();
     $('select').material_select();
   }
 
+  /**
+   * changes edit group status to false
+   * @param {object} event
+   * @returns {void} no return value
+   */
   editGroupOff(event) {
     event.preventDefault();
     this.props.editGroupOff();
   }
 
+  /**
+   * handles user logout
+   * @param {object} event
+   * @returns {void} no return value
+   */
   logout(event) {
     event.preventDefault();
     this.props.logout();
   }
 
+  /**
+   * Renders the component
+   * @returns {JSX} jsx representation of the component
+   */
   render() {
     if (!this.props.auth.isAuthenticated) {
       return (
@@ -91,11 +123,21 @@ MessageBoard.propTypes = {
   editGroupOff: PropTypes.func.isRequired
 };
 
+/**
+ * Maps state to props
+ * @param {object} state
+ * @returns {object} contains sections of the redux store
+ */
 const mapStateToProps = (state) => ({
   auth: state.auth,
   groups: state.groups
 });
 
+/**
+ * Maps dispatch to props
+ * @param {function} dispatch
+ * @returns {object} actions to be dispatched
+ */
 const mapDispatchToProps = dispatch => bindActionCreators({
   logout,
   getUserGroups,

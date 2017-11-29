@@ -3,14 +3,14 @@ import thunk from 'redux-thunk';
 import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedForgotPassword, { ForgotPassword } from
-  '../../components/authentication/ForgotPassword';
+  '../../src/components/authentication/ForgotPassword';
 
 let props;
 let event;
 
 const setup = (isAuthenticated) => {
   props = {
-    isAuthenticated: isAuthenticated,
+    isAuthenticated,
     isLoading: 0,
     forgotPassword: jest.fn()
   }

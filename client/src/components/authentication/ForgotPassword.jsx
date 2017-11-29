@@ -10,7 +10,17 @@ import TextInput from '../common/TextInput';
 import { forgotPassword } from '../../actions/passwordActions';
 import { validateForgotPasswordEmail } from '../../utils/validateInput';
 
+/**
+ * ForgotPassword component
+ * @class ForgotPassword
+ * @extends {React.Component}
+ */
 export class ForgotPassword extends React.Component {
+
+  /**
+   * Creates an instance of ForgotPassword
+   * @param {object} props
+   */
   constructor(props) {
     super(props);
 
@@ -21,11 +31,20 @@ export class ForgotPassword extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /**
+   * Handles input validation
+   * @returns {boolean} represents validity status of the input
+   */
   isValid() {
     const { isValid } = validateForgotPasswordEmail(this.state);
     return isValid;
   }
 
+  /**
+   * Handles change event for input fields
+   * @param {object} event
+   * @returns {void} no return value
+   */
   handleChange(event) {
     event.preventDefault();
     this.setState({
@@ -33,11 +52,20 @@ export class ForgotPassword extends React.Component {
     });
   }
 
+  /**
+   * Handles form submission
+   * @param {object} event
+   * @returns {void} no return value
+   */
   handleSubmit(event) {
     event.preventDefault();
     this.props.forgotPassword(this.state)
   }
 
+  /**
+  * Renders the component
+  * @returns {JSX} jsx representation of the component
+  */
   render() {
     if (this.props.isAuthenticated) {
       return (
@@ -80,18 +108,27 @@ export class ForgotPassword extends React.Component {
   }
 }
 
-
 ForgotPassword.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   forgotPassword: PropTypes.func.isRequired,
   isLoading: PropTypes.number.isRequired,
 };
 
+/**
+ * Maps state to props
+ * @param {object} state
+ * @returns {object} contains sections of the redux store
+ */
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   isLoading: state.ajaxCallsInProgress,
 });
 
+/**
+ * Maps dispatch to props
+ * @param {function} dispatch
+ * @returns {object} actions to be dispatched 
+ */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ forgotPassword },
     dispatch);

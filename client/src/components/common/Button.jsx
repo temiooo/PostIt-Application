@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Button Component
+ * @param {object} props 
+ * @returns {JSX} jsx representation of the component
+ */
 const Button = ({ onClick, className, text, icon, disabled }) => {
   return (
     <button

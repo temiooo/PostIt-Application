@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import mockData from '../__mocks__/mockData'
 import ConnectedWelcomePage, { WelcomePage } from
-  '../../components/messages/WelcomePage';
+  '../../src/components/messages/WelcomePage';
 
 let props;
 

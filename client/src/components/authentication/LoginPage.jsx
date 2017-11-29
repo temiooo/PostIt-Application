@@ -9,7 +9,17 @@ import TextInput from '../common/TextInput';
 import LandingPage from '../common/LandingPage';
 import { login } from '../../actions/authActions';
 
+/**
+ * LoginPage Component
+ * @class LoginPage
+ * @extends {React.Component}
+ */
 export class LoginPage extends React.Component {
+
+  /**
+   * Creates an instance of LoginPage
+   * @param {object} props 
+   */
   constructor(props) {
     super(props);
 
@@ -21,6 +31,11 @@ export class LoginPage extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /**
+   * Handles change event for input fields
+   * @param {object} event
+   * @returns {void} no return value
+   */
   handleChange(event) {
     event.preventDefault();
     this.setState({
@@ -28,6 +43,11 @@ export class LoginPage extends React.Component {
     });
   }
 
+  /**
+   * Handles login form submission
+   * @param {object} event
+   * @returns {void} no return value
+   */
   handleSubmit(event) {
     event.preventDefault();
     this.props.login(this.state)
@@ -38,6 +58,10 @@ export class LoginPage extends React.Component {
       });
   }
 
+  /**
+   * Renders the component
+   * @returns {JSX} jsx representation of the component
+   */
   render() {
     if (this.props.isAuthenticated) {
       return (
@@ -104,10 +128,20 @@ LoginPage.propTypes = {
   login: PropTypes.func.isRequired
 };
 
+/**
+ * Maps state to props
+ * @param {object} state
+ * @returns {object} contains sections of the redux store
+ */
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
+/**
+ * Maps dispatch to props
+ * @param {function} dispatch
+ * @returns {object} actions to be dispatched 
+ */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ login },
     dispatch);

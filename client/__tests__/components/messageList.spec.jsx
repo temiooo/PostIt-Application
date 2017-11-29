@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import mockData from '../__mocks__/mockData';
-import MessageList from '../../components/messages/MessageList';
+import MessageList from '../../src/components/messages/MessageList';
 
 let props;
 const { messageList } = mockData.componentData;

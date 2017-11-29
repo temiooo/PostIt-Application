@@ -1,9 +1,8 @@
 engines:
   eslint:
     enabled: true
-    checks:
-      similar-code:
-        enabled: false
+  duplication:
+    enabled: false
 
 ratings:
   paths:
@@ -11,7 +10,7 @@ ratings:
   - server/**
 
 exclude_paths:
-  - client/src/__tests__/
+  - client/__tests__/
   - client/dist/
   - server/test/
   - template/

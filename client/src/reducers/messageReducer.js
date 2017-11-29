@@ -1,6 +1,12 @@
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
+/**
+ * Reducer that handles messages from the current group
+ * @param {object} state - initial state
+ * @param {object} action - the dispatched action
+ * @returns {object} new state of the messages section of the store
+ */
 const messageReducer = (state = initialState.messages, action) => {
   switch (action.type) {
     case types.GET_MESSAGES_SUCCESS:

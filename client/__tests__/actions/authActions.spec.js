@@ -4,8 +4,8 @@ import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import mockData from '../__mocks__/mockData';
 import mockLocalStorage from '../__mocks__/mockLocalStorage';
-import * as types from '../../actions/actionTypes';
-import { signup, login, logout } from '../../actions/authActions';
+import * as types from '../../src/actions/actionTypes';
+import { signup, login, logout } from '../../src/actions/authActions';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);

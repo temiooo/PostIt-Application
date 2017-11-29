@@ -1,6 +1,13 @@
 import { Group, User } from '../models';
 
 const groupController = {
+  /**
+   * Creates a new group
+   * ROUTE: POST: /api/group
+   * @param {*} req - request object
+   * @param {*} res - response object
+   * @returns {object} contains details of the newly created group
+   */
   create(req, res) {
     const groupName = req.body.name;
     if (!groupName || groupName.trim().length === 0) {
@@ -28,6 +35,13 @@ const groupController = {
     }
   },
 
+  /**
+   * Edit details of an already existing group
+   * ROUTE: PUT: /api/group/:groupId
+   * @param {*} req - request object
+   * @param {*} res - response object
+   * @returns {object} contains details of the edited group
+   */
   edit(req, res) {
     const groupId = req.params.groupId;
     const userId = req.decoded.user.id;
@@ -70,6 +84,13 @@ const groupController = {
     }
   },
 
+  /**
+   * Gets details of a particular group
+   * ROUTE: GET: /api/group/:groupId
+   * @param {*} req - request object
+   * @param {*} res - response object
+   * @returns {object} contains details of the group requested for
+   */
   get(req, res) {
     const groupId = req.params.groupId;
 
@@ -88,6 +109,13 @@ const groupController = {
       }));
   },
 
+  /**
+   * Adds a user as a member of a group
+   * ROUTE: POST: /api/group/:groupId/user
+   * @param {*} req - request object
+   * @param {*} res - response object
+   * @returns {object} contains message specifiying success or failure of action
+   */
   addUser(req, res) {
     const groupId = req.params.groupId;
     const userId = req.body.userId;
@@ -127,6 +155,13 @@ const groupController = {
       }));
   },
 
+  /**
+   * List users belonging to a particular group
+   * ROUTE: GET: /api/group/:groupId/users
+   * @param {*} req - request object
+   * @param {*} res - response object
+   * @returns {array} contains users who are members of the specified group
+   */
   listUsers(req, res) {
     const groupId = req.params.groupId;
     Group.findOne({

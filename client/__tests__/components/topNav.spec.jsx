@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TopNav from '../../components/messages/TopNav';
+import TopNav from '../../src/components/messages/TopNav';
 
 const props = {
   logout: jest.fn(),

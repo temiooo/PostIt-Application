@@ -1,6 +1,12 @@
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
+/**
+ * Reducer that handles groups a user belongs to
+ * @param {array} state - initial state
+ * @param {object} action - the dispatched action
+ * @returns {array} new state of group section of the store
+ */
 const groupReducer = (state = initialState.groups, action) => {
   switch (action.type) {
     case types.GET_USER_GROUPS_SUCCESS:
