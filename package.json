@@ -16,7 +16,8 @@
     "build:js": "babel-node tools/build.js",
     "prebuild": "npm-run-all clean-dist build:js",
     "build": "babel-node tools/buildHtml.js",
-    "postbuild": "babel-node tools/distServer.js",
+    "open:build": "babel-node tools/distServer.js",
+    "heroku-postbuild": "npm run build",
     "e2e-setup": "selenium-standalone install",
     "e2e-server": "selenium-standalone start",
     "test:e2e": "sequelize db:migrate:undo:all && sequelize db:migrate && nightwatch"
