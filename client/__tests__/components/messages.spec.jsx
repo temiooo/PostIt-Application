@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import mockData from '../__mocks__/mockData';
 import ConnectedMessages, { Messages } from
-  '../../components/messages/Messages';
+  '../../src/components/messages/Messages';
 
 const props = {
   getGroup: jest.fn(),

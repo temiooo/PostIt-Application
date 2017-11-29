@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedLoginPage, { LoginPage } from
-  '../../components/authentication/LoginPage';
+  '../../src/components/authentication/LoginPage';
 
 let props;
 let event;

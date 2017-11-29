@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TextInput from '../../components/common/TextInput';
+import TextInput from '../../src/components/common/TextInput';
 
 let props;
 

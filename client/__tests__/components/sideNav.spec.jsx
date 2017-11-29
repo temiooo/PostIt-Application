@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import SideNav from '../../components/messages/SideNav';
+import SideNav from '../../src/components/messages/SideNav';
 let props;
 
 const setup = (groups) => {

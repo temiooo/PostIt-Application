@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import mockData from '../__mocks__/mockData';
-import * as types from '../../actions/actionTypes';
-import { getMessages, postMessage } from '../../actions/messageActions';
+import * as types from '../../src/actions/actionTypes';
+import { getMessages, postMessage } from '../../src/actions/messageActions';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);

@@ -9,7 +9,17 @@ import TextInput from '../common/TextInput';
 import { resetPassword } from '../../actions/passwordActions';
 import { validateNewPassword } from '../../utils/validateInput';
 
+/**
+ * ResetPassword Component
+ * @class ResetPassword
+ *  @extends {React.Component}
+ */
 export class ResetPassword extends React.Component {
+
+  /**
+   * Creates an instance of ResetPassword
+   * @param {object} props
+   */
   constructor(props, context) {
     super(props, context);
 
@@ -23,6 +33,10 @@ export class ResetPassword extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /**
+   * Handles input validation
+   * @returns {boolean} represents validity status of the input
+   */
   isValid() {
     const { errors, isValid } = validateNewPassword(this.state);
     if (!isValid) {
@@ -31,10 +45,19 @@ export class ResetPassword extends React.Component {
     return isValid;
   }
 
+  /**
+   * Handles onfocus event for input fields
+   * @returns {void} no return value
+   */
   handleFocus() {
     this.setState({ errors: {} })
   }
 
+  /**
+   * Handles change event for input fields
+   * @param {object} event
+   * @returns {void} no return value
+   */
   handleChange(event) {
     event.preventDefault();
     this.setState({
@@ -42,6 +65,11 @@ export class ResetPassword extends React.Component {
     });
   }
 
+  /**
+   * Handles reset password form submission
+   * @param {object} event
+   * @returns {void} no return value
+   */
   handleSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
@@ -54,6 +82,10 @@ export class ResetPassword extends React.Component {
     };
   }
 
+  /**
+   * Renders the component
+   * @returns {JSX} jsx representation of the component
+   */
   render() {
     if (this.props.isAuthenticated) {
       return (
@@ -111,11 +143,21 @@ ResetPassword.propTypes = {
   resetPassword: PropTypes.func.isRequired
 };
 
+/**
+ * Maps state to props
+ * @param {object} state
+ * @returns {object} contains sections of the redux store
+ */
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   isLoading: state.ajaxCallsInProgress,
 });
 
+/**
+ * Maps dispatch to props
+ * @param {function} dispatch
+ * @returns {object} actions to be dispatched 
+ */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ resetPassword },
     dispatch);

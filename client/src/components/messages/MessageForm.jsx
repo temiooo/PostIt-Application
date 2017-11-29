@@ -8,7 +8,17 @@ import Button from '../common/Button';
 import { validateMessageInput } from '../../utils/validateInput';
 import { postMessage, postMessageSuccess } from '../../actions/messageActions';
 
+/**
+ * MessageForm component
+ * @class MessageForm
+ * @extends {React.Component}
+ */
 export class MessageForm extends React.Component {
+
+  /**
+   * Creates an instance of MessageForm
+   * @param {object} props 
+   */
   constructor(props) {
     super(props);
 
@@ -21,17 +31,31 @@ export class MessageForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /**
+   * Handles change event for the input fields
+   * @param {object} event
+   * @returns {void} no return value
+   */
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     })
   }
 
+  /**
+   * Handles input validation
+   * @returns {boolean} represents validity status of the input
+   */
   isValid() {
     const { isValid } = validateMessageInput(this.state);
     return isValid;
   }
 
+  /**
+   * Handles message form submission
+   * @param {object} event
+   * @returns {void} no return value
+   */
   handleSubmit(event) {
     event.preventDefault();
     const id = this.props.groupId
@@ -49,6 +73,11 @@ export class MessageForm extends React.Component {
       });
   }
 
+
+  /**
+   * Renders the component
+   * @returns {JSX} jsx representation of the element
+   */
   render() {
     const options = ['Normal', 'Urgent', 'Critical'];
 
@@ -100,6 +129,11 @@ MessageForm.propTypes = {
   postMessage: PropTypes.func.isRequired
 };
 
+/**
+ * Maps dispatch to props
+ * @param {function} dispatch
+ * @returns {object} actions to be dispatched
+ */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     postMessage,

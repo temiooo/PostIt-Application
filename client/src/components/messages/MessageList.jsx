@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import Button from '../common/Button';
 import { Link } from 'react-router-dom'
 
+/**
+ * MessageList component
+ * @param {object} props
+ * @returns {JSX} jsx representation of the component
+ */
 const MessagesList = ({ messages, edit, isLoading }) => {
   const messageLength = messages.groupMessages.length;
   return (

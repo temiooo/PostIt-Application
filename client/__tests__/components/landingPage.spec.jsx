@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import LandingPage from
-  '../../components/common/LandingPage.jsx';
+  '../../src/components/common/LandingPage.jsx';
 
 describe('Landing Page Component', () => {
   it('should render without crashing', () => {

@@ -2,10 +2,10 @@ import moxios from 'moxios';
 import { expect } from 'chai';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
-import * as types from '../../actions/actionTypes';
+import * as types from '../../src/actions/actionTypes';
 import mockData from '../__mocks__/mockData';
 import { getGroupMembers, searchUsers, addUser }
-  from '../../actions/userActions';
+  from '../../src/actions/userActions';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);

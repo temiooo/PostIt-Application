@@ -10,7 +10,17 @@ import { Link, Redirect } from 'react-router-dom';
 import { signup } from '../../actions/authActions';
 import { validateSignupInput } from '../../utils/validateInput';
 
+/**
+ * SignupPage component
+ * @class SignupPage
+ * @extends {React.Component}
+ */
 export class SignupPage extends React.Component {
+
+  /**
+   * Creates an instance of SignupPage
+   * @param {object} props 
+   */
   constructor(props) {
     super(props);
 
@@ -26,12 +36,22 @@ export class SignupPage extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
+  /**
+   * Handles change event for input fields
+   * @param {object} event 
+   * @returns {void} no return value
+   */
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
+  /**
+   * Handles input validation
+   * @returns {boolean} represents validity status of the input
+   */
   isValid() {
     const { errors, isValid } = validateSignupInput(this.state);
     if (!isValid) {
@@ -40,6 +60,11 @@ export class SignupPage extends React.Component {
     return isValid;
   }
 
+  /**
+   * Handles signup form submission
+   * @param {object} event 
+   * @returns {void} no return value
+   */
   handleSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
@@ -52,6 +77,10 @@ export class SignupPage extends React.Component {
     }
   }
 
+  /**
+   * Renders the component
+   * @returns {JSX} jsx representation of the component
+   */
   render() {
     if (this.props.isAuthenticated) {
       return (
@@ -132,10 +161,20 @@ SignupPage.propTypes = {
   signup: PropTypes.func.isRequired
 };
 
+/**
+ * Maps state to props
+ * @param {object} state
+ * @returns {object} contains sections of the redux store
+ */
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
+/**
+ * Maps dispatch to props
+ * @param {function} dispatch 
+ * @returns {object} actions to be dispatched
+ */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ signup },
     dispatch);

@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import groupReducer from '../../reducers/groupReducer';
+import groupReducer from '../../src/reducers/groupReducer';
 import {
   getUserGroupsSuccess, getUserGroupsFailure,
   createGroupSuccess, createGroupFailure
-} from '../../actions/groupActions';
+} from '../../src/actions/groupActions';
 
 let action;
 let newState;

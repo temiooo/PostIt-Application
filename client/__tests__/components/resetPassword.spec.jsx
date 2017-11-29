@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import mockData from '../__mocks__/mockData';
 import ConnectedResetPassword, { ResetPassword } from
-  '../../components/authentication/ResetPassword';
+  '../../src/components/authentication/ResetPassword';
 
 let props;
 let event;

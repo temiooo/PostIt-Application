@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import mockData from '../__mocks__/mockData';
-import * as types from '../../actions/actionTypes';
+import * as types from '../../src/actions/actionTypes';
 import { getGroup, getUserGroups, createGroup, updateGroup }
-  from '../../actions/groupActions';
+  from '../../src/actions/groupActions';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);

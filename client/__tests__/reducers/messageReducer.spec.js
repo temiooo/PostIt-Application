@@ -1,13 +1,13 @@
 import { expect } from 'chai';
-import initialState from '../../reducers/initialState';
-import messageReducer from '../../reducers/messageReducer';
+import initialState from '../../src/reducers/initialState';
+import messageReducer from '../../src/reducers/messageReducer';
 import {
   getMessagesSuccess, getMessagesFailure,
   postMessageSuccess, postMessageFailure
-} from '../../actions/messageActions';
+} from '../../src/actions/messageActions';
 import {
   getGroupSuccess, getGroupFailure, updateGroupInfo
-} from '../../actions/groupActions';
+} from '../../src/actions/groupActions';
 
 let action;
 let newState;

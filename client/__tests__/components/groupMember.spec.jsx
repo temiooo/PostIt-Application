@@ -4,8 +4,7 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import mockData from '../__mocks__/mockData';
 import ConnectedGroupMember, { GroupMember } from
-  '../../components/messages/GroupMember';
-import { getGroupMembers } from '../../actions/userActions';
+  '../../src/components/messages/GroupMember';
 
 let props;
 

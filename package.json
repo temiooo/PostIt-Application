@@ -34,10 +34,10 @@
     "verbose": true,
     "collectCoverage": true,
     "testPathIgnorePatterns": [
-      "client/src/__tests__/__mocks__",
-      "client/src/__tests__/setup.js"
+      "client/__tests__/__mocks__",
+      "client/__tests__/setup.js"
     ],
-    "setupTestFrameworkScriptFile": "./client/src/__tests__/setup.js"
+    "setupTestFrameworkScriptFile": "./client/__tests__/setup.js"
   },
   "keywords": [],
   "author": "",
