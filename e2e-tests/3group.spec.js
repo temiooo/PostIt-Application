@@ -1,56 +1,59 @@
 module.exports = {
-  'group tests': (client) => {
+  beforeEach: (client) => {
     client
       .resizeWindow(1280, 800)
-      .url('http://localhost:8000')
-      .waitForElementVisible('body', 1000)
-      .setValue('input#email', 'abigail@gmail.com')
+      .url('http://localhost:8000/#/login')
+      .waitForElementVisible('body')
       .setValue('input#username', 'abigail')
       .setValue('input#password', 'abigail2000')
-      .setValue('input#confirmpassword', 'abigail2000')
-      .click('button#create-account')
-      .pause(1000)
-      .assert.urlEquals('http://localhost:8000/#/messageboard')
+      .click('button#login');
+  },
+  'user can create a group': (client) => {
+    client
+      .url('http://localhost:8000/#/messageboard')
+      .waitForElementPresent('.welcome-page')
       .click('a.modal-trigger')
       .setValue('input#name', 'ade')
       .click('.modal-footer')
-      .pause(1000)
       .assert.containsText('span#name-error', 'Group Name is too short'
       + ' (min of 5 characters')
-      .pause(1000)
       .clearValue('input#name')
       .setValue('input#name', 'Matterhorn')
       .click('button#save-group')
       .pause(1000)
       .assert.elementPresent('a#matterhorn')
+      .end();
+  },
+  'user can edit a group name': (client) => {
+    client
+      .url('http://localhost:8000/#/messageboard')
+      .waitForElementVisible('a#matterhorn')
       .click('a#matterhorn')
       .assert.urlContains('http://localhost:8000/#/messageboard/group')
-      .pause(2000)
       .click('a#edit-group')
-      .pause(2000)
-      .assert.visible('.modal-content')
+      .waitForElementVisible('.modal-content')
       .setValue('input#name', ' Group')
       .click('button#save-group')
-      .pause(1000)
-      .waitForElementVisible('.toast-message', 2000)
+      .waitForElementVisible('.toast-message')
       .assert.containsText('.toast-message', 'Group updated successfully')
-      .pause(1000)
       .assert.containsText('a#matterhorn-group', 'Matterhorn Group')
-      .pause(4000)
+      .end();
+  },
+  'user can add another user to a group': (client) => {
+    client
+      .url('http://localhost:8000/#/messageboard')
+      .waitForElementVisible('a#matterhorn-group')
+      .click('a#matterhorn-group')
       .click('a#add-user')
-      .pause(2000)
       .assert.urlContains('members')
-      .assert.containsText('li.collection-item', 'abigail')
-      .setValue('input#search', 'sh')
+      .assert.containsText('.group-members ul > :first-child', 'abigail')
+      .setValue('input#search', 'temi')
       .click('button#search')
-      .pause(2000)
-      .assert.visible('ul#search-results')
+      .waitForElementVisible('ul#search-results')
       .click('a.non-members')
-      .pause(1000)
-      .waitForElementVisible('.toast-message', 2000)
+      .waitForElementVisible('.toast-message')
       .assert.containsText('.toast-message', 'User Added Successfully')
-      .click('a#logout-button')
-      .assert.urlEquals('http://localhost:8000/#/login')
+      .assert.containsText('.group-members ul > :nth-child(2)', 'temitope')
       .end();
   }
 };
