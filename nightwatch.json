@@ -31,6 +31,9 @@
       "screenshots": {
         "enabled": true,
         "path": "./results/screenshots"
+      },
+      "globals": {
+        "waitForConditionTimeout": 7000
       }
     }
   }

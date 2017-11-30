@@ -1,46 +1,79 @@
 module.exports = {
-  'signup tests': (client) => {
+  beforeEach: (client) => {
     client
-      .resizeWindow(1280, 800)
+      .resizeWindow(1280, 800);
+  },
+  'user can\'t signup with invalid credentials': (client) => {
+    client
       .url('http://localhost:8000')
-      .waitForElementVisible('body', 1000)
-      .setValue('input#email', 'shade')
-      .setValue('input#username', 'sh')
-      .setValue('input#password', 'shadyshade')
-      .setValue('input#confirmpassword', 'shady100')
+      .waitForElementVisible('body')
+      .setValue('input#email', 'temitope')
+      .setValue('input#username', 'te')
+      .setValue('input#password', 'myPassword')
+      .setValue('input#confirmpassword', 'mypassword')
       .click('button#create-account')
-      .pause(1000)
+      .waitForElementVisible('span')
       .assert.containsText('#email-error', 'Email is Invalid')
       .assert.containsText('#username-error', 'Username is too short'
       + ' (min of 5 characters).')
       .assert.containsText('#confirmpassword-error', 'Passwords do not match')
-      .pause(2000)
-      .clearValue('input#email')
-      .setValue('input#email', 'shade@gmail.com')
-      .clearValue('input#username')
-      .setValue('input#username', 'shade')
-      .clearValue('input#confirmpassword')
-      .setValue('input#confirmpassword', 'shadyshade')
+      .end();
+  },
+  'user can signup successfully with valid credentials':
+    (client) => {
+      client
+        .url('http://localhost:8000')
+        .waitForElementVisible('body')
+        .setValue('input#email', 'temitope@gmail.com')
+        .setValue('input#username', 'temitope')
+        .setValue('input#password', 'myPassword')
+        .setValue('input#confirmpassword', 'myPassword')
+        .click('button#create-account')
+        .waitForElementPresent('.welcome-page')
+        .assert.urlEquals('http://localhost:8000/#/messageboard')
+        .end();
+    },
+  'user can logout after signing up': (client) => {
+    client
+      .url('http://localhost:8000')
+      .waitForElementVisible('body')
+      .setValue('input#email', 'abigail@gmail.com')
+      .setValue('input#username', 'abigail')
+      .setValue('input#password', 'abigail2000')
+      .setValue('input#confirmpassword', 'abigail2000')
       .click('button#create-account')
-      .pause(1000)
+      .waitForElementPresent('.welcome-page')
       .assert.urlEquals('http://localhost:8000/#/messageboard')
-      .pause(2000)
       .click('a#logout-button')
       .assert.urlEquals('http://localhost:8000/#/login')
+      .end();
+  },
+  'user can\'t signup with already existing email': (client) => {
+    client
       .url('http://localhost:8000')
-      .pause(2000)
-      .setValue('input#email', 'shade@gmail.com')
-      .setValue('input#username', 'segun')
-      .setValue('input#password', 'shadyshade')
-      .setValue('input#confirmpassword', 'shadyshade')
+      .waitForElementVisible('body')
+      .setValue('input#email', 'temitope@gmail.com')
+      .setValue('input#username', 'temmy')
+      .setValue('input#password', 'myPassword')
+      .setValue('input#confirmpassword', 'myPassword')
       .click('button#create-account')
-      .pause(1000)
-      .waitForElementVisible('.toast-message', 2000)
+      .waitForElementVisible('.toast-message')
       .assert.containsText('.toast-message', 'Email taken already.'
       + ' Please use another one')
-      .pause(2000)
-      .url('http://localhost:8000/#/messageboard')
-      .assert.urlEquals('http://localhost:8000/#/login')
+      .end();
+  },
+  'user can\'t signup with already existing username': (client) => {
+    client
+      .url('http://localhost:8000')
+      .waitForElementVisible('body')
+      .setValue('input#email', 'temmy@gmail.com')
+      .setValue('input#username', 'temitope')
+      .setValue('input#password', 'myPassword')
+      .setValue('input#confirmpassword', 'myPassword')
+      .click('button#create-account')
+      .waitForElementVisible('.toast-message')
+      .assert.containsText('.toast-message', 'Username taken already.'
+      + ' Please use another one')
       .end();
   }
 };
