@@ -1,9 +1,9 @@
 import path from 'path';
 import open from 'open';
+import logger from 'morgan';
 import express from 'express';
 import bodyParser from 'body-parser';
-
-import logger from 'morgan';
+import routes from '../server/routes';
 
 /* eslint-disable no-console */
 const port = parseInt(process.env.PORT, 10) || 5000;
@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api-docs',
   express.static(path.join(__dirname, '../server/api-docs')));
 
-require('../server/routes/index')(app);
+routes(app);
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));

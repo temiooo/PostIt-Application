@@ -28,7 +28,7 @@ const forgotPasswordMail = (url, passwordToken) => (
     <br>
   Please note that the link is valid for 1 hour only.
     <br>
-  http://${url}/#/resetpassword/${passwordToken}
+  http://${url}/resetpassword/${passwordToken}
     <br>
   If you did not request this, please ignore this
   email and your password will remain unchanged.
@@ -42,7 +42,7 @@ const resetPasswordMail = (username, url) => (
     <br>
   Your password has been successfully changed.
     <br>
-  Click <a href='http://${url}/#/login'>here</a> 
+  Click <a href='http://${url}/login'>here</a> 
   to login
   </p>
   </div>`
@@ -55,7 +55,7 @@ const msgPriorityMail = (username, groupname, url) => (
   <strong>${username}</strong> 
   just posted a new message on Group: ${groupname}
     <br>
-  Login <a href='http://${url}/#/login'>here</a>
+  Login <a href='http://${url}/login'>here</a>
   to view your messages.
   </p>
   </div>`

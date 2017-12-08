@@ -1,8 +1,8 @@
 import * as types from './actionTypes';
 
 /**
- * Action creator that signifies the
- * beginining of an ajax call
+ * Action creator that signifies the beginining of an ajax call
+ *
  * @returns {object} action
  */
 const beginAjaxCall = () => ({
@@ -10,8 +10,8 @@ const beginAjaxCall = () => ({
 });
 
 /**
- * Action creator that signifies an ajax call
- * was not successful
+ * Action creator that signifies an ajax call was not successful
+ *
  * @returns {object} action
  */
 const ajaxCallError = () => ({
@@ -19,8 +19,8 @@ const ajaxCallError = () => ({
 });
 
 /**
- * Action creator that signifies an ajax call
- * was successful
+ * Action creator that signifies an ajax call was successful
+ *
  * @returns {object} action
  */
 const ajaxCallSuccess = () => ({
@@ -28,6 +28,5 @@ const ajaxCallSuccess = () => ({
 });
 
 export {
-  beginAjaxCall, ajaxCallError,
-  ajaxCallSuccess
+  beginAjaxCall, ajaxCallError, ajaxCallSuccess
 };

@@ -1,8 +1,11 @@
 import { expect } from 'chai';
 import db from '../../models';
 import {
-  validUser, duplicateUsername, checkPassword,
-  badEmail, duplicateEmail
+  badEmail,
+  validUser,
+  checkPassword,
+  duplicateEmail,
+  duplicateUsername,
 } from '../helpers/seedData';
 
 let userId;
@@ -27,7 +30,7 @@ describe('User Model', () => {
       });
   });
 
-  it('should raise a validation for invalid email', (done) => {
+  it('should raise a validation error for invalid email', (done) => {
     db.User.create(badEmail)
       .catch((error) => {
         expect(error.errors[0].message)

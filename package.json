@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "migrate:db": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
-    "test:server": "npm run migrate:db && NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-register server/test/**/*.spec.js --timeout 5000",
+    "test:server": "npm run migrate:db && NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-register server/test/**/**.spec.js --timeout 5000",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test:client": "jest /client",
     "start": "babel-node server.js",

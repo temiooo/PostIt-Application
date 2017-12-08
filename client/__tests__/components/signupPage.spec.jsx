@@ -59,7 +59,7 @@ describe('Signup Page Component', () => {
       username,
       password,
       confirmpassword: password
-    })
+    });
     wrapper.instance().handleSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
   });

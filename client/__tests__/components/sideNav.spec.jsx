@@ -5,7 +5,7 @@ let props;
 
 const setup = (groups) => {
   props = {
-    groups: groups,
+    groupList: groups,
     edit: jest.fn()
   }
   return shallow(<SideNav {...props} />)

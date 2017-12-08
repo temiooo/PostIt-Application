@@ -4,8 +4,10 @@ const groupController = {
   /**
    * Creates a new group
    * ROUTE: POST: /api/group
-   * @param {*} req - request object
-   * @param {*} res - response object
+   *
+   * @param {object} req - request object
+   * @param {object} res - response object
+   *
    * @returns {object} contains details of the newly created group
    */
   create(req, res) {
@@ -38,14 +40,22 @@ const groupController = {
   /**
    * Edit details of an already existing group
    * ROUTE: PUT: /api/group/:groupId
-   * @param {*} req - request object
-   * @param {*} res - response object
+   *
+   * @param {object} req - request object
+   * @param {object} res - response object
+   *
    * @returns {object} contains details of the edited group
    */
   edit(req, res) {
     const groupId = req.params.groupId;
     const userId = req.decoded.user.id;
     const groupName = req.body.name;
+
+    if (!groupId || isNaN(groupId)) {
+      return res.status(400).send({
+        message: 'Please provide a valid group ID'
+      });
+    }
 
     if (!groupName || groupName.trim().length === 0) {
       res.status(400).send({ message: 'Group name not provided' });
@@ -87,12 +97,20 @@ const groupController = {
   /**
    * Gets details of a particular group
    * ROUTE: GET: /api/group/:groupId
-   * @param {*} req - request object
-   * @param {*} res - response object
+   *
+   * @param {object} req - request object
+   * @param {object} res - response object
+   *
    * @returns {object} contains details of the group requested for
    */
   get(req, res) {
     const groupId = req.params.groupId;
+
+    if (!groupId || isNaN(groupId)) {
+      return res.status(400).send({
+        message: 'Please provide a valid group ID'
+      });
+    }
 
     Group.findOne({
       where: { id: groupId }
@@ -112,13 +130,27 @@ const groupController = {
   /**
    * Adds a user as a member of a group
    * ROUTE: POST: /api/group/:groupId/user
-   * @param {*} req - request object
-   * @param {*} res - response object
+   *
+   * @param {object} req - request object
+   * @param {object} res - response object
+   *
    * @returns {object} contains message specifiying success or failure of action
    */
   addUser(req, res) {
     const groupId = req.params.groupId;
     const userId = req.body.userId;
+
+    if (!groupId || isNaN(groupId)) {
+      return res.status(400).send({
+        message: 'Please provide a valid group ID'
+      });
+    }
+
+    if (!userId || isNaN(userId)) {
+      return res.status(400).send({
+        message: 'Please provide a valid user ID'
+      });
+    }
 
     Group.findById(groupId).then((group) => {
       if (!group) {
@@ -158,12 +190,21 @@ const groupController = {
   /**
    * List users belonging to a particular group
    * ROUTE: GET: /api/group/:groupId/users
-   * @param {*} req - request object
-   * @param {*} res - response object
+   *
+   * @param {object} req - request object
+   * @param {object} res - response object
+   *
    * @returns {array} contains users who are members of the specified group
    */
   listUsers(req, res) {
     const groupId = req.params.groupId;
+
+    if (!groupId || isNaN(groupId)) {
+      return res.status(400).send({
+        message: 'Please provide a valid group ID'
+      });
+    }
+
     Group.findOne({
       where: { id: groupId },
       attributes: [],

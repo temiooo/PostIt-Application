@@ -10,7 +10,7 @@ let event;
 
 const props = {
   auth: { isAuthenticated: true, currentUser: { id: 1 } },
-  groups: [],
+  groupList: [],
   logout: jest.fn(),
   getUserGroups: jest.fn(),
   editGroupOff: jest.fn(),
@@ -23,7 +23,7 @@ const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 const store = mockStore({
   auth: {},
-  groups: []
+  groupList: []
 });
 
 describe('MessageBoard component', () => {
@@ -38,29 +38,6 @@ describe('MessageBoard component', () => {
     const wrapper = shallow(<MessageBoard {...newProps} />);
     expect(wrapper.find('TopNav').length).toBe(0);
     expect(wrapper.find('SideNav').length).toBe(0);
-  });
-
-  it('should call the editGroupOff method', () => {
-    const wrapper = shallow(<MessageBoard {...props} />);
-    const editGroupOffSpy = jest.spyOn(
-      wrapper.instance(), 'editGroupOff'
-    );
-    event = {
-      preventDefault: jest.fn()
-    };
-    wrapper.instance().editGroupOff(event)
-    expect(editGroupOffSpy).toHaveBeenCalledTimes(1)
-  });
-
-  it('should call the logout method', () => {
-    const wrapper = shallow(<MessageBoard {...props} />);
-
-    const logoutSpy = jest.spyOn(
-      wrapper.instance(), 'logout'
-    );
-
-    wrapper.instance().logout(event)
-    expect(logoutSpy).toHaveBeenCalledTimes(1)
   });
 
   it('should render the connected component', () => {

@@ -3,8 +3,10 @@ import validator from 'validator';
 
 /**
  * Validates signup input
+ *
  * @param {object} state
- * @returns {object} returns errors if any and validity status of the input
+ *
+ * @returns {object} returns errors if any and the validity status of the input
  */
 const validateSignupInput = (state) => {
   const errors = {};
@@ -26,7 +28,7 @@ const validateSignupInput = (state) => {
     errors.username = 'Username cannot end with space characters';
   }
 
-  if (trim(state.password).length === 0) {
+  if (state.password.length === 0) {
     errors.password = 'Password is required';
   } else if (state.password.length < 8) {
     errors.password = 'Password is too short (min of 8 characters).';
@@ -43,9 +45,35 @@ const validateSignupInput = (state) => {
 };
 
 /**
- * Validates input when creating new group
+ * Validates login input
+ *
  * @param {object} state
- * @returns {object} returns errors if any and validity status of the input
+ *
+ * @returns {object} returns errors if any and the validity status of the input
+ */
+const validateLoginInput = (state) => {
+  const errors = {};
+
+  if (trim(state.username).length === 0) {
+    errors.username = 'Please provide a username';
+  }
+
+  if (state.password.length === 0) {
+    errors.password = 'Please provide a password';
+  }
+
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  };
+};
+
+/**
+ * Validates input when creating new group
+ *
+ * @param {object} state
+ *
+ * @returns {object} returns errors if any and the validity status of the input
  */
 const validateGroupInput = (state) => {
   const errors = {};
@@ -69,8 +97,10 @@ const validateGroupInput = (state) => {
 
 /**
  * Validates message input
+ *
  * @param {object} state
- * @returns {object} returns errors if any and validity status of the input
+ *
+ * @returns {object} returns errors if any and the validity status of the input
  */
 const validateMessageInput = (state) => {
   const errors = {};
@@ -91,7 +121,9 @@ const validateMessageInput = (state) => {
 
 /**
  * Validates input when filling forgot password form
+ *
  * @param {object} state
+ *
  * @returns {object} contains boolean indicating validity status of the input
  */
 const validateForgotPasswordEmail = (state) => {
@@ -99,17 +131,22 @@ const validateForgotPasswordEmail = (state) => {
 
   if (trim(state.email).length === 0) {
     errors.email = 'Email is empty';
+  } else if (!validator.isEmail(state.email)) {
+    errors.email = 'Email is Invalid';
   }
 
   return {
+    errors,
     isValid: isEmpty(errors)
   };
 };
 
 /**
  * validates new password when resetting password
+ *
  * @param {object} state
- * @returns {object} returns errors if any and validity status of the input
+ *
+ * @returns {object} returns errors if any and the validity status of the input
  */
 const validateNewPassword = (state) => {
   const errors = {};
@@ -131,7 +168,7 @@ const validateNewPassword = (state) => {
 };
 
 export {
-  validateSignupInput, validateGroupInput,
-  validateMessageInput, validateForgotPasswordEmail,
-  validateNewPassword
+  validateSignupInput, validateLoginInput,
+  validateGroupInput, validateMessageInput,
+  validateForgotPasswordEmail, validateNewPassword
 };

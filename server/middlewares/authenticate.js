@@ -1,14 +1,15 @@
 import jwt from 'jsonwebtoken';
-import { User } from '../models';
 
 require('dotenv').config();
 
 const authenticate = {
   /**
    * authenticates a user
+   *
    * @param {object} req - request object
    * @param {object} res -response object
    * @param {function} next - calls the next function
+   *
    * @return {(function|object)} calls next function or returns response object
    */
   verifyUser(req, res, next) {
@@ -21,17 +22,7 @@ const authenticate = {
           });
         }
         req.decoded = decoded;
-        User.findOne({
-          where: {
-            id: decoded.user.id
-          },
-          attributes: {
-            exclude: ['password', 'resetPasswordToken', 'resetPasswordExpires']
-          },
-        }).then((user) => {
-          req.userDetails = user;
-          next();
-        });
+        next();
       });
     } else {
       return res.status(401).send({

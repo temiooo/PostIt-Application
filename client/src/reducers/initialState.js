@@ -3,11 +3,12 @@ export default {
     isAuthenticated: false,
     currentUser: {}
   },
-  groups: [],
-  messages: {
+  groupList: [],
+  selectedGroup: {
     groupId: '',
     groupName: '',
-    groupMessages: []
+    groupMessages: [],
+    editGroupStatus: false
   },
   users: {
     members: [],
@@ -15,5 +16,4 @@ export default {
     pagination: {}
   },
   ajaxCallsInProgress: 0,
-  editGroupStatus: false
 };

@@ -1,9 +1,9 @@
-import user from './user';
-import group from './group';
-import message from './message';
+import userController from './userController';
+import groupController from './groupController';
+import messageController from './messageController';
 
-module.exports = {
-  user,
-  group,
-  message,
+export {
+  userController as user,
+  groupController as group,
+  messageController as message,
 };

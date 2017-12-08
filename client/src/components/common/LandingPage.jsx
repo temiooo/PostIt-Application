@@ -2,6 +2,7 @@ import React from 'react';
 
 /**
  * LandingPage component
+ * 
  * @returns {JSX} jsx representation of the component
  */
 const LandingPage = () => {

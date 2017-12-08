@@ -8,9 +8,8 @@ import ConnectedCreateGroupModal, { CreateGroupModal } from
 let props;
 const setup = () => {
   props = {
-    createGroup: jest.fn(),
-    updateGroup: jest.fn(),
-    editGroupStatus: true,
+    createGroup: jest.fn(() => Promise.resolve()),
+    editGroup: jest.fn(),
     selectedGroup: {},
     currentUserId: 1
   };
@@ -21,8 +20,7 @@ const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 const store = mockStore({
   auth: { currentUser: { id: 2 } },
-  messages: {},
-  editGroupStatus: true
+  selectedGroup: {}
 });
 
 describe('Create Group Modal Component', () => {
@@ -44,7 +42,7 @@ describe('Create Group Modal Component', () => {
       }
     };
     wrapper.instance().handleChange(event);
-    expect(handleChangeSpy).toHaveBeenCalled();
+    expect(handleChangeSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should call the handleSubmit method', () => {
@@ -84,9 +82,9 @@ describe('Create Group Modal Component', () => {
       wrapper.instance(), 'componentWillReceiveProps'
     );
     const nextProps = {
-      editGroupStatus: true,
       selectedGroup: {
-        groupName: 'group b'
+        groupName: 'group b',
+        editGroupStatus: true,
       }
     };
     wrapper.instance().componentWillReceiveProps(nextProps)

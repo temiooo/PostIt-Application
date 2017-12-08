@@ -5,7 +5,9 @@ import * as types from './actionTypes';
 
 /**
  * Action creator for when signup is successful
+ *
  * @param {object} user
+ *
  * @returns {object} action
  */
 const signupSuccess = user => ({
@@ -15,6 +17,7 @@ const signupSuccess = user => ({
 
 /**
  * Action creator for when signup fails
+ *
  * @returns {object} action
  */
 const signupFailure = () => ({
@@ -23,7 +26,9 @@ const signupFailure = () => ({
 
 /**
  * Action creator for when login is successful
+ *
  * @param {object} user
+ *
  * @returns {object} action
  */
 const loginSuccess = user => ({
@@ -33,6 +38,7 @@ const loginSuccess = user => ({
 
 /**
  * Action creator for when login fails
+ *
  * @returns {object} action
  */
 const loginFailure = () => ({
@@ -41,7 +47,9 @@ const loginFailure = () => ({
 
 /**
  * Async action creator for signup
+ *
  * @param {object} userDetails
+ *
  * @returns {Promise} dispatches an action
  */
 const signup = userDetails => dispatch => axios
@@ -51,6 +59,7 @@ const signup = userDetails => dispatch => axios
     localStorage.setItem('jwtToken', token);
     setAuthorizationToken(token);
     dispatch(signupSuccess(response.data.user));
+    toastr.success('Welcome to PostIt');
   })
   .catch((error) => {
     dispatch(signupFailure());
@@ -59,7 +68,9 @@ const signup = userDetails => dispatch => axios
 
 /**
  * Async action creator for login
+ *
  * @param {object} userDetails
+ *
  * @returns {Promise} dispatches an action
  */
 const login = userDetails => dispatch => axios
@@ -69,6 +80,7 @@ const login = userDetails => dispatch => axios
     localStorage.setItem('jwtToken', token);
     setAuthorizationToken(token);
     dispatch(loginSuccess(response.data.user));
+    toastr.success('Welcome Back');
   })
   .catch((error) => {
     dispatch(loginFailure());
@@ -77,6 +89,7 @@ const login = userDetails => dispatch => axios
 
 /**
  * logout action creator
+ *
  * @returns {object} action
  */
 const logout = () => {

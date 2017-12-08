@@ -1,8 +1,11 @@
 import { expect } from 'chai';
 import db from '../../models';
 import {
-  newMessage, invalidPriorityMessage, invalidSenderId,
-  invalidGroupId, forDefaultValue
+  newMessage,
+  invalidGroupId,
+  forDefaultValue,
+  invalidSenderId,
+  invalidPriorityMessage
 } from '../helpers/seedData';
 
 describe('Message Model', () => {
@@ -27,7 +30,7 @@ describe('Message Model', () => {
       });
   });
 
-  it('should raise a validation for invalid priority', (done) => {
+  it('should raise a validation error for invalid priority', (done) => {
     db.Message.create(invalidPriorityMessage)
       .catch((error) => {
         expect(error.errors[0].message)
@@ -36,7 +39,7 @@ describe('Message Model', () => {
       });
   });
 
-  it('should raise a validation for invalid senderId', (done) => {
+  it('should raise a validation error for invalid senderId', (done) => {
     db.Message.create(invalidSenderId)
       .catch((error) => {
         expect(error.message)
@@ -45,7 +48,7 @@ describe('Message Model', () => {
       });
   });
 
-  it('should raise a validation for invalid groupId', (done) => {
+  it('should raise a validation error for invalid groupId', (done) => {
     db.Message.create(invalidGroupId)
       .catch((error) => {
         expect(error.message)

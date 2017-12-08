@@ -2,7 +2,9 @@ import { expect } from 'chai';
 import ajaxStatusReducer from '../../src/reducers/ajaxStatusReducer';
 import initialState from '../../src/reducers/initialState';
 import {
-  beginAjaxCall, ajaxCallError, ajaxCallSuccess
+  beginAjaxCall,
+  ajaxCallError,
+  ajaxCallSuccess
 } from '../../src/actions/ajaxStatusActions';
 
 let action;

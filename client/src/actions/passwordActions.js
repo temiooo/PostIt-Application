@@ -1,13 +1,16 @@
 import axios from 'axios';
 import toastr from 'toastr';
 import {
-  beginAjaxCall, ajaxCallSuccess,
+  beginAjaxCall,
+  ajaxCallSuccess,
   ajaxCallError
 } from './ajaxStatusActions';
 
 /**
  * Async action creator that handles forgot password
+ *
  * @param {object} email
+ *
  * @returns {Promise} dispatches an action
  */
 const forgotPassword = email => (dispatch) => {
@@ -26,8 +29,10 @@ const forgotPassword = email => (dispatch) => {
 
 /**
  * Async action creator that handles reset password
+ *
  * @param {string} resetToken - reset password token
  * @param {object} password - user's new password
+ *
  * @returns {Promise} dispatches an action
  */
 const resetPassword = (resetToken, password) => (dispatch) => {

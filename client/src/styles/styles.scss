@@ -33,6 +33,10 @@ html {
   border: 4px solid $primary-color;
 }
 
+.brand-logo {
+  position: relative !important;
+}
+
 .top-space {
   padding-top: 15%;
 }
@@ -60,7 +64,7 @@ html {
 }
 .msg-wrap {
   padding:10px;
-  height:calc(100vh - 315px) !important;
+  height:calc(100vh - 260px) !important;
   overflow: auto;
   border: 3px groove #69B5AE;
   border-radius: 15px;
@@ -95,11 +99,22 @@ textarea {
 }
 
 .send-msg button {
-  margin:10px 30px 5px;
+  margin: 9px 15px 0px 0px;
+  @media only screen and (max-width: 600px) {
+    padding: 0px 20px;
+    margin: 9px 10px 5px;
+  }
+}
+
+.send-btn-wrapper {
+  position: relative
 }
 
 .priority {
   margin-top:0.5rem !important;
+  @media only screen and (max-width: 600px) {
+    margin-left: 10px
+  }
 }  
 
  .select-wrapper input.select-dropdown {
@@ -211,15 +226,6 @@ input[type=search]:not(.browser-default) {
   position: absolute;
   padding: 10% 0% 0% 5%;
   color: #325a56;
-}
-
-
-
-@media only screen and (max-width: 500px) {
-  .send-msg button {
-      padding: 0px;
-      margin:10px 0px 5px -15px;
-  }  
 }
 
 @media only screen and (max-width: 1140px) and (min-width: 993px) {

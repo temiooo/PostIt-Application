@@ -1,6 +1,7 @@
 import { Group, Message, User } from '../models';
 import {
-  transporter, mailOptions,
+  transporter,
+  mailOptions,
   msgPriorityMail
 } from '../utils/nodemailer';
 
@@ -8,13 +9,22 @@ const messageController = {
   /**
    * Posts a new message to a group
    * ROUTE: POST: /api/group/:groupId/message
+   *
    * @param {object} req - request object
    * @param {object} res - response object
+   *
    * @returns {object} contains details of the newly posted message
    */
   create(req, res) {
     const groupId = req.params.groupId;
     const userId = req.decoded.user.id;
+
+    if (!groupId || isNaN(groupId)) {
+      return res.status(400).send({
+        message: 'Please provide a valid group ID'
+      });
+    }
+
     Group.findById(groupId).then((group) => {
       if (!group) {
         res.status(404).send({ message: 'Group Does Not Exist' });
@@ -35,7 +45,7 @@ const messageController = {
               .then((msg) => {
                 const message = {
                   ...msg.dataValues,
-                  User: { username: req.userDetails.username }
+                  User: { username: req.decoded.user.name }
                 };
                 if (priority === 'Urgent' || priority === 'Critical') {
                   group.getUsers().then((users) => {
@@ -47,7 +57,7 @@ const messageController = {
                     const bcc = memberEmails;
                     const subject =
                       `${msg.priority} message from Group: ${group.name}`;
-                    const username = req.userDetails.username;
+                    const username = req.decoded.user.name;
                     if (bcc.length > 0) {
                       transporter.sendMail(mailOptions(to, bcc, subject,
                         msgPriorityMail(
@@ -86,13 +96,21 @@ const messageController = {
   /**
    * Retrieves messages from a specified group
    * ROUTE: GET: /api/group/:groupId/messages
+   *
    * @param {object} req - request object
    * @param {object} res -r esponse object
+   *
    * @returns {array} contains messages retrieved from a group
    */
   list(req, res) {
     const groupId = req.params.groupId;
     const userId = req.decoded.user.id;
+
+    if (!groupId || isNaN(groupId)) {
+      return res.status(400).send({
+        message: 'Please provide a valid group ID'
+      });
+    }
 
     Group.findById(groupId).then((group) => {
       if (!group) {

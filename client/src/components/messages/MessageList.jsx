@@ -5,17 +5,19 @@ import { Link } from 'react-router-dom'
 
 /**
  * MessageList component
+ * 
  * @param {object} props
+ * 
  * @returns {JSX} jsx representation of the component
  */
-const MessagesList = ({ messages, edit, isLoading }) => {
-  const messageLength = messages.groupMessages.length;
+const MessageList = ({ selectedGroup, edit, isLoading }) => {
+  const messageLength = selectedGroup.groupMessages.length;
   return (
     <div className="tabcontent s12">
       <div>
         <div className="row">
           <div className="col s12 m12 l8">
-            <h4>{messages.groupName}</h4>
+            <h4>{selectedGroup.groupName}</h4>
           </div>
           <div className="col s12 m12 l4">
             <a
@@ -27,7 +29,7 @@ const MessagesList = ({ messages, edit, isLoading }) => {
             </a>
             <Link
               id="add-user"
-              to={`/messageboard/group/${messages.groupId}/members`}
+              to={`/messageboard/group/${selectedGroup.groupId}/members`}
               className="group-action btn-floating waves-effect waves-light">
               <i className="material-icons right">person_add</i>
             </Link>
@@ -37,7 +39,7 @@ const MessagesList = ({ messages, edit, isLoading }) => {
           <div>
             {messageLength > 0 ? (
               <div className="msg-wrap">
-                {messages.groupMessages.map(message =>
+                {selectedGroup.groupMessages.map(message =>
                   <div className="single-msg" key={message.id}>
                     <div>
                       <small className="right time">{message.createdAt.slice(0, 10)}</small>
@@ -76,10 +78,10 @@ const MessagesList = ({ messages, edit, isLoading }) => {
 
 };
 
-MessagesList.propTypes = {
-  messages: PropTypes.object.isRequired,
+MessageList.propTypes = {
+  selectedGroup: PropTypes.object.isRequired,
   edit: PropTypes.func.isRequired,
   isLoading: PropTypes.number.isRequired
 };
 
-export default MessagesList;
+export default MessageList;

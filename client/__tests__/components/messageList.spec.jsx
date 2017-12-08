@@ -6,9 +6,9 @@ import MessageList from '../../src/components/messages/MessageList';
 let props;
 const { messageList } = mockData.componentData;
 
-const setup = (messages, isLoading) => {
+const setup = (selectedGroup, isLoading) => {
   props = {
-    messages: messages,
+    selectedGroup,
     edit: jest.fn(),
     isLoading
   }

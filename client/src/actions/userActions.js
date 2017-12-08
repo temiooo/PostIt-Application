@@ -3,9 +3,10 @@ import toastr from 'toastr';
 import * as types from './actionTypes';
 
 /**
- * Action creator for when getting
- * members of a group is successful
+ * Action creator for when getting members of a group is successful
+ *
  * @param {array} members
+ *
  * @returns {object} action
  */
 const getGroupMembersSuccess = members => ({
@@ -13,8 +14,8 @@ const getGroupMembersSuccess = members => ({
 });
 
 /**
- * Action creator for when getting
- * members of a group fails
+ * Action creator for when getting members of a group fails
+ *
  * @returns {object} action
  */
 const getGroupMembersFailure = () => ({
@@ -22,9 +23,10 @@ const getGroupMembersFailure = () => ({
 });
 
 /**
- * Action creator for when searching
- * for other users is successful
+ * Action creator for when searching for other users is successful
+ *
  * @param {object} users
+ *
  * @returns {object} action
  */
 const searchUsersSuccess = users => ({
@@ -32,8 +34,8 @@ const searchUsersSuccess = users => ({
 });
 
 /**
- * Action creator for when searching
- * for other users fail'
+ * Action creator for when searching for other users fail
+ *
  * @returns {object} action
  */
 const searchUsersFailure = () => ({
@@ -42,7 +44,9 @@ const searchUsersFailure = () => ({
 
 /**
  * Async action creator to get members of a group
+ *
  * @param {number} groupId - id of the group to get its members
+ *
  * @returns {Promise} dispatches an action
  */
 const getGroupMembers = groupId => dispatch => axios
@@ -56,10 +60,12 @@ const getGroupMembers = groupId => dispatch => axios
 
 /**
  * Async action creator to search for other users
+ *
  * @param {string} searchTerm - the search query
  * @param {number} group - members of this group not included in search results
  * @param {number} limit - limit of search results
  * @param {number} offset - the offset value
+ *
  * @returns {Promise} dispatches an action
  */
 const searchUsers = (searchTerm, group, limit, offset) => (dispatch) => {
@@ -77,8 +83,10 @@ const searchUsers = (searchTerm, group, limit, offset) => (dispatch) => {
 
 /**
  * Async action creator to add user to a group
+ *
  * @param {number} groupId - group to add user to
  * @param {object} userDetail - details of the user to be added
+ *
  * @returns {Promise} axios response
  */
 const addUser = (groupId, userDetail) => () => axios

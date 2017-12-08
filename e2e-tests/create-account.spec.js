@@ -19,20 +19,20 @@ module.exports = {
       .assert.containsText('#confirmpassword-error', 'Passwords do not match')
       .end();
   },
-  'user can signup successfully with valid credentials':
-    (client) => {
-      client
-        .url('http://localhost:8000')
-        .waitForElementVisible('body')
-        .setValue('input#email', 'temitope@gmail.com')
-        .setValue('input#username', 'temitope')
-        .setValue('input#password', 'myPassword')
-        .setValue('input#confirmpassword', 'myPassword')
-        .click('button#create-account')
-        .waitForElementPresent('.welcome-page')
-        .assert.urlEquals('http://localhost:8000/#/messageboard')
-        .end();
-    },
+  'user can signup successfully with valid credentials': (client) => {
+    client
+      .url('http://localhost:8000')
+      .waitForElementVisible('body')
+      .setValue('input#email', 'temitope@gmail.com')
+      .setValue('input#username', 'temitope')
+      .setValue('input#password', 'myPassword')
+      .setValue('input#confirmpassword', 'myPassword')
+      .click('button#create-account')
+      .waitForElementPresent('.welcome-page')
+      .assert.elementPresent('a#logout-button')
+      .assert.urlEquals('http://localhost:8000/messageboard')
+      .end();
+  },
   'user can logout after signing up': (client) => {
     client
       .url('http://localhost:8000')
@@ -43,9 +43,10 @@ module.exports = {
       .setValue('input#confirmpassword', 'abigail2000')
       .click('button#create-account')
       .waitForElementPresent('.welcome-page')
-      .assert.urlEquals('http://localhost:8000/#/messageboard')
+      .assert.urlEquals('http://localhost:8000/messageboard')
       .click('a#logout-button')
-      .assert.urlEquals('http://localhost:8000/#/login')
+      .assert.urlEquals('http://localhost:8000/login')
+      .assert.elementNotPresent('.welcome-page')
       .end();
   },
   'user can\'t signup with already existing email': (client) => {

@@ -1,21 +1,23 @@
 import { expect } from 'chai';
-import groupReducer from '../../src/reducers/groupReducer';
+import groupListReducer from '../../src/reducers/groupListReducer';
 import {
-  getUserGroupsSuccess, getUserGroupsFailure,
-  createGroupSuccess, createGroupFailure
-} from '../../src/actions/groupActions';
+  getUserGroupsSuccess,
+  getUserGroupsFailure,
+  createGroupSuccess,
+  createGroupFailure
+} from '../../src/actions/groupListActions';
 
 let action;
 let newState;
 let initialState;
 
-describe('Group Reducer', () => {
+describe('Group List Reducer', () => {
   it('should return the initial state for unknown action type', () => {
     initialState = [];
     action = {
       type: null
     };
-    newState = groupReducer(initialState, action);
+    newState = groupListReducer(initialState, action);
 
     expect(newState).to.equal(initialState);
   });
@@ -24,7 +26,7 @@ describe('Group Reducer', () => {
     initialState = [];
     const groups = [{ id: 3, name: 'Group A' }, { id: 6, name: 'Group D' }];
     action = getUserGroupsSuccess(groups);
-    newState = groupReducer(initialState, action);
+    newState = groupListReducer(initialState, action);
 
     expect(newState).to.equal(groups);
     expect(newState.length).to.equal(2);
@@ -34,7 +36,7 @@ describe('Group Reducer', () => {
   it('should handle action type GET_USER_GROUPS_FAILURE', () => {
     initialState = [{ id: 2, name: 'Accountant' }];
     action = getUserGroupsFailure();
-    newState = groupReducer(initialState, action);
+    newState = groupListReducer(initialState, action);
 
     expect(newState).to.equal(initialState);
     expect(newState).to.not.eql([]);
@@ -44,7 +46,7 @@ describe('Group Reducer', () => {
     initialState = [{ id: 3, name: 'Politics' }];
     const group = { id: 4, name: 'Architecture' };
     action = createGroupSuccess(group);
-    newState = groupReducer(initialState, action);
+    newState = groupListReducer(initialState, action);
 
     expect(newState).to.not.equal(initialState);
     expect(newState.length).to.equal(2);
@@ -55,7 +57,7 @@ describe('Group Reducer', () => {
   it('should handle action type CREATE_GROUP_FAILURE', () => {
     initialState = [{ id: 3, name: 'Politics' }];
     action = createGroupFailure();
-    newState = groupReducer(initialState, action);
+    newState = groupListReducer(initialState, action);
 
     expect(newState).to.equal(initialState);
     expect(newState.length).to.equal(1);

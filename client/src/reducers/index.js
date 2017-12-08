@@ -1,19 +1,17 @@
 import { combineReducers } from 'redux';
-import auth from './authReducer';
-import users from './userReducer';
-import groups from './groupReducer';
-import messages from './messageReducer';
+import authReducer from './authReducer';
+import userReducer from './userReducer';
+import groupListReducer from './groupListReducer';
+import selectedGroupReducer from './selectedGroupReducer';
 import * as types from '../actions/actionTypes';
-import editGroupStatus from './editGroupReducer';
-import ajaxCallsInProgress from './ajaxStatusReducer';
+import ajaxStatusReducer from './ajaxStatusReducer';
 
 const appReducer = combineReducers({
-  auth,
-  groups,
-  messages,
-  users,
-  ajaxCallsInProgress,
-  editGroupStatus
+  auth: authReducer,
+  groupList: groupListReducer,
+  selectedGroup: selectedGroupReducer,
+  users: userReducer,
+  ajaxCallsInProgress: ajaxStatusReducer
 });
 
 const rootReducer = (state, action) => {

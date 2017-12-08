@@ -1,9 +1,12 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import validator from 'validator';
 import randomstring from 'randomstring';
 import { User, Group } from '../models';
 import {
-  transporter, mailOptions, forgotPasswordMail,
+  transporter,
+  mailOptions,
+  forgotPasswordMail,
   resetPasswordMail
 } from '../utils/nodemailer';
 
@@ -13,8 +16,10 @@ const userController = {
   /**
    * Creates a new user
    * ROUTE: POST: /api/user/signup
+   *
    * @param {object} req - request object
    * @param {object} res - response object
+   *
    * @returns {object} contains auth token and details of the newly created user
    */
   signup(req, res) {
@@ -45,13 +50,15 @@ const userController = {
   /**
    * Authenticates and logs in a user
    * ROUTE: POST: /api/user/signin
+   *
    * @param {object} req - request object
    * @param {object} res - response object
+   *
    * @returns {object} contains auth token and details of the user
    */
   signin(req, res) {
     if (!req.body.username || !req.body.password) {
-      return res.status(401).send({
+      return res.status(400).send({
         message: 'Please provide a username and password'
       });
     }
@@ -62,7 +69,9 @@ const userController = {
         }
       }).then((user) => {
         if (!user) {
-          return res.status(401).send({ message: 'User not found' });
+          return res.status(401).send({
+            message: 'Invalid username or password'
+          });
         }
 
         if (bcrypt.compareSync(req.body.password, user.password)) {
@@ -78,7 +87,9 @@ const userController = {
             token
           });
         }
-        return res.status(401).send({ message: 'Password is incorrect' });
+        return res.status(401).send({
+          message: 'Invalid username or password'
+        });
       })
       .catch(() => res.status(500).send({
         message: 'Internal Server Error'
@@ -89,11 +100,19 @@ const userController = {
    * Generates a reset password token for users
    * that have forgotten their password
    * ROUTE: PUT: /api/user/forgotpassword
+   *
    * @param {object} req - request object
    * @param {object} res - response object
+   *
    * @returns {object} message object stating if user has been sent an email
    */
   forgotPassword(req, res) {
+    if (!req.body.email || !validator.isEmail(req.body.email)) {
+      return res.status(400).send({
+        message: 'Please provide a valid email'
+      });
+    }
+
     const passwordToken = randomstring.generate(50);
     User.findOne({
       where: {
@@ -139,8 +158,10 @@ const userController = {
   /**
    * Resets a user's password
    * ROUTE: PUT: /api/user/resetpassword/:token
+   *
    * @param {object} req - request object
    * @param {object} res - response object
+   *
    * @returns {object} message object stating if password reset was successful
    */
   resetPassword(req, res) {
@@ -197,18 +218,34 @@ const userController = {
   /**
    * Searches for users that match the specified search query
    * ROUTE: GET: /api/search/users
+   *
    * @param {object} req - request object
    * @param {object} res - response object
+   *
    * @returns {object} contains search results
    */
   searchUser(req, res) {
-    const limit = req.query.limit || null;
-    const offset = req.query.offset || null;
+    let limit;
+    let offset;
     const groupId = req.query.group;
+
+    if (req.query.limit && !(isNaN(req.query.limit))) {
+      limit = req.query.limit;
+    }
+
+    if (req.query.offset && !(isNaN(req.query.offset))) {
+      offset = req.query.offset;
+    }
+
+    if (!groupId || isNaN(groupId)) {
+      return res.status(400).send({
+        message: 'Please provide a valid group ID'
+      });
+    }
 
     Group.findById(groupId).then((group) => {
       if (!group) {
-        res.status(400).send({ message: 'Group Not Specified' });
+        res.status(404).send({ message: 'Group Does Not Exist' });
       } else {
         group.getUsers().then((users) => {
           const members = users.map(user => user.id);
@@ -257,12 +294,21 @@ const userController = {
   /**
    * Retrieves a list of group  a user belongs to
    * ROUTE: GET: /api/user/:userId/groups
+   *
    * @param {object} req - request object
    * @param {object} res - response object
+   *
    * @returns {array} lsit of groups specified user belongs to
    */
   listGroups(req, res) {
     const userId = req.params.userId;
+
+    if (!userId || isNaN(userId)) {
+      return res.status(400).send({
+        message: 'Please provide a valid user ID'
+      });
+    }
+
     User.findOne({
       where: { id: userId },
       attributes: [],
