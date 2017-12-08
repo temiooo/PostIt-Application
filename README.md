@@ -1,4 +1,4 @@
-[![Code Climate](https://codeclimate.com/github/temiooo/PostIt-Application/badges/gpa.svg)](https://codeclimate.com/github/temiooo/PostIt-Application)
+[![Maintainability](https://api.codeclimate.com/v1/badges/21cde8866daa1671de14/maintainability)](https://codeclimate.com/github/temiooo/PostIt-Application/maintainability)
 [![Build Status](https://travis-ci.org/temiooo/PostIt-Application.svg?branch=Develop)](https://travis-ci.org/temiooo/PostIt-Application)
 [![Coverage Status](https://coveralls.io/repos/github/temiooo/PostIt-Application/badge.svg)](https://coveralls.io/github/temiooo/PostIt-Application)
 # PostIt Application
@@ -77,3 +77,6 @@ If you are interested in contributing, follow the instructions below.
 
 `All Pull requests must be made against Develop branch. PRs against master would be rejected.`
 
+## LICENSE
+
+Copyright © [The MIT License](./LICENSE.md)
