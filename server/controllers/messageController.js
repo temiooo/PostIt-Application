@@ -19,7 +19,7 @@ const messageController = {
     const groupId = req.params.groupId;
     const userId = req.decoded.user.id;
 
-    if (!groupId || isNaN(groupId)) {
+    if (!Number.isInteger(Number(groupId))) {
       return res.status(400).send({
         message: 'Please provide a valid group ID'
       });
@@ -106,7 +106,7 @@ const messageController = {
     const groupId = req.params.groupId;
     const userId = req.decoded.user.id;
 
-    if (!groupId || isNaN(groupId)) {
+    if (!Number.isInteger(Number(groupId))) {
       return res.status(400).send({
         message: 'Please provide a valid group ID'
       });

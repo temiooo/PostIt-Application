@@ -31,7 +31,7 @@ export class SignupPage extends React.Component {
       email: '',
       username: '',
       password: '',
-      confirmpassword: '',
+      confirmPassword: '',
       errors: {}
     };
 
@@ -138,10 +138,10 @@ export class SignupPage extends React.Component {
                   icon="lock"
                   type="password"
                   name="confirmpassword"
-                  value={this.state.confirmpassword}
+                  value={this.state.confirmPassword}
                   onChange={this.handleChange}
                   label="Confirm Password"
-                  error={this.state.errors.confirmpassword}
+                  error={this.state.errors.confirmPassword}
                 />
                 <div className="row center-align">
                   <Button

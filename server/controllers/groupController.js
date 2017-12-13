@@ -51,7 +51,7 @@ const groupController = {
     const userId = req.decoded.user.id;
     const groupName = req.body.name;
 
-    if (!groupId || isNaN(groupId)) {
+    if (!Number.isInteger(Number(groupId))) {
       return res.status(400).send({
         message: 'Please provide a valid group ID'
       });
@@ -106,7 +106,7 @@ const groupController = {
   get(req, res) {
     const groupId = req.params.groupId;
 
-    if (!groupId || isNaN(groupId)) {
+    if (!Number.isInteger(Number(groupId))) {
       return res.status(400).send({
         message: 'Please provide a valid group ID'
       });
@@ -140,13 +140,13 @@ const groupController = {
     const groupId = req.params.groupId;
     const userId = req.body.userId;
 
-    if (!groupId || isNaN(groupId)) {
+    if (!Number.isInteger(Number(groupId))) {
       return res.status(400).send({
         message: 'Please provide a valid group ID'
       });
     }
 
-    if (!userId || isNaN(userId)) {
+    if (!Number.isInteger(Number(userId))) {
       return res.status(400).send({
         message: 'Please provide a valid user ID'
       });
@@ -199,7 +199,7 @@ const groupController = {
   listUsers(req, res) {
     const groupId = req.params.groupId;
 
-    if (!groupId || isNaN(groupId)) {
+    if (!Number.isInteger(Number(groupId))) {
       return res.status(400).send({
         message: 'Please provide a valid group ID'
       });

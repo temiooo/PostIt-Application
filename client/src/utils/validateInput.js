@@ -34,8 +34,8 @@ const validateSignupInput = (state) => {
     errors.password = 'Password is too short (min of 8 characters).';
   }
 
-  if (state.confirmpassword !== state.password) {
-    errors.confirmpassword = 'Passwords do not match';
+  if (state.confirmPassword !== state.password) {
+    errors.confirmPassword = 'Passwords do not match';
   }
 
   return {
@@ -157,8 +157,8 @@ const validateNewPassword = (state) => {
     errors.password = 'Password is too short (min of 8 characters).';
   }
 
-  if (state.confirmpassword !== state.password) {
-    errors.confirmpassword = 'Passwords do not match';
+  if (state.confirmPassword !== state.password) {
+    errors.confirmPassword = 'Passwords do not match';
   }
 
   return {

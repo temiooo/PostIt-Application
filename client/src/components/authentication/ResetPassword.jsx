@@ -28,7 +28,7 @@ export class ResetPassword extends React.Component {
 
     this.state = {
       password: '',
-      confirmpassword: '',
+      confirmPassword: '',
       errors: {},
     };
     this.handleChange = this.handleChange.bind(this);
@@ -126,11 +126,11 @@ export class ResetPassword extends React.Component {
               icon="lock"
               type="password"
               name="confirmpassword"
-              value={this.state.confirmpassword}
+              value={this.state.confirmPassword}
               onChange={this.handleChange}
               label="Confirm Password"
               onFocus={this.handleFocus}
-              error={this.state.errors.confirmpassword}
+              error={this.state.errors.confirmPassword}
             />
             <div className="row  center-align">
               <Button

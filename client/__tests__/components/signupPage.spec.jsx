@@ -103,7 +103,7 @@ describe('Signup Page Component', () => {
     wrapper.instance().handleSubmit(event);
     expect(wrapper.state().errors.password)
       .toBe('Password is too short (min of 8 characters).');
-    expect(wrapper.state().errors.confirmpassword)
+    expect(wrapper.state().errors.confirmPassword)
       .toBe('Passwords do not match');
   });
 

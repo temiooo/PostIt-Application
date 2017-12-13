@@ -229,15 +229,15 @@ const userController = {
     let offset;
     const groupId = req.query.group;
 
-    if (req.query.limit && !(isNaN(req.query.limit))) {
+    if (req.query.limit && Number.isInteger(Number(req.query.limit))) {
       limit = req.query.limit;
     }
 
-    if (req.query.offset && !(isNaN(req.query.offset))) {
+    if (req.query.offset && Number.isInteger(Number(req.query.offset))) {
       offset = req.query.offset;
     }
 
-    if (!groupId || isNaN(groupId)) {
+    if (!groupId || !(Number.isInteger(Number(groupId)))) {
       return res.status(400).send({
         message: 'Please provide a valid group ID'
       });
@@ -303,7 +303,7 @@ const userController = {
   listGroups(req, res) {
     const userId = req.params.userId;
 
-    if (!userId || isNaN(userId)) {
+    if (!Number.isInteger(Number(userId))) {
       return res.status(400).send({
         message: 'Please provide a valid user ID'
       });
