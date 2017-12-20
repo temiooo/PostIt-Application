@@ -137,7 +137,7 @@ export class SignupPage extends React.Component {
                 <TextInput
                   icon="lock"
                   type="password"
-                  name="confirmpassword"
+                  name="confirmPassword"
                   value={this.state.confirmPassword}
                   onChange={this.handleChange}
                   label="Confirm Password"

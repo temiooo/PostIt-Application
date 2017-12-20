@@ -10,13 +10,13 @@ module.exports = {
       .setValue('input#email', 'temitope')
       .setValue('input#username', 'te')
       .setValue('input#password', 'myPassword')
-      .setValue('input#confirmpassword', 'mypassword')
+      .setValue('input#confirmPassword', 'mypassword')
       .click('button#create-account')
       .waitForElementVisible('span')
       .assert.containsText('#email-error', 'Email is Invalid')
       .assert.containsText('#username-error', 'Username is too short'
       + ' (min of 5 characters).')
-      .assert.containsText('#confirmpassword-error', 'Passwords do not match')
+      .assert.containsText('#confirmPassword-error', 'Passwords do not match')
       .end();
   },
   'user can signup successfully with valid credentials': (client) => {
@@ -26,7 +26,7 @@ module.exports = {
       .setValue('input#email', 'temitope@gmail.com')
       .setValue('input#username', 'temitope')
       .setValue('input#password', 'myPassword')
-      .setValue('input#confirmpassword', 'myPassword')
+      .setValue('input#confirmPassword', 'myPassword')
       .click('button#create-account')
       .waitForElementPresent('.welcome-page')
       .assert.elementPresent('a#logout-button')
@@ -40,7 +40,7 @@ module.exports = {
       .setValue('input#email', 'abigail@gmail.com')
       .setValue('input#username', 'abigail')
       .setValue('input#password', 'abigail2000')
-      .setValue('input#confirmpassword', 'abigail2000')
+      .setValue('input#confirmPassword', 'abigail2000')
       .click('button#create-account')
       .waitForElementPresent('.welcome-page')
       .assert.urlEquals('http://localhost:8000/messageboard')
@@ -56,7 +56,7 @@ module.exports = {
       .setValue('input#email', 'temitope@gmail.com')
       .setValue('input#username', 'temmy')
       .setValue('input#password', 'myPassword')
-      .setValue('input#confirmpassword', 'myPassword')
+      .setValue('input#confirmPassword', 'myPassword')
       .click('button#create-account')
       .waitForElementVisible('.toast-message')
       .assert.containsText('.toast-message', 'Email taken already.'
@@ -70,7 +70,7 @@ module.exports = {
       .setValue('input#email', 'temmy@gmail.com')
       .setValue('input#username', 'temitope')
       .setValue('input#password', 'myPassword')
-      .setValue('input#confirmpassword', 'myPassword')
+      .setValue('input#confirmPassword', 'myPassword')
       .click('button#create-account')
       .waitForElementVisible('.toast-message')
       .assert.containsText('.toast-message', 'Username taken already.'
