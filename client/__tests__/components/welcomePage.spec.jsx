@@ -1,29 +1,19 @@
 import React from 'react';
-import thunk from 'redux-thunk';
 import { shallow } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
 import mockData from '../__mocks__/mockData'
-import ConnectedWelcomePage, { WelcomePage } from
-  '../../src/components/messages/WelcomePage';
+import WelcomePage from '../../src/components/messages/WelcomePage';
 
 let props;
 
 const { welcomePage } = mockData.componentData;
 
-const setup = (groups, currentUser) => {
+const setup = (groupList, currentUser) => {
   props = {
-    groups,
+    groupList,
     currentUser
   }
   return shallow(<WelcomePage {...props} />);
 };
-
-const middleware = [thunk];
-const mockStore = configureMockStore(middleware);
-const store = mockStore({
-  auth: { currentUser: {} },
-  groups: []
-});
 
 describe('Welcome Page Component', () => {
   it('should render without crashing', () => {
@@ -45,12 +35,5 @@ describe('Welcome Page Component', () => {
     expect(usernameWrapper.text()).toBe('Hi Mike,');
     expect(emailWrapper.text()).toBe('Email : mike@gmail.com');
     expect(groupNumberWrapper.text()).toBe('Your Groups : 2');
-  });
-
-  it('should render the connected component', () => {
-    const connectedComponent = shallow(
-      <ConnectedWelcomePage {...props} store={store} />
-    );
-    expect(connectedComponent.length).toBe(1);
   });
 });

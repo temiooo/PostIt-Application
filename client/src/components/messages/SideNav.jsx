@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 
 /**
  * SideNav component
+ * 
  * @param {object} props
+ * 
  * @returns {JSX} jsx representation of the element
  */
-const SideNav = ({ groups, edit }) => {
+const SideNav = ({ groupList, edit }) => {
   return (
     <div className="col s12 m12 l3 pull-l2 teal lighten-1">
       <ul id="slide-out" className="side-nav side-nav-bar z-depth-3 fixed">
@@ -21,7 +23,7 @@ const SideNav = ({ groups, edit }) => {
         <li>
           <div className="divider"></div>
         </li>
-        {groups.map(group => <li key={group.id}>
+        {groupList.map(group => <li key={group.id}>
           <Link
             id={group.name.toLowerCase().split(' ').join('-')}
             to={`/messageboard/group/${group.id}/messages`}
@@ -45,7 +47,7 @@ const SideNav = ({ groups, edit }) => {
 };
 
 SideNav.propTypes = {
-  groups: PropTypes.array.isRequired,
+  groupList: PropTypes.array.isRequired,
   edit: PropTypes.func.isRequired
 }
 

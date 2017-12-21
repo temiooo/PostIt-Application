@@ -46,11 +46,33 @@ describe('Forgot Password Component', () => {
     expect(handleChangeSpy).toHaveBeenCalledTimes(1);
   });
 
+  it('should set error state if email is invalid on form submission', () => {
+    const wrapper = setup(false);
+    wrapper.setState({
+      email: 'myemail@'
+    });
+    wrapper.instance().handleSubmit(event);
+    expect(wrapper.state().errors).toHaveProperty('email');
+    expect(wrapper.state().errors.email).toEqual('Email is Invalid');
+  });
+
+  it('should clear error state when input field is focused', () => {
+    const wrapper = setup(false);
+    wrapper.setState({
+      errors: { email: 'Email is Invalid' }
+    });
+    wrapper.instance().handleFocus();
+    expect(wrapper.state().errors).toEqual({});
+  });
+
   it('should call the handleSubmit method', () => {
-    const wrapper = setup(false);;
+    const wrapper = setup(false);
     const handleSubmitSpy = jest.spyOn(
       wrapper.instance(), 'handleSubmit'
     );
+    wrapper.setState({
+      email: 'user@gmail.com'
+    });
     wrapper.instance().handleSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalledTimes(1);
     expect(props.forgotPassword).toHaveBeenCalledTimes(1)

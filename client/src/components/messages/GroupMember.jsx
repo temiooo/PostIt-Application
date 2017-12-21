@@ -9,13 +9,16 @@ import {
 
 /**
  * GroupMember component
+ * 
  * @class GroupMember
+ * 
  * @extends {React.Component}
  */
 export class GroupMember extends React.Component {
 
   /**
    * Creates an instance of GroupMember
+   * 
    * @param {object} props 
    */
   constructor(props) {
@@ -32,16 +35,18 @@ export class GroupMember extends React.Component {
   }
 
   /**
-   * lifecycle method invoked before component mounts
+   * lifecycle method invoked when component mounts
+   * 
    * @returns {void} no return value
    */
-  componentWillMount() {
-    const group = this.props.messages.groupId || this.props.match.params.id;
+  componentDidMount() {
+    const group = this.props.match.params.id;
     this.props.getGroupMembers(group);
   }
 
   /**
    * lifecycle method invoked before component is unmounted
+   * 
    * @returns {void} no return value
    */
   componentWillUnmount() {
@@ -50,7 +55,9 @@ export class GroupMember extends React.Component {
 
   /**
    * Handles change event for the input field
-   * @param {object} event 
+   * 
+   * @param {object} event
+   * 
    * @returns {void} no return value
    */
   handleChange(event) {
@@ -61,12 +68,14 @@ export class GroupMember extends React.Component {
 
   /**
    * Makes API call to search for user based on search query
+   * 
    * @param {number} offset
+   * 
    * @returns {void} no return value
    */
   searchUser(offset) {
     const { searchTerm } = this.state;
-    const group = this.props.messages.groupId || this.props.match.params.id;
+    const group = this.props.match.params.id;
     const limit = 9;
     offset = offset || 0;
     this.props.searchUsers(searchTerm, group, limit, offset);
@@ -74,7 +83,9 @@ export class GroupMember extends React.Component {
 
   /**
    * Handles searching of users
+   * 
    * @param {object} event
+   * 
    * @returns {void} no return value
    */
   handleSearch(event) {
@@ -84,7 +95,9 @@ export class GroupMember extends React.Component {
 
   /**
    * Handles adding a user to a group
+   * 
    * @param {number} user
+   * 
    * @returns {void} no return value
    */
   addUserToGroup(user) {
@@ -99,7 +112,9 @@ export class GroupMember extends React.Component {
 
   /**
    * Handles page click for paginated search result
+   * 
    * @param {object} data
+   * 
    * @returns {void} no return value
    */
   handlePageClick(data) {
@@ -111,6 +126,7 @@ export class GroupMember extends React.Component {
 
   /**
    * Renders the component
+   * 
    * @returns {JSX} jsx representation of the component
    */
   render() {
@@ -198,7 +214,6 @@ export class GroupMember extends React.Component {
 
 GroupMember.propTypes = {
   users: PropTypes.object.isRequired,
-  messages: PropTypes.object.isRequired,
   getGroupMembers: PropTypes.func.isRequired,
   searchUsers: PropTypes.func.isRequired,
   searchUsersFailure: PropTypes.func.isRequired,
@@ -207,17 +222,20 @@ GroupMember.propTypes = {
 
 /**
  * Map state to props
+ * 
  * @param {object} state
+ * 
  * @returns {object} contains section of the redux store
  */
 const mapStateToProps = state => ({
-  messages: state.messages,
   users: state.users
 });
 
 /**
  * Maps dispatch to props
+ * 
  * @param {function} dispatch
+ * 
  * @returns {object} actions to be dispatched 
  */
 const mapDispatchToProps = dispatch => bindActionCreators({

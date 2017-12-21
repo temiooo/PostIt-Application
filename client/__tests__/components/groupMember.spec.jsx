@@ -13,7 +13,6 @@ const { groupMember } = mockData.componentData;
 const setup = (users) => {
   props = {
     users,
-    messages: {},
     getGroupMembers: jest.fn(),
     searchUsers: jest.fn(),
     searchUsersFailure: jest.fn(),

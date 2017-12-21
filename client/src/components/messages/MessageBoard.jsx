@@ -10,69 +10,44 @@ import GroupMember from './GroupMember';
 import WelcomePage from './WelcomePage';
 import CreateGroupModal from './CreateGroupModal';
 import { logout } from '../../actions/authActions';
-import { getMessages } from '../../actions/messageActions';
-import { getUserGroups, editGroupOff } from '../../actions/groupActions';
+import { getUserGroups } from '../../actions/groupListActions';
+import { editGroupOff } from '../../actions/selectedGroupActions';
 
 /**
  * MessageBoard component
+ * 
  * @class MessageBoard
+ * 
  * @extends {React.Component}
  */
 export class MessageBoard extends React.Component {
 
   /**
    * Creates an instance of MessageBoard
+   * 
    * @param {object} props 
    */
   constructor(props) {
     super(props);
 
-    this.logout = this.logout.bind(this);
-    this.editGroupOff = this.editGroupOff.bind(this);
-
   }
 
   /**
-   * lifecycle method invoked before component mounts
-   * @returns {void} no return value 
+   * lifecycle method invoked when component mounts
+   * 
+   * @returns {void} no return value
    */
-  componentWillMount() {
+  componentDidMount() {
+    $('.button-collapse').sideNav();
+    $('select').material_select();
     if (this.props.auth.isAuthenticated) {
       this.props.getUserGroups(this.props.auth.currentUser.id);
     }
   }
 
   /**
-   * lifecycle method invoked when component mounts
-   * @returns {void} no return value
-   */
-  componentDidMount() {
-    $('.button-collapse').sideNav();
-    $('select').material_select();
-  }
-
-  /**
-   * changes edit group status to false
-   * @param {object} event
-   * @returns {void} no return value
-   */
-  editGroupOff(event) {
-    event.preventDefault();
-    this.props.editGroupOff();
-  }
-
-  /**
-   * handles user logout
-   * @param {object} event
-   * @returns {void} no return value
-   */
-  logout(event) {
-    event.preventDefault();
-    this.props.logout();
-  }
-
-  /**
    * Renders the component
+   * 
    * @returns {JSX} jsx representation of the component
    */
   render() {
@@ -81,21 +56,25 @@ export class MessageBoard extends React.Component {
         <Redirect to='/login' />
       );
     }
+
     return (
       <div className="message-board">
-        <TopNav logout={this.logout} />
+        <TopNav logout={this.props.logout} />
         <div className="row">
 
           <SideNav
-            groups={this.props.groups}
-            edit={this.editGroupOff}
+            groupList={this.props.groupList}
+            edit={this.props.editGroupOff}
           />
           <CreateGroupModal />
 
           <main>
             <Route
               exact path={`${this.props.match.url}`}
-              component={WelcomePage}
+              component={() => <WelcomePage
+                groupList={this.props.groupList}
+                currentUser={this.props.auth.currentUser}
+              />}
             />
 
             <Route
@@ -117,7 +96,7 @@ export class MessageBoard extends React.Component {
 
 MessageBoard.propTypes = {
   auth: PropTypes.object.isRequired,
-  groups: PropTypes.array.isRequired,
+  groupList: PropTypes.array.isRequired,
   logout: PropTypes.func.isRequired,
   getUserGroups: PropTypes.func.isRequired,
   editGroupOff: PropTypes.func.isRequired
@@ -125,17 +104,22 @@ MessageBoard.propTypes = {
 
 /**
  * Maps state to props
+ * 
  * @param {object} state
+ * 
  * @returns {object} contains sections of the redux store
  */
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  groups: state.groups
+  groupList: state.groupList,
+
 });
 
 /**
  * Maps dispatch to props
+ * 
  * @param {function} dispatch
+ * 
  * @returns {object} actions to be dispatched
  */
 const mapDispatchToProps = dispatch => bindActionCreators({

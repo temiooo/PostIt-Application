@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 
 /**
  * Button Component
+ * 
  * @param {object} props 
+ * 
  * @returns {JSX} jsx representation of the component
  */
-const Button = ({ onClick, className, text, icon, disabled }) => {
+const Button = ({ id, onClick, className, text, icon, disabled }) => {
   return (
     <button
-      id={text.split(' ').join('-')}
+      id={id}
       onClick={onClick}
       className={className}
       type="submit"
@@ -21,6 +23,7 @@ const Button = ({ onClick, className, text, icon, disabled }) => {
 };
 
 Button.PropTypes = {
+  id: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   className: PropTypes.string,
   text: PropTypes.string.isRequired,

@@ -2,7 +2,7 @@ module.exports = {
   beforeEach: (client) => {
     client
       .resizeWindow(1280, 800)
-      .url('http://localhost:8000/#/login')
+      .url('http://localhost:8000/login')
       .waitForElementVisible('body')
       .setValue('input#username', 'abigail')
       .setValue('input#password', 'abigail2000')
@@ -10,7 +10,7 @@ module.exports = {
   },
   'user can create a group': (client) => {
     client
-      .url('http://localhost:8000/#/messageboard')
+      .url('http://localhost:8000/messageboard')
       .waitForElementPresent('.welcome-page')
       .click('a.modal-trigger')
       .setValue('input#name', 'ade')
@@ -22,14 +22,15 @@ module.exports = {
       .click('button#save-group')
       .pause(1000)
       .assert.elementPresent('a#matterhorn')
+      .assert.containsText('a#matterhorn', 'Matterhorn')
       .end();
   },
   'user can edit a group name': (client) => {
     client
-      .url('http://localhost:8000/#/messageboard')
+      .url('http://localhost:8000/messageboard')
       .waitForElementVisible('a#matterhorn')
       .click('a#matterhorn')
-      .assert.urlContains('http://localhost:8000/#/messageboard/group')
+      .assert.urlContains('http://localhost:8000/messageboard/group')
       .click('a#edit-group')
       .waitForElementVisible('.modal-content')
       .setValue('input#name', ' Group')
@@ -41,7 +42,7 @@ module.exports = {
   },
   'user can add another user to a group': (client) => {
     client
-      .url('http://localhost:8000/#/messageboard')
+      .url('http://localhost:8000/messageboard')
       .waitForElementVisible('a#matterhorn-group')
       .click('a#matterhorn-group')
       .click('a#add-user')

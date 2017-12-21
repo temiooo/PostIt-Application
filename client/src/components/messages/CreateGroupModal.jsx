@@ -5,17 +5,21 @@ import { bindActionCreators } from 'redux';
 import Button from '../common/Button';
 import TextInput from '../common/TextInput';
 import { validateGroupInput } from '../../utils/validateInput';
-import { createGroup, updateGroup } from '../../actions/groupActions';
+import { createGroup } from '../../actions/groupListActions';
+import { editGroup } from '../../actions/selectedGroupActions';
 
 /**
  * CreateGroupModal component
+ * 
  * @class CreateGroupModal
+ * 
  * @extends {React.Component}
  */
 export class CreateGroupModal extends React.Component {
 
   /**
    * Creates an instance of CreateGroupModal
+   * 
    * @param {object} props 
    */
   constructor(props) {
@@ -34,6 +38,7 @@ export class CreateGroupModal extends React.Component {
 
   /**
    * lifecycle method invoked when component mounts
+   * 
    * @returns {void} no return value
    */
   componentDidMount() {
@@ -42,21 +47,27 @@ export class CreateGroupModal extends React.Component {
 
   /**
    * lifecycle method invoked before component receives new props
-   * @param {object} nextProps 
+   * 
+   * @param {object} nextProps
+   * 
    * @returns {void} no return value
    */
   componentWillReceiveProps(nextProps) {
-    if (nextProps.editGroupStatus) {
+    if (nextProps.selectedGroup.editGroupStatus) {
       const group = this.state.name;
       if (group !== nextProps.selectedGroup.groupName) {
         this.setState({ name: nextProps.selectedGroup.groupName })
       }
+    } else {
+      this.setState({ name: '' })
     }
   }
 
   /**
    * Handles change event for the input field
-   * @param {object} event 
+   * 
+   * @param {object} event
+   * 
    * @returns {void} no return value
    */
   handleChange(event) {
@@ -68,6 +79,7 @@ export class CreateGroupModal extends React.Component {
 
   /**
    * Handles input validation
+   * 
    * @returns {boolean} represents validity status of the input
    */
   isValid() {
@@ -76,7 +88,8 @@ export class CreateGroupModal extends React.Component {
   };
 
   /**
-   * Sets error state if input values are invalid 
+   * Sets error state if input values are invalid
+   * 
    * @returns {void} no return value
    */
   hasErrors() {
@@ -88,6 +101,7 @@ export class CreateGroupModal extends React.Component {
 
   /**
    * Handles onBlur event for the input field
+   * 
    * @returns {void} no return value
    */
   handleBlur() {
@@ -96,6 +110,7 @@ export class CreateGroupModal extends React.Component {
 
   /**
    * Handles onFocus event for the input field
+   * 
    * @returns {void} no return value
    */
   handleFocus() {
@@ -104,7 +119,9 @@ export class CreateGroupModal extends React.Component {
 
   /**
    * Handles create group form submission
+   * 
    * @param {object} event
+   * 
    * @returns {void} no return value
    */
   handleSubmit(event) {
@@ -113,13 +130,15 @@ export class CreateGroupModal extends React.Component {
     const groupId = this.props.selectedGroup.groupId;
     const userId = this.props.currentUserId;
 
-    this.props.editGroupStatus ?
-      this.props.updateGroup(groupName, groupId, userId)
-      : this.props.createGroup(groupName);
+    this.props.selectedGroup.editGroupStatus ?
+      this.props.editGroup(groupName, groupId, userId)
+      : this.props.createGroup(groupName)
+        .then(() => { this.setState({ name: '' }) });
   }
 
   /**
    * Renders the component
+   * 
    * @returns {JSX} jsx representation of the component
    */
   render() {
@@ -142,6 +161,7 @@ export class CreateGroupModal extends React.Component {
         </div>
         <div className="modal-footer">
           <Button
+            id="save-group"
             className="btn modal-action modal-close waves-effect waves-green red darken-1"
             text="save group"
             onClick={this.handleSubmit}
@@ -155,31 +175,33 @@ export class CreateGroupModal extends React.Component {
 
 CreateGroupModal.propTypes = {
   createGroup: PropTypes.func.isRequired,
-  updateGroup: PropTypes.func.isRequired,
-  editGroupStatus: PropTypes.bool.isRequired,
+  editGroup: PropTypes.func.isRequired,
   selectedGroup: PropTypes.object.isRequired,
   currentUserId: PropTypes.number.isRequired
 }
 
 /**
  * Maps state to props
- * @param {object} state 
+ * 
+ * @param {object} state
+ * 
  * @returns {object} contains sections of the redux store
  */
 const mapStateToProps = (state) => ({
-  selectedGroup: state.messages,
-  editGroupStatus: state.editGroupStatus,
+  selectedGroup: state.selectedGroup,
   currentUserId: state.auth.currentUser.id
 });
 
 /**
  * Maps dispatch to props
+ * 
  * @param {function} dispatch
+ * 
  * @returns {object} actions to be dispatched
  */
 const mapDispatchToProps = dispatch => bindActionCreators({
   createGroup,
-  updateGroup
+  editGroup
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupModal);

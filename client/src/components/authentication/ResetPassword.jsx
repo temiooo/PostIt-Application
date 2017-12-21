@@ -11,13 +11,16 @@ import { validateNewPassword } from '../../utils/validateInput';
 
 /**
  * ResetPassword Component
+ * 
  * @class ResetPassword
- *  @extends {React.Component}
+ * 
+ * @extends {React.Component}
  */
 export class ResetPassword extends React.Component {
 
   /**
    * Creates an instance of ResetPassword
+   * 
    * @param {object} props
    */
   constructor(props, context) {
@@ -25,7 +28,7 @@ export class ResetPassword extends React.Component {
 
     this.state = {
       password: '',
-      confirmpassword: '',
+      confirmPassword: '',
       errors: {},
     };
     this.handleChange = this.handleChange.bind(this);
@@ -35,6 +38,7 @@ export class ResetPassword extends React.Component {
 
   /**
    * Handles input validation
+   * 
    * @returns {boolean} represents validity status of the input
    */
   isValid() {
@@ -47,6 +51,7 @@ export class ResetPassword extends React.Component {
 
   /**
    * Handles onfocus event for input fields
+   * 
    * @returns {void} no return value
    */
   handleFocus() {
@@ -55,7 +60,9 @@ export class ResetPassword extends React.Component {
 
   /**
    * Handles change event for input fields
+   * 
    * @param {object} event
+   * 
    * @returns {void} no return value
    */
   handleChange(event) {
@@ -67,7 +74,9 @@ export class ResetPassword extends React.Component {
 
   /**
    * Handles reset password form submission
+   * 
    * @param {object} event
+   * 
    * @returns {void} no return value
    */
   handleSubmit(event) {
@@ -84,6 +93,7 @@ export class ResetPassword extends React.Component {
 
   /**
    * Renders the component
+   * 
    * @returns {JSX} jsx representation of the component
    */
   render() {
@@ -116,14 +126,15 @@ export class ResetPassword extends React.Component {
               icon="lock"
               type="password"
               name="confirmpassword"
-              value={this.state.confirmpassword}
+              value={this.state.confirmPassword}
               onChange={this.handleChange}
               label="Confirm Password"
               onFocus={this.handleFocus}
-              error={this.state.errors.confirmpassword}
+              error={this.state.errors.confirmPassword}
             />
             <div className="row  center-align">
               <Button
+                id="reset-password"
                 className="btn waves-effect waves-light red lighten-2"
                 onClick={this.handleSubmit}
                 text="RESET PASSWORD"
@@ -145,7 +156,9 @@ ResetPassword.propTypes = {
 
 /**
  * Maps state to props
+ * 
  * @param {object} state
+ * 
  * @returns {object} contains sections of the redux store
  */
 const mapStateToProps = state => ({
@@ -155,7 +168,9 @@ const mapStateToProps = state => ({
 
 /**
  * Maps dispatch to props
+ * 
  * @param {function} dispatch
+ * 
  * @returns {object} actions to be dispatched 
  */
 const mapDispatchToProps = dispatch =>

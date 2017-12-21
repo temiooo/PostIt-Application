@@ -2,7 +2,7 @@ import authenticate from '../middlewares/authenticate';
 import validateInput from '../middlewares/validateInput';
 import { user, group, message } from '../controllers';
 
-module.exports = (app) => {
+export default (app) => {
   app.post('/api/user/signup', validateInput.validateSignupInput,
     user.signup);
   app.post('/api/user/signin', user.signin);

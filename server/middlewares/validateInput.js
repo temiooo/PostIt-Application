@@ -4,7 +4,9 @@ import { User, Group } from '../models';
 
 /**
  * Checks validity of input supplied
+ *
  * @param {object} input
+ *
  * @returns {object} returns errors if any and validity status of the input
  */
 const checkValidity = (input) => {
@@ -40,50 +42,53 @@ const checkValidity = (input) => {
 const validateInput = {
   /**
    * Checks if username or email exist already in the database
+   *
    * @param {object} req - request object
    * @param {object} res -response object
    * @param {function} next - calls the next function
+   *
    * @returns {(function|object)} calls next function or returns response object
    */
   validateSignupInput(req, res, next) {
     const { error, isValid } = checkValidity(req.body);
     if (!isValid) {
-      return res.status(401).send({
+      return res.status(400).send({
         message: error
       });
     }
 
     User.findOne({
       where: {
-        username: req.body.username
+        $or: [
+          { email: req.body.email },
+          { username: req.body.username }
+        ]
       }
     }).then((user) => {
       if (user) {
-        return res.status(409).send({
-          message: 'Username taken already. Please use another one.'
-        });
-      }
-
-      User.findOne({
-        where: {
-          email: req.body.email
+        if (user.username === req.body.username) {
+          return res.status(409).send({
+            message: 'Username taken already. Please use another one.'
+          });
         }
-      }).then((existingUser) => {
-        if (existingUser) {
+
+        if (user.email === req.body.email) {
           return res.status(409).send({
             message: 'Email taken already. Please use another one.'
           });
         }
-        next();
-      });
+      }
+      next();
     });
   },
 
   /**
    * checks if group name exists already in the database
+   *
    * @param {object} req - request object
    * @param {object} res -response object
    * @param {function} next - calls the next function
+   *
    * @returns {(function|object)} calls next function or returns response object
    */
   validateGroupname(req, res, next) {
@@ -103,9 +108,11 @@ const validateInput = {
 
   /**
    * Checks if message input is valid
+   *
    * @param {object} req - request object
    * @param {object} res -response object
    * @param {function} next - calls the next function
+   *
    * @returns {(function|object)} calls next function or returns response object
    */
   validateMessageInput(req, res, next) {

@@ -2,8 +2,10 @@ import { expect } from 'chai';
 import authReducer from '../../src/reducers/authReducer';
 import initialState from '../../src/reducers/initialState';
 import {
-  signupSuccess, signupFailure,
-  loginSuccess, loginFailure
+  signupSuccess,
+  signupFailure,
+  loginSuccess,
+  loginFailure
 } from '../../src/actions/authActions';
 
 let action;

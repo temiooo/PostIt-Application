@@ -1,6 +1,10 @@
 import { expect } from 'chai';
 import db from '../../models';
-import { insertSeedData, newGroup, updatedGroup } from '../helpers/seedData';
+import {
+  insertSeedData,
+  newGroup,
+  updatedGroup
+} from '../helpers/seedData';
 
 let newGroupId;
 
@@ -33,10 +37,11 @@ describe('Group Model', () => {
       });
   });
 
-  it('should raise a validation for unique input', (done) => {
+  it('should raise a validation error for unique input', (done) => {
     db.Group.create(newGroup)
       .catch((error) => {
-        expect(error.errors[0].message).to.equal('Group name already exists. Use another name');
+        expect(error.errors[0].message)
+          .to.equal('Group name already exists. Use another name');
         expect(error.errors[0].type).to.equal('unique violation');
         expect(error.errors[0].path).to.equal('name');
         expect(error.errors[0].value).to.equal('Europeans');

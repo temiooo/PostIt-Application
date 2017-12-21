@@ -12,13 +12,16 @@ import { validateSignupInput } from '../../utils/validateInput';
 
 /**
  * SignupPage component
+ * 
  * @class SignupPage
+ * 
  * @extends {React.Component}
  */
 export class SignupPage extends React.Component {
 
   /**
    * Creates an instance of SignupPage
+   * 
    * @param {object} props 
    */
   constructor(props) {
@@ -28,8 +31,8 @@ export class SignupPage extends React.Component {
       email: '',
       username: '',
       password: '',
-      confirmpassword: '',
-      errors: {},
+      confirmPassword: '',
+      errors: {}
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -39,7 +42,9 @@ export class SignupPage extends React.Component {
 
   /**
    * Handles change event for input fields
+   * 
    * @param {object} event 
+   * 
    * @returns {void} no return value
    */
   handleChange(event) {
@@ -50,6 +55,7 @@ export class SignupPage extends React.Component {
 
   /**
    * Handles input validation
+   * 
    * @returns {boolean} represents validity status of the input
    */
   isValid() {
@@ -62,23 +68,22 @@ export class SignupPage extends React.Component {
 
   /**
    * Handles signup form submission
+   * 
    * @param {object} event 
+   * 
    * @returns {void} no return value
    */
   handleSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
       this.setState({ errors: {} })
-      this.props.signup(this.state).then(() => {
-        if (this.props.isAuthenticated) {
-          toastr.success('Welcome to PostIt');
-        }
-      });
+      this.props.signup(this.state)
     }
   }
 
   /**
    * Renders the component
+   * 
    * @returns {JSX} jsx representation of the component
    */
   render() {
@@ -132,14 +137,15 @@ export class SignupPage extends React.Component {
                 <TextInput
                   icon="lock"
                   type="password"
-                  name="confirmpassword"
-                  value={this.state.confirmpassword}
+                  name="confirmPassword"
+                  value={this.state.confirmPassword}
                   onChange={this.handleChange}
                   label="Confirm Password"
-                  error={this.state.errors.confirmpassword}
+                  error={this.state.errors.confirmPassword}
                 />
                 <div className="row center-align">
                   <Button
+                    id="create-account"
                     className=
                     "btn waves-effect waves-light red lighten-2 signup-button"
                     onClick={this.handleSubmit}
@@ -163,7 +169,9 @@ SignupPage.propTypes = {
 
 /**
  * Maps state to props
+ * 
  * @param {object} state
+ * 
  * @returns {object} contains sections of the redux store
  */
 const mapStateToProps = state => ({
@@ -172,7 +180,9 @@ const mapStateToProps = state => ({
 
 /**
  * Maps dispatch to props
+ * 
  * @param {function} dispatch 
+ * 
  * @returns {object} actions to be dispatched
  */
 const mapDispatchToProps = dispatch =>

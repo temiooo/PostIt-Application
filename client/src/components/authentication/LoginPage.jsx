@@ -8,16 +8,20 @@ import Button from '../common/Button';
 import TextInput from '../common/TextInput';
 import LandingPage from '../common/LandingPage';
 import { login } from '../../actions/authActions';
+import { validateLoginInput } from '../../utils/validateInput';
 
 /**
  * LoginPage Component
+ * 
  * @class LoginPage
+ * 
  * @extends {React.Component}
  */
 export class LoginPage extends React.Component {
 
   /**
    * Creates an instance of LoginPage
+   * 
    * @param {object} props 
    */
   constructor(props) {
@@ -25,15 +29,19 @@ export class LoginPage extends React.Component {
 
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      errors: {}
     };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   /**
    * Handles change event for input fields
+   * 
    * @param {object} event
+   * 
    * @returns {void} no return value
    */
   handleChange(event) {
@@ -44,22 +52,36 @@ export class LoginPage extends React.Component {
   }
 
   /**
+  * Handles input validation
+  *
+  * @returns {boolean} represents validity status of the input
+  */
+  isValid() {
+    const { errors, isValid } = validateLoginInput(this.state);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+    return isValid;
+  }
+
+  /**
    * Handles login form submission
+   * 
    * @param {object} event
+   * 
    * @returns {void} no return value
    */
   handleSubmit(event) {
     event.preventDefault();
-    this.props.login(this.state)
-      .then(() => {
-        if (this.props.isAuthenticated) {
-          toastr.success('Welcome Back');
-        }
-      });
+    if (this.isValid()) {
+      this.props.login(this.state)
+      this.setState({ errors: {} })
+    }
   }
 
   /**
    * Renders the component
+   * 
    * @returns {JSX} jsx representation of the component
    */
   render() {
@@ -90,6 +112,7 @@ export class LoginPage extends React.Component {
                   value={this.state.username}
                   onChange={this.handleChange}
                   label="Username"
+                  error={this.state.errors.username}
                 />
                 <TextInput
                   icon="lock"
@@ -98,9 +121,11 @@ export class LoginPage extends React.Component {
                   value={this.state.password}
                   onChange={this.handleChange}
                   label="Password"
+                  error={this.state.errors.password}
                 />
                 <div className="row  center-align">
                   <Button
+                    id="login"
                     className="btn waves-effect waves-light red lighten-2"
                     onClick={this.handleSubmit}
                     text="login"
@@ -130,7 +155,9 @@ LoginPage.propTypes = {
 
 /**
  * Maps state to props
+ * 
  * @param {object} state
+ * 
  * @returns {object} contains sections of the redux store
  */
 const mapStateToProps = state => ({
@@ -139,7 +166,9 @@ const mapStateToProps = state => ({
 
 /**
  * Maps dispatch to props
+ * 
  * @param {function} dispatch
+ * 
  * @returns {object} actions to be dispatched 
  */
 const mapDispatchToProps = dispatch =>

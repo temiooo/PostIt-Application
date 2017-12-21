@@ -33,7 +33,7 @@
         "path": "./results/screenshots"
       },
       "globals": {
-        "waitForConditionTimeout": 7000
+        "waitForConditionTimeout": 8000
       }
     }
   }

@@ -4,6 +4,7 @@ import path from 'path';
 import open from 'open';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
+import routes from '../server/routes';
 import config from '../webpack.config.dev';
 
 /* eslint-disable no-console */
@@ -27,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api-docs',
   express.static(path.join(__dirname, '../server/api-docs')));
 
-require('../server/routes/index')(app);
+routes(app);
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/src/index.html'));

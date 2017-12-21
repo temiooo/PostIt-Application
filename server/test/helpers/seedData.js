@@ -61,8 +61,8 @@ export const generateToken = (id, user) => {
   const token = jwt.sign({
     user: { id, name: user.username, email: user.email }
   }, process.env.SECRET, {
-      expiresIn: '24h'
-    });
+    expiresIn: '24h'
+  });
 
   return token;
 };
