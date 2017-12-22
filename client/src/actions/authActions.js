@@ -6,9 +6,9 @@ import * as types from './actionTypes';
 /**
  * Action creator for when signup is successful
  *
- * @param {object} user
+ * @param {Object} user
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const signupSuccess = user => ({
   type: types.SIGNUP_SUCCESS,
@@ -18,7 +18,7 @@ const signupSuccess = user => ({
 /**
  * Action creator for when signup fails
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const signupFailure = () => ({
   type: types.SIGNUP_FAILURE
@@ -27,9 +27,9 @@ const signupFailure = () => ({
 /**
  * Action creator for when login is successful
  *
- * @param {object} user
+ * @param {Object} user
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const loginSuccess = user => ({
   type: types.LOGIN_SUCCESS,
@@ -39,7 +39,7 @@ const loginSuccess = user => ({
 /**
  * Action creator for when login fails
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const loginFailure = () => ({
   type: types.LOGIN_FAILURE
@@ -48,7 +48,7 @@ const loginFailure = () => ({
 /**
  * Async action creator for signup
  *
- * @param {object} userDetails
+ * @param {Object} userDetails
  *
  * @returns {Promise} dispatches an action
  */
@@ -69,7 +69,7 @@ const signup = userDetails => dispatch => axios
 /**
  * Async action creator for login
  *
- * @param {object} userDetails
+ * @param {Object} userDetails
  *
  * @returns {Promise} dispatches an action
  */
@@ -90,7 +90,7 @@ const login = userDetails => dispatch => axios
 /**
  * logout action creator
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const logout = () => {
   localStorage.removeItem('jwtToken');
@@ -98,7 +98,23 @@ const logout = () => {
   return { type: types.LOGOUT };
 };
 
+/**
+ * Checks the error message when an async action fails
+ *
+ * @param {string} errorMessage
+ *
+ * @returns {function} dispatch
+ */
+const checkError = errorMessage => (dispatch) => {
+  if (errorMessage ===
+    'Token is no longer valid so we can\'t authenticate you.') {
+    toastr.error('Your session has expired.<br/>Please login again.');
+    return dispatch(logout());
+  }
+  toastr.error(errorMessage);
+};
+
 export {
   signup, signupSuccess, signupFailure, login,
-  loginSuccess, loginFailure, logout
+  loginSuccess, loginFailure, logout, checkError
 };

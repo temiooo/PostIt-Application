@@ -22,7 +22,7 @@ export class ForgotPassword extends React.Component {
   /**
    * Creates an instance of ForgotPassword
    * 
-   * @param {object} props
+   * @param {Object} props
    */
   constructor(props) {
     super(props);
@@ -53,7 +53,7 @@ export class ForgotPassword extends React.Component {
   /**
    * Handles change event for input fields
    * 
-   * @param {object} event
+   * @param {Object} event
    * 
    * @returns {void} no return value
    */
@@ -76,7 +76,7 @@ export class ForgotPassword extends React.Component {
   /**
    * Handles form submission
    * 
-   * @param {object} event
+   * @param {Object} event
    * 
    * @returns {void} no return value
    */
@@ -147,9 +147,9 @@ ForgotPassword.propTypes = {
 /**
  * Maps state to props
  * 
- * @param {object} state
+ * @param {Object} state
  * 
- * @returns {object} contains sections of the redux store
+ * @returns {Object} contains sections of the redux store
  */
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
@@ -161,7 +161,7 @@ const mapStateToProps = state => ({
  * 
  * @param {function} dispatch
  * 
- * @returns {object} actions to be dispatched 
+ * @returns {Object} actions to be dispatched 
  */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ forgotPassword },

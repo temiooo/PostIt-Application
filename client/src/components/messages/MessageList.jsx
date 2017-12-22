@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 /**
  * MessageList component
  * 
- * @param {object} props
+ * @param {Object} props
  * 
  * @returns {JSX} jsx representation of the component
  */

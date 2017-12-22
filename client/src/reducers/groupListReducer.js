@@ -5,7 +5,7 @@ import initialState from './initialState';
  * Reducer that contains the groups a user belongs to
  *
  * @param {array} state - initial state
- * @param {object} action - the dispatched action
+ * @param {Object} action - the dispatched action
  *
  * @returns {array} new state of group section of the store
  */

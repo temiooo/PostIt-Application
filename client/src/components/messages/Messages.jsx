@@ -25,7 +25,7 @@ export class Messages extends React.Component {
   /**
    * Creates an instance of Messages
    * 
-   * @param {object} props 
+   * @param {Object} props 
    */
   constructor(props) {
     super(props);
@@ -53,7 +53,7 @@ export class Messages extends React.Component {
   /**
    * lifecycle method invoked before component receives new props
    * 
-   * @param {object} nextProps
+   * @param {Object} nextProps
    * 
    * @returns {void} no return value
    */
@@ -68,7 +68,7 @@ export class Messages extends React.Component {
   /**
   * Handles change event for the input fields
 
-  * @param {object} event
+  * @param {Object} event
 
   * @returns {void} no return value
   */
@@ -81,7 +81,7 @@ export class Messages extends React.Component {
   /**
    * Handles message form submission
    * 
-   * @param {object} event
+   * @param {Object} event
    * 
    * @returns {void} no return value
    */
@@ -152,9 +152,9 @@ Messages.propTypes = {
 /**
  * Maps state to props
  * 
- * @param {object} state
+ * @param {Object} state
  * 
- * @returns {object} contains sections of the redux store
+ * @returns {Object} contains sections of the redux store
  */
 const mapStateToProps = (state) => ({
   selectedGroup: state.selectedGroup,
@@ -166,7 +166,7 @@ const mapStateToProps = (state) => ({
 
  * @param {function} dispatch
  * 
- * @returns {object} actions to be dispatched
+ * @returns {Object} actions to be dispatched
  */
 const mapDispatchToProps = dispatch => bindActionCreators({
   getMessages,

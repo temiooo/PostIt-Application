@@ -22,7 +22,7 @@ export class LoginPage extends React.Component {
   /**
    * Creates an instance of LoginPage
    * 
-   * @param {object} props 
+   * @param {Object} props 
    */
   constructor(props) {
     super(props);
@@ -40,7 +40,7 @@ export class LoginPage extends React.Component {
   /**
    * Handles change event for input fields
    * 
-   * @param {object} event
+   * @param {Object} event
    * 
    * @returns {void} no return value
    */
@@ -67,7 +67,7 @@ export class LoginPage extends React.Component {
   /**
    * Handles login form submission
    * 
-   * @param {object} event
+   * @param {Object} event
    * 
    * @returns {void} no return value
    */
@@ -156,9 +156,9 @@ LoginPage.propTypes = {
 /**
  * Maps state to props
  * 
- * @param {object} state
+ * @param {Object} state
  * 
- * @returns {object} contains sections of the redux store
+ * @returns {Object} contains sections of the redux store
  */
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
@@ -169,7 +169,7 @@ const mapStateToProps = state => ({
  * 
  * @param {function} dispatch
  * 
- * @returns {object} actions to be dispatched 
+ * @returns {Object} actions to be dispatched 
  */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ login },

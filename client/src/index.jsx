@@ -1,6 +1,7 @@
 /* eslint-disable import/default */
 import 'babel-polyfill';
 import React from 'react';
+import toastr from 'toastr';
 import { render } from 'react-dom';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
@@ -13,6 +14,10 @@ import setAuthorizationToken from './utils/setAuthorizationToken';
 import './styles/styles.scss';
 
 const store = configureStore();
+
+toastr.options = {
+  "preventDuplicates": true
+};
 
 if (localStorage.jwtToken) {
   setAuthorizationToken(localStorage.jwtToken);
