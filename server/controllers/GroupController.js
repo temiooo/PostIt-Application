@@ -1,14 +1,14 @@
 import { Group, User } from '../models';
 
-const groupController = {
+const GroupController = {
   /**
    * Creates a new group
    * ROUTE: POST: /api/group
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
-   * @returns {object} contains details of the newly created group
+   * @returns {Object} contains details of the newly created group
    */
   create(req, res) {
     const groupName = req.body.name;
@@ -41,10 +41,10 @@ const groupController = {
    * Edit details of an already existing group
    * ROUTE: PUT: /api/group/:groupId
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
-   * @returns {object} contains details of the edited group
+   * @returns {Object} contains details of the edited group
    */
   edit(req, res) {
     const groupId = req.params.groupId;
@@ -98,10 +98,10 @@ const groupController = {
    * Gets details of a particular group
    * ROUTE: GET: /api/group/:groupId
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
-   * @returns {object} contains details of the group requested for
+   * @returns {Object} contains details of the group requested for
    */
   get(req, res) {
     const groupId = req.params.groupId;
@@ -131,10 +131,10 @@ const groupController = {
    * Adds a user as a member of a group
    * ROUTE: POST: /api/group/:groupId/user
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
-   * @returns {object} contains message specifiying success or failure of action
+   * @returns {Object} contains message specifiying success or failure of action
    */
   addUser(req, res) {
     const groupId = req.params.groupId;
@@ -191,8 +191,8 @@ const groupController = {
    * List users belonging to a particular group
    * ROUTE: GET: /api/group/:groupId/users
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
    * @returns {array} contains users who are members of the specified group
    */
@@ -226,4 +226,4 @@ const groupController = {
   }
 };
 
-export default groupController;
+export default GroupController;

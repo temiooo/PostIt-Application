@@ -5,15 +5,15 @@ import {
   msgPriorityMail
 } from '../utils/nodemailer';
 
-const messageController = {
+const MessageController = {
   /**
    * Posts a new message to a group
    * ROUTE: POST: /api/group/:groupId/message
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
-   * @returns {object} contains details of the newly posted message
+   * @returns {Object} contains details of the newly posted message
    */
   create(req, res) {
     const groupId = req.params.groupId;
@@ -97,8 +97,8 @@ const messageController = {
    * Retrieves messages from a specified group
    * ROUTE: GET: /api/group/:groupId/messages
    *
-   * @param {object} req - request object
-   * @param {object} res -r esponse object
+   * @param {Object} req - request object
+   * @param {Object} res -r esponse object
    *
    * @returns {array} contains messages retrieved from a group
    */
@@ -143,4 +143,4 @@ const messageController = {
   }
 };
 
-export default messageController;
+export default MessageController;

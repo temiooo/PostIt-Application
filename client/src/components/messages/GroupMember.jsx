@@ -19,7 +19,7 @@ export class GroupMember extends React.Component {
   /**
    * Creates an instance of GroupMember
    * 
-   * @param {object} props 
+   * @param {Object} props 
    */
   constructor(props) {
     super(props);
@@ -56,7 +56,7 @@ export class GroupMember extends React.Component {
   /**
    * Handles change event for the input field
    * 
-   * @param {object} event
+   * @param {Object} event
    * 
    * @returns {void} no return value
    */
@@ -84,7 +84,7 @@ export class GroupMember extends React.Component {
   /**
    * Handles searching of users
    * 
-   * @param {object} event
+   * @param {Object} event
    * 
    * @returns {void} no return value
    */
@@ -113,7 +113,7 @@ export class GroupMember extends React.Component {
   /**
    * Handles page click for paginated search result
    * 
-   * @param {object} data
+   * @param {Object} data
    * 
    * @returns {void} no return value
    */
@@ -223,9 +223,9 @@ GroupMember.propTypes = {
 /**
  * Map state to props
  * 
- * @param {object} state
+ * @param {Object} state
  * 
- * @returns {object} contains section of the redux store
+ * @returns {Object} contains section of the redux store
  */
 const mapStateToProps = state => ({
   users: state.users
@@ -236,7 +236,7 @@ const mapStateToProps = state => ({
  * 
  * @param {function} dispatch
  * 
- * @returns {object} actions to be dispatched 
+ * @returns {Object} actions to be dispatched 
  */
 const mapDispatchToProps = dispatch => bindActionCreators({
   getGroupMembers,

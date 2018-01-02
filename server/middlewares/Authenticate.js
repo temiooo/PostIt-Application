@@ -6,8 +6,8 @@ const authenticate = {
   /**
    * authenticates a user
    *
-   * @param {object} req - request object
-   * @param {object} res -response object
+   * @param {Object} req - request object
+   * @param {Object} res -response object
    * @param {function} next - calls the next function
    *
    * @return {(function|object)} calls next function or returns response object

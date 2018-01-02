@@ -5,9 +5,9 @@ import { User, Group } from '../models';
 /**
  * Checks validity of input supplied
  *
- * @param {object} input
+ * @param {Object} input
  *
- * @returns {object} returns errors if any and validity status of the input
+ * @returns {Object} returns errors if any and validity status of the input
  */
 const checkValidity = (input) => {
   let error = '';
@@ -39,12 +39,12 @@ const checkValidity = (input) => {
   };
 };
 
-const validateInput = {
+const ValidateInput = {
   /**
    * Checks if username or email exist already in the database
    *
-   * @param {object} req - request object
-   * @param {object} res -response object
+   * @param {Object} req - request object
+   * @param {Object} res -response object
    * @param {function} next - calls the next function
    *
    * @returns {(function|object)} calls next function or returns response object
@@ -85,8 +85,8 @@ const validateInput = {
   /**
    * checks if group name exists already in the database
    *
-   * @param {object} req - request object
-   * @param {object} res -response object
+   * @param {Object} req - request object
+   * @param {Object} res -response object
    * @param {function} next - calls the next function
    *
    * @returns {(function|object)} calls next function or returns response object
@@ -109,8 +109,8 @@ const validateInput = {
   /**
    * Checks if message input is valid
    *
-   * @param {object} req - request object
-   * @param {object} res -response object
+   * @param {Object} req - request object
+   * @param {Object} res -response object
    * @param {function} next - calls the next function
    *
    * @returns {(function|object)} calls next function or returns response object
@@ -137,4 +137,4 @@ const validateInput = {
   }
 };
 
-export default validateInput;
+export default ValidateInput;

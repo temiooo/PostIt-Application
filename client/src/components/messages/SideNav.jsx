@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 /**
  * SideNav component
  * 
- * @param {object} props
+ * @param {Object} props
  * 
  * @returns {JSX} jsx representation of the element
  */

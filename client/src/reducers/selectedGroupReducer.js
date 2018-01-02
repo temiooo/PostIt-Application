@@ -4,10 +4,10 @@ import initialState from './initialState';
 /**
  * Reducer that handles messages from the current group
  *
- * @param {object} state - initial state
- * @param {object} action - the dispatched action
+ * @param {Object} state - initial state
+ * @param {Object} action - the dispatched action
  *
- * @returns {object} new state of the messages section of the store
+ * @returns {Object} new state of the messages section of the store
  */
 const selectedGroupReducer = (state = initialState.selectedGroup, action) => {
   switch (action.type) {

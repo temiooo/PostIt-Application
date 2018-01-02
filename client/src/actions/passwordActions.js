@@ -9,7 +9,7 @@ import {
 /**
  * Async action creator that handles forgot password
  *
- * @param {object} email
+ * @param {Object} email
  *
  * @returns {Promise} dispatches an action
  */
@@ -31,7 +31,7 @@ const forgotPassword = email => (dispatch) => {
  * Async action creator that handles reset password
  *
  * @param {string} resetToken - reset password token
- * @param {object} password - user's new password
+ * @param {Object} password - user's new password
  *
  * @returns {Promise} dispatches an action
  */

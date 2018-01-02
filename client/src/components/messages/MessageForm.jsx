@@ -5,7 +5,7 @@ import Button from '../common/Button';
 /**
  * MessageForm component
  * 
- * @param {object} props
+ * @param {Object} props
  * 
  * @returns {JSX} jsx representation of the component
  */

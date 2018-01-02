@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 /**
  * Button Component
  * 
- * @param {object} props 
+ * @param {Object} props 
  * 
  * @returns {JSX} jsx representation of the component
  */

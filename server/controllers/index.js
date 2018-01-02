@@ -1,9 +1,9 @@
-import userController from './userController';
-import groupController from './groupController';
-import messageController from './messageController';
+import UserController from './UserController';
+import GroupController from './GroupController';
+import MessageController from './MessageController';
 
 export {
-  userController as user,
-  groupController as group,
-  messageController as message,
+  UserController as user,
+  GroupController as group,
+  MessageController as message,
 };

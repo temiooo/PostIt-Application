@@ -25,7 +25,7 @@ export class MessageBoard extends React.Component {
   /**
    * Creates an instance of MessageBoard
    * 
-   * @param {object} props 
+   * @param {Object} props 
    */
   constructor(props) {
     super(props);
@@ -105,9 +105,9 @@ MessageBoard.propTypes = {
 /**
  * Maps state to props
  * 
- * @param {object} state
+ * @param {Object} state
  * 
- * @returns {object} contains sections of the redux store
+ * @returns {Object} contains sections of the redux store
  */
 const mapStateToProps = (state) => ({
   auth: state.auth,
@@ -120,7 +120,7 @@ const mapStateToProps = (state) => ({
  * 
  * @param {function} dispatch
  * 
- * @returns {object} actions to be dispatched
+ * @returns {Object} actions to be dispatched
  */
 const mapDispatchToProps = dispatch => bindActionCreators({
   logout,

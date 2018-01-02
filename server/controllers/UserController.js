@@ -12,15 +12,15 @@ import {
 
 require('dotenv').config();
 
-const userController = {
+const UserController = {
   /**
    * Creates a new user
    * ROUTE: POST: /api/user/signup
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
-   * @returns {object} contains auth token and details of the newly created user
+   * @returns {Object} contains auth token and details of the newly created user
    */
   signup(req, res) {
     return User
@@ -33,7 +33,7 @@ const userController = {
         const token = jwt.sign({
           user: { id: user.id, name: user.username, email: user.email }
         }, process.env.SECRET, {
-          expiresIn: '24h'
+          expiresIn: Number(process.env.TOKEN_EXPIRATION_TIME)
         });
 
         res.status(201).send({
@@ -51,10 +51,10 @@ const userController = {
    * Authenticates and logs in a user
    * ROUTE: POST: /api/user/signin
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
-   * @returns {object} contains auth token and details of the user
+   * @returns {Object} contains auth token and details of the user
    */
   signin(req, res) {
     if (!req.body.username || !req.body.password) {
@@ -78,7 +78,7 @@ const userController = {
           const token = jwt.sign({
             user: { id: user.id, name: user.username, email: user.email }
           }, process.env.SECRET, {
-            expiresIn: '24h'
+            expiresIn: Number(process.env.TOKEN_EXPIRATION_TIME)
           });
 
           return res.status(200).send({
@@ -101,10 +101,10 @@ const userController = {
    * that have forgotten their password
    * ROUTE: PUT: /api/user/forgotpassword
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
-   * @returns {object} message object stating if user has been sent an email
+   * @returns {Object} message object stating if user has been sent an email
    */
   forgotPassword(req, res) {
     if (!req.body.email || !validator.isEmail(req.body.email)) {
@@ -159,10 +159,10 @@ const userController = {
    * Resets a user's password
    * ROUTE: PUT: /api/user/resetpassword/:token
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
-   * @returns {object} message object stating if password reset was successful
+   * @returns {Object} message object stating if password reset was successful
    */
   resetPassword(req, res) {
     const passwordToken = req.params.token;
@@ -219,10 +219,10 @@ const userController = {
    * Searches for users that match the specified search query
    * ROUTE: GET: /api/search/users
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
-   * @returns {object} contains search results
+   * @returns {Object} contains search results
    */
   searchUser(req, res) {
     let limit;
@@ -295,8 +295,8 @@ const userController = {
    * Retrieves a list of group  a user belongs to
    * ROUTE: GET: /api/user/:userId/groups
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request object
+   * @param {Object} res - response object
    *
    * @returns {array} lsit of groups specified user belongs to
    */
@@ -337,4 +337,4 @@ const userController = {
   }
 };
 
-export default userController;
+export default UserController;

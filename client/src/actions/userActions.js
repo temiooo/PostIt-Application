@@ -1,13 +1,14 @@
 import axios from 'axios';
 import toastr from 'toastr';
 import * as types from './actionTypes';
+import { checkError } from '../actions/authActions';
 
 /**
  * Action creator for when getting members of a group is successful
  *
  * @param {array} members
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const getGroupMembersSuccess = members => ({
   type: types.GET_GROUP_MEMBERS_SUCCESS, members
@@ -16,7 +17,7 @@ const getGroupMembersSuccess = members => ({
 /**
  * Action creator for when getting members of a group fails
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const getGroupMembersFailure = () => ({
   type: types.GET_GROUP_MEMBERS_FAILURE
@@ -25,9 +26,9 @@ const getGroupMembersFailure = () => ({
 /**
  * Action creator for when searching for other users is successful
  *
- * @param {object} users
+ * @param {Object} users
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const searchUsersSuccess = users => ({
   type: types.SEARCH_USERS_SUCCESS, users
@@ -36,7 +37,7 @@ const searchUsersSuccess = users => ({
 /**
  * Action creator for when searching for other users fail
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const searchUsersFailure = () => ({
   type: types.SEARCH_USERS_FAILURE
@@ -54,7 +55,8 @@ const getGroupMembers = groupId => dispatch => axios
   .then((response) => {
     dispatch(getGroupMembersSuccess(response.data));
   })
-  .catch(() => {
+  .catch((error) => {
+    dispatch(checkError(error.response.data.message));
     dispatch(getGroupMembersFailure());
   });
 
@@ -77,7 +79,8 @@ const searchUsers = (searchTerm, group, limit, offset) => (dispatch) => {
       dispatch(searchUsersSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(searchUsersFailure(error.response.data.message));
+      dispatch(checkError(error.response.data.message));
+      dispatch(searchUsersFailure());
     });
 };
 
@@ -85,17 +88,17 @@ const searchUsers = (searchTerm, group, limit, offset) => (dispatch) => {
  * Async action creator to add user to a group
  *
  * @param {number} groupId - group to add user to
- * @param {object} userDetail - details of the user to be added
+ * @param {Object} userDetail - details of the user to be added
  *
  * @returns {Promise} axios response
  */
-const addUser = (groupId, userDetail) => () => axios
+const addUser = (groupId, userDetail) => dispatch => axios
   .post(`/api/group/${groupId}/user`, userDetail)
   .then((response) => {
     toastr.success(response.data.message);
   })
   .catch((error) => {
-    toastr.error(error.response);
+    dispatch(checkError(error.response.data.message));
   });
 
 export {

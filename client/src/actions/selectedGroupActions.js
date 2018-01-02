@@ -10,14 +10,17 @@ import {
   getUserGroupsSuccess,
   getUserGroupsFailure
 } from './groupListActions';
+import {
+  checkError
+} from '../actions/authActions';
 
 /**
  * Action creator that sets a particular group
  * as the current group in the store
  *
- * @param {object} group - group data
+ * @param {Object} group - group data
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const getGroupSuccess = group => ({
   type: types.GET_GROUP_SUCCESS, group
@@ -26,7 +29,7 @@ const getGroupSuccess = group => ({
 /** Action creator that signifies an error occured
  * while fetching the current group
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const getGroupFailure = () => ({
   type: types.GET_GROUP_FAILURE
@@ -35,9 +38,9 @@ const getGroupFailure = () => ({
 /**
  * Action creator that updates a group name after it has been changed
  *
- * @param {object} group - group data
+ * @param {Object} group - group data
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const editGroupSuccess = group => ({
   type: types.EDIT_GROUP_SUCCESS, group
@@ -46,7 +49,7 @@ const editGroupSuccess = group => ({
 /** Action creator that signifies an error occured
  * while trying to edit a group
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const editGroupFailure = () => ({
   type: types.EDIT_GROUP_FAILURE
@@ -54,7 +57,7 @@ const editGroupFailure = () => ({
 
 /** Action creator that sets edit group status to true in the store
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const editGroupOn = () => ({
   type: types.EDIT_GROUP_ON
@@ -63,7 +66,7 @@ const editGroupOn = () => ({
 /**
  * Action creator that sets edit group status to false in the store
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const editGroupOff = () => ({
   type: types.EDIT_GROUP_OFF
@@ -76,7 +79,7 @@ const editGroupOff = () => ({
  * @param {number} id - id of the current group
  * @param {array} data - message data grom the current group
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const getMessagesSuccess = (id, data) => ({
   type: types.GET_MESSAGES_SUCCESS, id, data
@@ -85,7 +88,7 @@ const getMessagesSuccess = (id, data) => ({
 /**
  * Action creator to signify failed retrieval of messages from a group
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const getMessagesFailure = () => ({
   type: types.GET_MESSAGES_FAILURE
@@ -94,9 +97,9 @@ const getMessagesFailure = () => ({
 /**
  * Action creator to signify a message has been sent successfully
  *
- * @param {object} message - new message
+ * @param {Object} message - new message
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const postMessageSuccess = message => ({
   type: types.POST_MESSAGE_SUCCESS, message
@@ -105,7 +108,7 @@ const postMessageSuccess = message => ({
 /**
  * Action creator that signifies failure to send message
  *
- * @returns {object} action
+ * @returns {Object} action
  */
 const postMessageFailure = () => ({
   type: types.POST_MESSAGE_FAILURE
@@ -130,7 +133,7 @@ const getGroup = id => dispatch => axios
 /**
  * Async action creator to edit a group
  *
- * @param {object} groupName - new name of the group
+ * @param {Object} groupName - new name of the group
  * @param {number} groupId - id of the group whose name was changed
  * @param {number} userId - the id of the user changing the group's name
  *
@@ -149,7 +152,7 @@ const editGroup = (groupName, groupId, userId) => dispatch => axios
   .catch((error) => {
     dispatch(getUserGroupsFailure());
     dispatch(editGroupFailure());
-    toastr.error(error.response.data.message);
+    dispatch(checkError(error.response.data.message));
   });
 
 /**
@@ -171,7 +174,7 @@ const getMessages = groupId => (dispatch) => {
     .catch((error) => {
       dispatch(ajaxCallError());
       dispatch(getMessagesFailure());
-      toastr.error(error.response.data.message);
+      dispatch(checkError(error.response.data.message));
     });
 };
 
@@ -179,7 +182,7 @@ const getMessages = groupId => (dispatch) => {
  * Async action creator to post a new message
  *
  * @param {number} id - id of the group to post the message to
- * @param {object} message - details of the new message
+ * @param {Object} message - details of the new message
  *
  * @returns {Promise} dispatches an action
  */
@@ -190,7 +193,7 @@ const postMessage = (id, message) => dispatch => axios
   })
   .catch((error) => {
     dispatch(postMessageFailure());
-    toastr.error(error.response.data.message);
+    dispatch(checkError(error.response.data.message));
   });
 
 export {

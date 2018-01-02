@@ -4,9 +4,9 @@ import validator from 'validator';
 /**
  * Validates signup input
  *
- * @param {object} state
+ * @param {Object} state
  *
- * @returns {object} returns errors if any and the validity status of the input
+ * @returns {Object} returns errors if any and the validity status of the input
  */
 const validateSignupInput = (state) => {
   const errors = {};
@@ -47,9 +47,9 @@ const validateSignupInput = (state) => {
 /**
  * Validates login input
  *
- * @param {object} state
+ * @param {Object} state
  *
- * @returns {object} returns errors if any and the validity status of the input
+ * @returns {Object} returns errors if any and the validity status of the input
  */
 const validateLoginInput = (state) => {
   const errors = {};
@@ -71,9 +71,9 @@ const validateLoginInput = (state) => {
 /**
  * Validates input when creating new group
  *
- * @param {object} state
+ * @param {Object} state
  *
- * @returns {object} returns errors if any and the validity status of the input
+ * @returns {Object} returns errors if any and the validity status of the input
  */
 const validateGroupInput = (state) => {
   const errors = {};
@@ -98,9 +98,9 @@ const validateGroupInput = (state) => {
 /**
  * Validates message input
  *
- * @param {object} state
+ * @param {Object} state
  *
- * @returns {object} returns errors if any and the validity status of the input
+ * @returns {Object} returns errors if any and the validity status of the input
  */
 const validateMessageInput = (state) => {
   const errors = {};
@@ -122,9 +122,9 @@ const validateMessageInput = (state) => {
 /**
  * Validates input when filling forgot password form
  *
- * @param {object} state
+ * @param {Object} state
  *
- * @returns {object} contains boolean indicating validity status of the input
+ * @returns {Object} contains boolean indicating validity status of the input
  */
 const validateForgotPasswordEmail = (state) => {
   const errors = {};
@@ -144,9 +144,9 @@ const validateForgotPasswordEmail = (state) => {
 /**
  * validates new password when resetting password
  *
- * @param {object} state
+ * @param {Object} state
  *
- * @returns {object} returns errors if any and the validity status of the input
+ * @returns {Object} returns errors if any and the validity status of the input
  */
 const validateNewPassword = (state) => {
   const errors = {};
