@@ -2,6 +2,7 @@ import express from 'express';
 import webpack from 'webpack';
 import path from 'path';
 import open from 'open';
+import cors from 'cors';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import routes from '../server/routes';
@@ -22,6 +23,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(express.static(path.join(__dirname, '../client/src')));
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

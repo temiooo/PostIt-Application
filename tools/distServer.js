@@ -1,5 +1,6 @@
 import path from 'path';
 import open from 'open';
+import cors from 'cors';
 import logger from 'morgan';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -9,8 +10,10 @@ import routes from '../server/routes';
 const port = parseInt(process.env.PORT, 10) || 5000;
 const app = express();
 
+
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
