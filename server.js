@@ -17,6 +17,12 @@ app.use('/api-docs/', express.static(path.join(__dirname, 'server/api-docs/')));
 
 routes(app);
 
+app.get('/*', (req, res) => {
+  res.status(404).send({
+    message: 'This page does not exist'
+  });
+});
+
 app.listen(port);
 
 export default app;
